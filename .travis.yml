@@ -24,7 +24,6 @@ matrix:
       env: INSTALL="install"
            CONTROL="YES"
 #   PHP version
-    - php: 7.1.3
     - php: 7.2
       env: INSTALL="install"
     - php: 7.3
@@ -68,7 +67,6 @@ install:
   - '[[ "$CONTROL" == "" ]] || composer global require friendsofphp/php-cs-fixer symfony/flex sensiolabs/security-checker friendsoftwig/twigcs phpstan/phpstan-symfony'
   - composer $INSTALL $SYMFONY_PHPUNIT_COMPOSER_OPTION
   - '[[ "$SYMFONY_PHPUNIT_COMPOSER_OPTION" == "" ]] || cp var/data/simple-phpunit.php vendor/symfony/phpunit-bridge/bin/simple-phpunit.php'
-  - cp var/data/origine.db var/data/data.db
   - ./bin/phpunit install
 
 script:
