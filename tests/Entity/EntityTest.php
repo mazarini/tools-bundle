@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App\Tests\EntityTest;
+namespace App\Tests\Entity;
 
 use App\Entity\Fake;
 use PHPUnit\Framework\TestCase;
