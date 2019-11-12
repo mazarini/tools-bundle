@@ -65,6 +65,11 @@ class Data
         return $this;
     }
 
+    public function addHref($name, string $href): string
+    {
+        return $this->href->addHref($name, $href);
+    }
+
     public function getHref($name): string
     {
         return $this->href->getHref($name);
