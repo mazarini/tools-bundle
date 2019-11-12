@@ -19,8 +19,8 @@
 
 namespace App\Tests\Data;
 
-use App\Entity\Fake as Entity;
-use App\Pagination\Fake as Pagination;
+use Mazarini\TestBundle\Entity\Fake as Entity;
+use Mazarini\TestBundle\Pagination\Fake as Pagination;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Href\Href;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
