@@ -31,21 +31,23 @@ class DataTest extends KernelTestCase
 {
     public function testData()
     {
+        $data = new Data();
         $requestStack = new RequestStack();
         $request = new Request();
         $requestStack->push($request);
         $href = new Href($requestStack);
-        $href->addHref('example', '/example');
-        $pagination = new Pagination(2, 11, 10);
-        $entity = new Entity();
-        $data = new Data();
         $data->setHref($href);
+        $data->addHref('example', '/example');
+        $pagination = new Pagination(2, 11, 10);
         $data->setPagination($pagination);
+        $entity = new Entity();
         $data->setEntity($entity);
+        $entities = $data->getEntities();
 
         $this->assertSame($data->getEntity(), $entity);
         $this->assertSame($data->getPagination(), $pagination);
         $this->assertSame($data->getHref('example'), '/example');
         $this->assertSame($data->getClass('x'), ' disabled');
+        $this->assertSame($entities[0]->getId(), 11);
     }
 }

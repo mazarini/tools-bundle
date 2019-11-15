@@ -26,7 +26,12 @@ class Href implements HrefInterface
     /**
      * @var string
      */
-    protected $current = '';
+    protected $currentAction = '';
+
+    /**
+     * @var string
+     */
+    protected $currentUrl = '';
 
     /**
      * @var string[]
@@ -37,7 +42,7 @@ class Href implements HrefInterface
     {
         $request = $requestStack->getMasterRequest();
         if (null !== $request) {
-            $this->current = $request->getPathInfo();
+            $this->currentAction = $request->getPathInfo();
         }
     }
 
@@ -57,9 +62,15 @@ class Href implements HrefInterface
         return $this->hrefs[$name];
     }
 
-    public function setCurrent(string $current): HrefInterface
+    public function getHrefs(): array
     {
-        $this->current = $current;
+        return $this->hrefs;
+    }
+
+    public function setCurrentAction(string $currentAction): HrefInterface
+    {
+        $this->currentAction = $currentAction;
+        $this->hrefs[$currentAction] = '';
 
         return $this;
     }
@@ -70,7 +81,7 @@ class Href implements HrefInterface
             return false;
         }
 
-        return $this->hrefs[$name] === $this->current || '' === $this->hrefs[$name];
+        return $this->hrefs[$name] === $this->currentAction || '' === $this->hrefs[$name];
     }
 
     public function getClass(string $name): string

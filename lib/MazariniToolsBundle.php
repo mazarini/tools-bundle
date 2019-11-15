@@ -17,21 +17,13 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\Href;
+namespace Mazarini\ToolsBundle;
 
-interface HrefInterface
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+/**
+ * @author Mazarini <mazarini@protonmail.com>
+ */
+class MazariniToolsBundle extends Bundle
 {
-    public function addHref(string $name, string $href): self;
-
-    public function getHref(string $name): string;
-
-    public function getHrefs(): array;
-
-    public function setCurrentAction(string $current): self;
-
-    public function isCurrent(string $name): bool;
-
-    public function isAble(string $name): bool;
-
-    public function getClass(string $name): string;
 }

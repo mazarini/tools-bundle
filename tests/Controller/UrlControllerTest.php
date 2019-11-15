@@ -17,21 +17,32 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\Href;
+namespace App\Tests\Controller;
 
-interface HrefInterface
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
+
+class UrlControllerTest extends WebTestCase
 {
-    public function addHref(string $name, string $href): self;
+    /**
+     * @dataProvider getPublicUrls
+     */
+    public function testPublicUrls(string $url)
+    {
+        $client = static::createClient();
+        $client->request('GET', $url);
 
-    public function getHref(string $name): string;
+        $this->assertSame(
+            Response::HTTP_OK,
+            $client->getResponse()->getStatusCode(),
+            sprintf('The %s public URL loads correctly.', $url)
+        );
+    }
 
-    public function getHrefs(): array;
-
-    public function setCurrentAction(string $current): self;
-
-    public function isCurrent(string $name): bool;
-
-    public function isAble(string $name): bool;
-
-    public function getClass(string $name): string;
+    public function getPublicUrls()
+    {
+        yield ['/'];
+        yield ['/page-1.html'];
+        yield ['/page-2.html'];
+    }
 }

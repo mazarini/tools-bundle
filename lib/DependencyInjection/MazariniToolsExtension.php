@@ -17,21 +17,21 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\Href;
+namespace Mazarini\ToolsBundle\DependencyInjection;
 
-interface HrefInterface
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+class MazariniToolsExtension extends Extension
 {
-    public function addHref(string $name, string $href): self;
-
-    public function getHref(string $name): string;
-
-    public function getHrefs(): array;
-
-    public function setCurrentAction(string $current): self;
-
-    public function isCurrent(string $name): bool;
-
-    public function isAble(string $name): bool;
-
-    public function getClass(string $name): string;
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $loader = new YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.yaml');
+    }
 }

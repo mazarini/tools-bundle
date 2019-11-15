@@ -32,11 +32,13 @@ class HrefTest extends KernelTestCase
         $request = new Request();
         $requestStack->push($request);
         $href = new Href($requestStack);
-        $href->addHref('current', '/');
+        $href->setCurrentAction('current');
         $href->addHref('current-bis', '');
         $href->addHref('able', '/able');
         $this->assertSame($href->getHref('able'), '/able');
         $this->assertSame($href->getHref('x'), '#');
+        $this->assertSame($href->getHref('current'), '');
+        $this->assertSame(\count($href->getHrefs()), 3);
         $this->assertTrue($href->isCurrent('current'));
         $this->assertTrue($href->isCurrent('current-bis'));
         $this->assertTrue(!$href->isCurrent('able'));
