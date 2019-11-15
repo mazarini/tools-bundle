@@ -19,7 +19,7 @@
 
 namespace App\Tests\Entity;
 
-use Mazarini\TestBundle\Entity\Fake;
+use Mazarini\TestBundle\Fake\Entity;
 use PHPUnit\Framework\TestCase;
 
 class EntityTest extends TestCase
@@ -29,7 +29,7 @@ class EntityTest extends TestCase
      */
     public function testNewEntity(): void
     {
-        $entity = new Fake();
+        $entity = new Entity();
         $this->assertSame($entity->getId(), 0);
         $this->assertTrue($entity->isNew());
         for ($i = 1; $i < 10; ++$i) {
@@ -43,8 +43,7 @@ class EntityTest extends TestCase
      */
     public function testEntity(): void
     {
-        $entity = new Fake();
-        $entity->setId(1);
+        $entity = new Entity(1);
         $this->assertSame($entity->getId(), 1);
         $this->assertTrue(!$entity->isNew());
     }
