@@ -41,8 +41,12 @@ class UrlControllerTest extends WebTestCase
 
     public function getPublicUrls()
     {
+        yield [''];
         yield ['/'];
-        yield ['/page-1.html'];
-        yield ['/page-2.html'];
+        yield ['/Index.html'];
+        yield ['/Href.html'];
+        yield ['/Entity.html'];
+        yield ['/Entities.html'];
+        yield ['/Pagination.html'];
     }
 }

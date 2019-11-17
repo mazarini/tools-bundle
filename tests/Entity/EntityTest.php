@@ -32,10 +32,6 @@ class EntityTest extends TestCase
         $entity = new Entity();
         $this->assertSame($entity->getId(), 0);
         $this->assertTrue($entity->isNew());
-        for ($i = 1; $i < 10; ++$i) {
-            $getCol = 'getCol'.$i;
-            $this->assertSame($entity->$getCol(), 'row 00 / col 0'.$i);
-        }
     }
 
     /**

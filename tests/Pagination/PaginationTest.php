@@ -24,21 +24,36 @@ use PHPUnit\Framework\TestCase;
 
 class PaginationTest extends TestCase
 {
-    /**
-     * testNewEntity.
-     */
-    public function testPages(): void
+    public function testZeroPage(): void
     {
         $pagination = new Pagination(1, 0, 10);
-        $this->assertSame($pagination->getLastPage(), 0);
+        $this->assertSame(\count($pagination->GetEntities()), 0);
         $this->assertSame($pagination->getCurrentPage(), 0);
+        $this->assertSame($pagination->getLastPage(), 0);
         $this->assertTrue(!$pagination->HasToPaginate());
+        $this->assertTrue(!$pagination->HasPreviousPage());
+        $this->assertTrue(!$pagination->HasNextPage());
+    }
 
-        $pagination = new Pagination(0, 1, 10);
-        $this->assertSame($pagination->getLastPage(), 1);
+    public function testOnePage(): void
+    {
+        $pagination = new Pagination(0, 5, 10);
         $this->assertSame($pagination->getCurrentPage(), 1);
-        $this->assertTrue(!$pagination->HasToPaginate());
 
+        $pagination = new Pagination(1, 5, 10);
+        $this->assertSame($pagination->getCurrentPage(), 1);
+
+        $pagination = new Pagination(2, 5, 10);
+        $this->assertSame($pagination->getCurrentPage(), 1);
+
+        $this->assertSame($pagination->getLastPage(), 1);
+        $this->assertTrue(!$pagination->HasToPaginate());
+        $this->assertTrue(!$pagination->HasPreviousPage());
+        $this->assertTrue(!$pagination->HasNextPage());
+    }
+
+    public function testPages(): void
+    {
         $pagination = new Pagination(3, 20, 10);
         $this->assertSame($pagination->getLastPage(), 2);
         $this->assertSame($pagination->getCurrentPage(), 2);
@@ -59,6 +74,7 @@ class PaginationTest extends TestCase
         $pagination = new Pagination(3, 50, 10);
         $this->assertTrue($pagination->HasPreviousPage());
         $this->assertTrue($pagination->HasNextPage());
+
         $this->assertSame($pagination->getFirstPage(), 1);
         $this->assertSame($pagination->getPreviousPage(), 2);
         $this->assertSame($pagination->getCurrentPage(), 3);
@@ -72,16 +88,7 @@ class PaginationTest extends TestCase
 
     public function testEntities(): void
     {
-        $pagination = new Pagination(1, 0, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 0);
-
-        $pagination = new Pagination(1, 25, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 10);
-
-        $pagination = new Pagination(1, 25, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 10);
-
-        $pagination = new Pagination(3, 25, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 5);
+        $pagination = new Pagination(1, 3, 10);
+        $this->assertSame(\count($pagination->GetEntities()), 3);
     }
 }
