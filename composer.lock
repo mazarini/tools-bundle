@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56c603e80fc677a39bad759d2d71f2d5",
+    "content-hash": "399155e272edc684ef3e0554e99067b9",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -371,12 +371,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "25a6dca02e945cabf785d3ef030ab36945bae3b2"
+                "reference": "f274898ec50e7c291d118253fc7a7ded5a0d3917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/25a6dca02e945cabf785d3ef030ab36945bae3b2",
-                "reference": "25a6dca02e945cabf785d3ef030ab36945bae3b2",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/f274898ec50e7c291d118253fc7a7ded5a0d3917",
+                "reference": "f274898ec50e7c291d118253fc7a7ded5a0d3917",
                 "shasum": ""
             },
             "require": {
@@ -394,8 +394,7 @@
                 "mazarini/package": "^1.0",
                 "symfony/debug-pack": "^1.0",
                 "symfony/maker-bundle": "^1.14",
-                "symfony/test-pack": "^1.0",
-                "symfony/web-server-bundle": "^4.3|^5.0"
+                "symfony/test-pack": "^1.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -428,7 +427,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2019-11-15T09:21:02+00:00"
+            "time": "2019-11-16T22:46:24+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3336,16 +3335,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.0.0-BETA1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b13513a53b1a0660c7f467f1413f82eafb7e434f"
+                "reference": "9b58bb8ac7a41d72fbb5a7dc643e07923e5ccc26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b13513a53b1a0660c7f467f1413f82eafb7e434f",
-                "reference": "b13513a53b1a0660c7f467f1413f82eafb7e434f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9b58bb8ac7a41d72fbb5a7dc643e07923e5ccc26",
+                "reference": "9b58bb8ac7a41d72fbb5a7dc643e07923e5ccc26",
                 "shasum": ""
             },
             "require": {
@@ -3396,7 +3395,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-11-11T16:55:30+00:00"
+            "time": "2019-11-15T20:38:32+00:00"
         }
     ],
     "aliases": [],

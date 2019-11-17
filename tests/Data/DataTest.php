@@ -48,6 +48,6 @@ class DataTest extends KernelTestCase
         $this->assertSame($data->getPagination(), $pagination);
         $this->assertSame($data->getHref('example'), '/example');
         $this->assertSame($data->getClass('x'), ' disabled');
-        $this->assertSame($entities[0]->getId(), 11);
+        $this->assertSame($entities[11]->getId(), 11);
     }
 }
