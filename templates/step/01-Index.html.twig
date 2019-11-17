@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block head_title %}
+	{{ step }}
+{% endblock %}
+
+{% block title %}
+	{{ step }}
+{% endblock %}
+
+{% block content %}
+	<ul>
+		<li>
+			Symfony :
+			{{ symfony.version }}
+		</li>
+	</ul>
+{% endblock %}

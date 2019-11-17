@@ -52,8 +52,6 @@ abstract class ControllerAbstract extends AbstractController
     public function __construct(RequestStack $requestStack, HrefInterface $href, Data $data)
     {
         $data->setHref($href);
-        $this->data = $data;
-        $this->href = $href;
         $request = $requestStack->getMasterRequest();
         if (null !== $request) {
             $part = explode('_', $request->attributes->get('_route'));
@@ -62,6 +60,9 @@ abstract class ControllerAbstract extends AbstractController
             $part[$last] = '';
             $this->baseRoute = implode('_', $part);
         }
+        $this->data = $data;
+        $this->href = $href;
+        $this->parameters['data'] = $data;
     }
 
     abstract protected function InitUrl(): self;
@@ -101,6 +102,7 @@ abstract class ControllerAbstract extends AbstractController
         }
         if (isset($parameters['entity'])) {
             $this->initEntityUrl($parameters['entity']);
+            $this->data->setEntity($parameters['entity']);
             unset($parameters['entity']);
         }
         $this->initUrl();

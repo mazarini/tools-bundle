@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block head_title %}
+	{{ step }}
+{% endblock %}
+
+{% block title %}
+	{{ step }}
+{% endblock %}
+
+{% block content %}
+	{{ dump(data.entity) }}
+{% endblock %}
