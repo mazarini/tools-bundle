@@ -24,41 +24,49 @@ trait IteratorTrait
     /**
      * @var int
      */
-    private $array_position = 0;
-    protected $array_data = [];
+    private $_array_position_ = 0;
 
+    /**
+     * @var string[]
+     */
+    private $_array_var_ = [];
+
+    /**
+     * __construct.
+     */
     public function __construct()
     {
-        $this->array_data = [];
         foreach (get_object_vars($this) as $key => $value) {
-            if ('array_position' !== $key && 'array_data' !== $key) {
-                $this->array_data[] = [$key, $value];
+            if (method_exists($this, 'get'.ucfirst($key))) {
+                $this->_array_var_[] = $key;
             }
         }
     }
 
     public function rewind()
     {
-        $this->array_position = 0;
+        $this->_array_position_ = 0;
     }
 
     public function current()
     {
-        return $this->array_data[$this->array_position][1];
+        $getter = 'get'.ucfirst($this->key());
+
+        return $this->$getter();
     }
 
     public function key()
     {
-        return $this->array_data[$this->array_position][0];
+        return $this->_array_var_[$this->_array_position_];
     }
 
     public function next()
     {
-        ++$this->array_position;
+        ++$this->_array_position_;
     }
 
     public function valid()
     {
-        return isset($this->array_data[$this->array_position]);
+        return isset($this->_array_var_[$this->_array_position_]);
     }
 }

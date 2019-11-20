@@ -19,18 +19,39 @@
 
 namespace Mazarini\ToolsBundle\ArrayTrait;
 
-trait IteratorGetTrait
+trait ArrayTrait
 {
-    use IteratorTrait;
+    /**
+     * @var string[]
+     */
+    protected $_array_var_ = [];
 
+    /**
+     * __construct.
+     */
     public function __construct()
     {
-        $this->array_data = [];
-        foreach (get_object_vars($this) as $key => $value) {
-            $get = 'get'.ucfirst($key);
-            if (exist_method($this, $get)) {
-                $this->array_data[] = [$key, $this->$get()];
+        if (0 === \count($this->_array_var_)) {
+            foreach (get_object_vars($this) as $key => $value) {
+                if (method_exists($this, 'get'.ucfirst($key))) {
+                    $this->_array_var_[] = $key;
+                }
             }
         }
+    }
+
+    /**
+     * getVarValue.
+     *
+     * @param int|string $key
+     */
+    protected function getVarValue($key): mixed
+    {
+        if (\is_int($key)) {
+            $key = $this->_array_var_[$key];
+        }
+        $getter = 'get'.ucfirst($key);
+
+        return $this->$getter();
     }
 }

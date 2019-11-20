@@ -21,10 +21,6 @@ namespace Mazarini\ToolsBundle\ArrayTrait;
 
 trait AccessTrait
 {
-    abstract protected function getContainer(): array;
-
-    abstract protected function setContainer(array $container): void;
-
     public function offsetSet($offset, $value)
     {
         $set = 'set'.ucfirst($offset);
@@ -33,9 +29,9 @@ trait AccessTrait
 
     public function offsetExists($offset)
     {
-        $set = 'set'.ucfirst($offset);
+        $get = 'get'.ucfirst($offset);
 
-        return method_exists($this, $set);
+        return method_exists($this, $get);
     }
 
     public function offsetUnset($offset)
@@ -44,7 +40,6 @@ trait AccessTrait
 
     public function offsetGet($offset)
     {
-        $get = 'get'.ucfirst($offset);
-        $this->$get();
+        return $this->getVarValue($offset);
     }
 }
