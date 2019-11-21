@@ -48,6 +48,9 @@ matrix:
     - php: 7.2
       env: SYMFONY="5.0.*"
            STABILITY="dev"
+    - php: 7.2
+      env: SYMFONY="5.1.*"
+           STABILITY="dev"
   allow_failures:
 #   PHP version dev version
     - php: nightly
@@ -59,6 +62,9 @@ matrix:
            STABILITY="dev"
     - php: 7.2
       env: SYMFONY="5.0.*"
+           STABILITY="dev"
+    - php: 7.2
+      env: SYMFONY="5.1.*"
            STABILITY="dev"
 
 before_install:

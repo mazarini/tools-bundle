@@ -67,11 +67,14 @@ stable:
 4.3: stable
 	composer config extra.symfony.require 4.3.*
 
-4.4: beta
+4.4: stable
 	composer config extra.symfony.require 4.4.*
 
-5.0: beta
+5.0: stable
 	composer config extra.symfony.require 5.0.*
+
+5.1: dev
+	composer config extra.symfony.require 5.1.*
 
 ############################################
 #               S E R V E R                #
