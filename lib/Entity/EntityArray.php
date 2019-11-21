@@ -17,30 +17,13 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App\Tests\Entity;
+namespace Mazarini\ToolsBundle\Entity;
 
-use App\Entity\Entity;
-use PHPUnit\Framework\TestCase;
+use Mazarini\ToolsBundle\ArrayTrait\AccessTrait;
+use Mazarini\ToolsBundle\ArrayTrait\IteratorTrait;
 
-class EntityTest extends TestCase
+class EntityArray extends Entity implements \ArrayAccess, \Iterator
 {
-    /**
-     * testNewEntity.
-     */
-    public function testNewEntity(): void
-    {
-        $entity = new Entity();
-        $this->assertSame($entity->getId(), 0);
-        $this->assertTrue($entity->isNew());
-    }
-
-    /**
-     * testEntity.
-     */
-    public function testEntity(): void
-    {
-        $entity = new Entity(1);
-        $this->assertSame($entity->getId(), 1);
-        $this->assertTrue(!$entity->isNew());
-    }
+    use AccessTrait;
+    use IteratorTrait;
 }

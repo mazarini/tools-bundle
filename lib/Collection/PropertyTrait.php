@@ -31,18 +31,18 @@ trait PropertyTrait
                 $array[lcfirst(mb_substr($method, 3))] = mb_substr($method, 3);
             }
         }
-        parent::__construct($array);
+        $this->__values__ = $array;
     }
 
     public function offsetSet($offset, $value): void
     {
-        $setter = 'set'.parent::offsetGet($offset);
+        $setter = 'set'.$this->__values__[$offset];
         $this->$setter($value);
     }
 
     public function offsetGet($offset)
     {
-        $getter = 'get'.parent::offsetGet($offset);
+        $getter = 'get'.$this->__values__[$offset];
 
         return $this->$getter();
     }

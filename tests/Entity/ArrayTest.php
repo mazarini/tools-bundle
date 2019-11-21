@@ -17,41 +17,21 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\ArrayTrait;
+namespace App\Tests\Entity;
 
-trait ArrayTrait
+use App\Entity\Entity;
+use PHPUnit\Framework\TestCase;
+
+class ArrayTest extends TestCase
 {
     /**
-     * @var string[]
+     * testEntity.
      */
-    protected $_array_var_ = [];
-
-    /**
-     * __construct.
-     */
-    public function __construct()
+    public function testArray(): void
     {
-        if (0 === \count($this->_array_var_)) {
-            foreach (get_object_vars($this) as $key => $value) {
-                if (method_exists($this, 'get'.ucfirst($key))) {
-                    $this->_array_var_[] = $key;
-                }
-            }
+        $entity = new Entity(1);
+        foreach ($entity as $name => $value) {
+            $this->assertSame($entity[$name], $value);
         }
-    }
-
-    /**
-     * getVarValue.
-     *
-     * @param int|string $key
-     */
-    protected function getVarValue($key): mixed
-    {
-        if (\is_int($key)) {
-            $key = $this->_array_var_[$key];
-        }
-        $getter = 'get'.ucfirst($key);
-
-        return $this->$getter();
     }
 }

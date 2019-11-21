@@ -19,54 +19,9 @@
 
 namespace Mazarini\ToolsBundle\ArrayTrait;
 
+use Mazarini\ToolsBundle\Collection\PropertyTrait;
+
 trait IteratorTrait
 {
-    /**
-     * @var int
-     */
-    private $_array_position_ = 0;
-
-    /**
-     * @var string[]
-     */
-    private $_array_var_ = [];
-
-    /**
-     * __construct.
-     */
-    public function __construct()
-    {
-        foreach (get_object_vars($this) as $key => $value) {
-            if (method_exists($this, 'get'.ucfirst($key))) {
-                $this->_array_var_[] = $key;
-            }
-        }
-    }
-
-    public function rewind()
-    {
-        $this->_array_position_ = 0;
-    }
-
-    public function current()
-    {
-        $getter = 'get'.ucfirst($this->key());
-
-        return $this->$getter();
-    }
-
-    public function key()
-    {
-        return $this->_array_var_[$this->_array_position_];
-    }
-
-    public function next()
-    {
-        ++$this->_array_position_;
-    }
-
-    public function valid()
-    {
-        return isset($this->_array_var_[$this->_array_position_]);
-    }
+    use PropertyTrait;
 }
