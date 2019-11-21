@@ -19,7 +19,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Entity;
 use Mazarini\TestBundle\Controller\StepController as BaseController;
+use Mazarini\TestBundle\Fake\Pagination;
+use Mazarini\TestBundle\Tool\Folder;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,4 +30,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StepController extends BaseController
 {
+    /**
+     * @Route("/", name="step_INDEX")
+     * @Route("/{step}.html", name="step_index")
+     */
+    public function index(Folder $folder, $step = '')
+    {
+        $steps = $folder->getSteps();
+        if (!isset($steps[$step])) {
+            $step = array_key_first($steps);
+        }
+
+        foreach ($steps as $name => $dummy) {
+            $parameters['steps'][$name] = $this->generateUrl('step_index', ['step' => $name]);
+        }
+        $parameters['step'] = $step;
+        $parameters['steps'][$step] = '';
+        $parameters['entity'] = new Entity(1);
+        $parameters['pagination'] = new Pagination(3, 50, 10);
+
+        return $this->dataRender('step/'.$steps[$step], $parameters);
+    }
 }
