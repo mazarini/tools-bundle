@@ -41,7 +41,7 @@ class Data
         return $this->entity;
     }
 
-    public function getEntities(): array
+    public function getEntities(): \Traversable
     {
         return $this->pagination->getEntities();
     }

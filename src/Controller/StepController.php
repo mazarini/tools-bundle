@@ -19,10 +19,15 @@
 
 namespace App\Controller;
 
+use App\Collection\Collection;
+use App\Collection\Property;
 use App\Entity\Entity;
+use App\Pagination\Pagination;
 use Mazarini\TestBundle\Controller\StepController as BaseController;
-use Mazarini\TestBundle\Fake\Pagination;
 use Mazarini\TestBundle\Tool\Folder;
+use Mazarini\ToolsBundle\Data\Data;
+use Mazarini\ToolsBundle\Href\Href;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -30,6 +35,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StepController extends BaseController
 {
+    public function __construct(RequestStack $requestStack, Href $href, Data $data)
+    {
+        parent::__construct($requestStack, $href, $data);
+        $this->parameters['collection'] = new Collection();
+        $this->parameters['property'] = new Property();
+    }
+
     /**
      * @Route("/", name="step_INDEX")
      * @Route("/{step}.html", name="step_index")

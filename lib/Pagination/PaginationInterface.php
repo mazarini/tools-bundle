@@ -21,7 +21,7 @@ namespace Mazarini\ToolsBundle\Pagination;
 
 interface PaginationInterface
 {
-    public function getEntities();
+    public function getEntities(): \Traversable;
 
     public function getPageSize(): int;
 
@@ -40,4 +40,6 @@ interface PaginationInterface
     public function getNextPage(): int;
 
     public function getLastPage(): int;
+
+    public function count(): int;
 }

@@ -17,26 +17,18 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\Pagination;
+namespace App\Collection;
 
-trait EntitiesTrait
+use Mazarini\ToolsBundle\Collection\Collection as BaseCollection;
+
+class Collection extends BaseCollection
 {
-    /**
-     * @var \Traversable
-     */
-    protected $entities;
-
-    public function getEntities(): \Traversable
+    public function __construct()
     {
-        return $this->entities;
+        $array = [];
+        for ($i = 1; $i < 9; ++$i) {
+            $array['key-'.$i] = 'value-'.$i;
+        }
+        parent::__construct($array);
     }
-
-    protected function setEntities(): PaginationInterface
-    {
-        $this->entities = $this->getIterator();
-
-        return $this;
-    }
-
-    abstract protected function getIterator(): \Traversable;
 }

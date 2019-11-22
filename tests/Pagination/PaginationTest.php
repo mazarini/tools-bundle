@@ -19,7 +19,7 @@
 
 namespace App\Tests\Pagination;
 
-use Mazarini\TestBundle\Fake\Pagination;
+use App\Pagination\Pagination;
 use PHPUnit\Framework\TestCase;
 
 class PaginationTest extends TestCase
@@ -27,7 +27,11 @@ class PaginationTest extends TestCase
     public function testZeroPage(): void
     {
         $pagination = new Pagination(1, 0, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 0);
+        if (is_a($pagination->GetEntities(), 'Mazarini\ToolsBundle\Collection\Collection')) {
+            $this->assertSame(\count($pagination->GetEntities()), 0);
+        } else {
+            $this->assertTrue(is_a($pagination->GetEntities(), 'Mazarini\ToolsBundle\Collection\Collection'));
+        }
         $this->assertSame($pagination->getCurrentPage(), 0);
         $this->assertSame($pagination->getLastPage(), 0);
         $this->assertTrue(!$pagination->HasToPaginate());
@@ -89,6 +93,10 @@ class PaginationTest extends TestCase
     public function testEntities(): void
     {
         $pagination = new Pagination(1, 3, 10);
-        $this->assertSame(\count($pagination->GetEntities()), 3);
+        if (is_a($pagination->GetEntities(), 'Mazarini\ToolsBundle\Collection\Collection')) {
+            $this->assertSame(\count($pagination->GetEntities()), 3);
+        } else {
+            $this->assertTrue(is_a($pagination->GetEntities(), 'Mazarini\ToolsBundle\Collection\Collection'));
+        }
     }
 }

@@ -19,8 +19,8 @@
 
 namespace App\Tests\Data;
 
-use Mazarini\TestBundle\Fake\Entity;
-use Mazarini\TestBundle\Fake\Pagination;
+use App\Entity\Entity;
+use App\Pagination\Pagination;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Href\Href;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -48,6 +48,10 @@ class DataTest extends KernelTestCase
         $this->assertSame($data->getPagination(), $pagination);
         $this->assertSame($data->getHref('example'), '/example');
         $this->assertSame($data->getClass('x'), ' disabled');
-        $this->assertSame($entities[11]->getId(), 11);
+        if (is_a($entities, 'Mazarini\ToolsBundle\Collection\Collection')) {
+            $this->assertSame($entities[11]->getId(), 11);
+        } else {
+            $this->assertTrue(is_a($entities, 'Mazarini\ToolsBundle\Collection\Collection'));
+        }
     }
 }

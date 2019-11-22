@@ -19,7 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Collection;
 
-class Property extends Collection
+class Property implements CollectionInterface
 {
     use PropertyTrait;
 }

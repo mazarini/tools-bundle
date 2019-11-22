@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+	{{ dump(property) }}
 	<table>
 		<tr>
 			<th>
@@ -17,15 +18,19 @@
 			<th>
 				Value
 			</th>
+			<th>
+				[Key]
+			</th>
 		</tr>
-		{% embed '@MazariniTools/iterative.html.twig' with {'items': data.entity} %}
+		{% embed '@MazariniTools/iterative.html.twig' with {'items': property} %}
 			{% block item_container %}
 				<tr>
 					<td>{{ key }}</td>
 					<td>{{ item }}</td>
+					<td>{{ property[key] }}</td>
 				</tr>
 			{% endblock item_container %}
 		{% endembed %}
-
 	</table>
+	{{ dump(property) }}
 {% endblock %}
