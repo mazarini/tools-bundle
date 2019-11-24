@@ -21,19 +21,13 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Href\HrefInterface;
-use Mazarini\ToolsBundle\Pagination\PaginationInterface;
+use Mazarini\ToolsBundle\Href\Hrefs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class ControllerAbstract extends AbstractController
 {
-    /**
-     * @var HrefInterface
-     */
-    protected $href;
-
     /**
      * @var Data
      */
@@ -49,43 +43,42 @@ abstract class ControllerAbstract extends AbstractController
      */
     protected $baseRoute;
 
-    public function __construct(RequestStack $requestStack, HrefInterface $href, Data $data)
+    public function __construct(RequestStack $requestStack, Hrefs $hrefs, Data $data)
     {
-        $data->setHref($href);
+        $this->parameters['data'] = $data;
+        $data->setHrefs($hrefs);
         $request = $requestStack->getMasterRequest();
         if (null !== $request) {
             $part = explode('_', $request->attributes->get('_route'));
-            $last = \count($part) - 1;
-            $href->setCurrentAction($part[$last]);
-            $part[$last] = '';
+            $part[array_key_last($part)] = '';
             $this->baseRoute = implode('_', $part);
         }
         $this->data = $data;
-        $this->href = $href;
-        $this->parameters['data'] = $data;
     }
 
-    abstract protected function InitUrl(): self;
+    abstract protected function InitUrl(Data $data): self;
 
     protected function InitEntityUrl(EntityInterface $entity): self
     {
         return $this;
     }
 
-    protected function InitPaginationUrl(PaginationInterface $pagination): self
+    protected function InitPaginationUrl(Data $data): self
     {
+        $hrefs = $data->getHrefs();
+        $pagination = $data->getPagination();
         if ($pagination->hasPreviousPage()) {
-            $this->addUrl('index', ['page' => 1], 'first');
-            $this->addUrl('index', ['page' => $pagination->getCurrentPage() - 1], 'previous');
+            $this->addUrl($hrefs, 'index', ['page' => 1], 'first');
+            $this->addUrl($hrefs, 'index', ['page' => $pagination->getCurrentPage() - 1], 'previous');
         }
         if ($pagination->hasNextPage()) {
             $last = $pagination->getLastPage();
-            $this->addUrl('index', ['page' => $last - 1], 'next');
-            $this->addUrl('index', ['page' => $last], 'last');
+            $this->addUrl($hrefs, 'index', ['page' => $last - 1], 'next');
+            $this->addUrl($hrefs, 'index', ['page' => $last], 'last');
         }
         if (($last = $pagination->getLastPage()) <= 5) {
             for ($i = 1; $i <= $last; ++$i) {
-                $this->addUrl('index', ['page' => $i], 'page_'.$i);
+                $this->addUrl($hrefs, 'index', ['page' => $i], 'page_'.$i);
             }
         }
 
@@ -96,8 +89,8 @@ abstract class ControllerAbstract extends AbstractController
     {
         $parameters = array_merge($this->parameters, $parameters);
         if (isset($parameters['pagination'])) {
-            $this->initPaginationUrl($parameters['pagination']);
             $this->data->setPagination($parameters['pagination']);
+            $this->initPaginationUrl($this->data);
             unset($parameters['pagination']);
         }
         if (isset($parameters['entity'])) {
@@ -105,17 +98,17 @@ abstract class ControllerAbstract extends AbstractController
             $this->data->setEntity($parameters['entity']);
             unset($parameters['entity']);
         }
-        $this->initUrl();
+        $this->initUrl($this->data);
 
         return $this->render($view, $parameters);
     }
 
-    protected function addUrl(string $name, array $parameters = [], string $complement = null): self
+    protected function addUrl(Hrefs $hrefs, string $name, array $parameters = [], string $complement = null): self
     {
         if (null === $complement) {
             $complement = $name;
         }
-        $this->href->addHref($complement, $this->generateUrl($this->baseRoute.$name, $parameters));
+        $hrefs->addLink($complement, $this->generateUrl($this->baseRoute.$name, $parameters));
 
         return $this;
     }

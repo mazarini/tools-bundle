@@ -9,5 +9,36 @@
 {% endblock %}
 
 {% block content %}
-	{{ dump(href) }}
+	{{ dump(data.hrefs) }}
+	<table>
+		<tr>
+			<th>
+				Key
+			</th>
+			<th>
+				Url
+			</th>
+			<th>
+				Class
+			</th>
+			<th>
+				[Key].url
+			</th>
+			<th>
+				[Key].class
+			</th>
+		</tr>
+		{% embed '@MazariniTools/iterative.html.twig' with {'items': data.hrefs} %}
+			{% block item_container %}
+				<tr>
+					<td>{{ key }}</td>
+					<td>{{ item.url }}</td>
+					<td>{{ item.class }}</td>
+					<td>{{ data.hrefs[key].url }}</td>
+					<td>{{ data.hrefs[key].class }}</td>
+				</tr>
+			{% endblock item_container %}
+		{% endembed %}
+	</table>
+	{{ dump(data.hrefs) }}
 {% endblock %}

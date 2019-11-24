@@ -19,7 +19,7 @@
 
 namespace App\Tests\Href;
 
-use Mazarini\ToolsBundle\Href\Href;
+use Mazarini\ToolsBundle\Href\Hrefs;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -31,22 +31,16 @@ class HrefTest extends KernelTestCase
         $requestStack = new RequestStack();
         $request = new Request();
         $requestStack->push($request);
-        $href = new Href($requestStack);
-        $href->setCurrentAction('current');
-        $href->addHref('current-bis', '');
-        $href->addHref('able', '/able');
-        $this->assertSame($href->getHref('able'), '/able');
-        $this->assertSame($href->getHref('x'), '#');
-        $this->assertSame($href->getHref('current'), '');
-        $this->assertSame(\count($href->getHrefs()), 3);
-        $this->assertTrue($href->isCurrent('current'));
-        $this->assertTrue($href->isCurrent('current-bis'));
-        $this->assertTrue(!$href->isCurrent('able'));
-        $this->assertTrue(!$href->isCurrent('disabled'));
-        $this->assertTrue($href->isAble('able'));
-        $this->assertTrue(!$href->isAble('disabled'));
-        $this->assertSame($href->getClass('current'), ' active');
-        $this->assertSame($href->getClass('able'), '');
-        $this->assertSame($href->getClass('x'), ' disabled');
+        $hrefs = new Hrefs($requestStack);
+        $hrefs->setCurrentUrl('/current');
+        $hrefs->addLink('current', '/current');
+        $hrefs->addLink('able', '/able');
+        $this->assertSame($hrefs['able']->getUrl(), '/able');
+        $this->assertSame($hrefs['x']->getUrl(), '#');
+        $this->assertSame($hrefs['current']->getUrl(), '');
+        $this->assertSame(\count($hrefs), 3);
+        $this->assertSame($hrefs['current']->getClass(), ' active');
+        $this->assertSame($hrefs['able']->getClass(), '');
+        $this->assertSame($hrefs['x']->getClass(), ' disabled');
     }
 }

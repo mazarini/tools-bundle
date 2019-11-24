@@ -20,14 +20,14 @@
 namespace Mazarini\ToolsBundle\Data;
 
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Href\HrefInterface;
+use Mazarini\ToolsBundle\Href\Hrefs;
 use Mazarini\ToolsBundle\Pagination\PaginationInterface;
 
 class Data
 {
     protected $entity;
     protected $pagination;
-    protected $href;
+    protected $hrefs;
 
     public function setEntity(EntityInterface $entity): self
     {
@@ -58,27 +58,22 @@ class Data
         return $this->pagination;
     }
 
-    public function setHref(HrefInterface $href): self
+    public function setHrefs(Hrefs $hrefs): self
     {
-        $this->href = $href;
+        $this->hrefs = $hrefs;
 
         return $this;
     }
 
-    public function addHref(string $name, string $href): self
+    public function getHrefs(): Hrefs
     {
-        $this->href->addHref($name, $href);
+        return $this->hrefs;
+    }
+
+    public function addHref(string $name, string $url): self
+    {
+        $this->hrefs->addLink($name, $url);
 
         return $this;
-    }
-
-    public function getHref(string $name): string
-    {
-        return $this->href->getHref($name);
-    }
-
-    public function getClass(string $name): string
-    {
-        return $this->href->getClass($name);
     }
 }

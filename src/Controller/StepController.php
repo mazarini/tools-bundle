@@ -23,21 +23,24 @@ use App\Collection\Collection;
 use App\Collection\Property;
 use App\Entity\Entity;
 use App\Pagination\Pagination;
-use Mazarini\TestBundle\Controller\StepController as BaseController;
 use Mazarini\TestBundle\Tool\Folder;
+use Mazarini\ToolsBundle\Controller\ControllerAbstract;
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Href\Href;
+use Mazarini\ToolsBundle\Href\Hrefs;
+use Mazarini\ToolsBundle\Href\Link;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/")
  */
-class StepController extends BaseController
+class StepController extends ControllerAbstract
 {
-    public function __construct(RequestStack $requestStack, Href $href, Data $data)
+    public function __construct(RequestStack $requestStack, Hrefs $hrefs, Data $data)
     {
-        parent::__construct($requestStack, $href, $data);
+        parent::__construct($requestStack, $hrefs, $data);
+        $this->parameters['symfony']['version'] = Kernel::VERSION;
         $this->parameters['collection'] = new Collection();
         $this->parameters['property'] = new Property();
     }
@@ -62,5 +65,24 @@ class StepController extends BaseController
         $parameters['pagination'] = new Pagination(3, 50, 10);
 
         return $this->dataRender('step/'.$steps[$step], $parameters);
+    }
+
+    protected function InitUrl(Data $data): ControllerAbstract
+    {
+        $data->getHrefs()['current'] = new Link('');
+        $data->getHrefs()['disabled'] = new Link('#');
+        $this->addUrl($data->getHrefs(), 'INDEX');
+
+        return $this;
+    }
+
+    protected function addUrl(Hrefs $hrefs, string $name, array $parameters = [], string $complement = null): ControllerAbstract
+    {
+        if (null === $complement) {
+            $complement = $name;
+        }
+        $hrefs->addLink($complement, '#'.$complement);
+
+        return $this;
     }
 }
