@@ -1,5 +1,5 @@
 language: php
-sudo: false
+os: linux
 
 cache:
   directories:
@@ -17,7 +17,7 @@ env:
     - STABILITY=
     - CONTROL=
 
-matrix:
+jobs:
   fast_finish: true
   include:
 #   CONTROLE
