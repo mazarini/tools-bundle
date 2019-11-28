@@ -121,7 +121,7 @@ test:
 	vendor/bin/simple-phpunit -v
 
 cover-text: clean
-	vendor/bin/simple-phpunit -v --coverage-text
+	php7.4 vendor/bin/simple-phpunit -v --coverage-text
 
 cover: clean
-	vendor/bin/simple-phpunit --coverage-html var/test-coverage
+	php7.4 vendor/bin/simple-phpunit --coverage-html var/test-coverage
