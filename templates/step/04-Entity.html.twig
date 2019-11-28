@@ -1,12 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block head_title %}
-	{{ step }}
-{% endblock %}
-
-{% block title %}
-	{{ step }}
-{% endblock %}
+{% extends '@MazariniTest/step/layout.html.twig' %}
 
 {% block content %}
 	{{ dump(data.entity) }}

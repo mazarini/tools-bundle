@@ -13,7 +13,7 @@ env:
     - SYMFONY_DEPRECATIONS_HELPER=29
     - SYMFONY_PHPUNIT_COMPOSER_OPTION=
     - INSTALL="update"
-    - SYNFONY="4.4.*"
+    - SYNFONY=
     - STABILITY=
     - CONTROL=
 

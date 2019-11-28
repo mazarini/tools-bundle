@@ -19,7 +19,7 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Entity;
+use Mazarini\TestBundle\Fake\Entity;
 use PHPUnit\Framework\TestCase;
 
 class ArrayTest extends TestCase

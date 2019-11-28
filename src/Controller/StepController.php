@@ -21,8 +21,9 @@ namespace App\Controller;
 
 use App\Collection\Collection;
 use App\Collection\Property;
-use App\Entity\Entity;
-use App\Pagination\Pagination;
+use Mazarini\TestBundle\Controller\StepController as baseController;
+use Mazarini\TestBundle\Fake\Entity;
+use Mazarini\TestBundle\Fake\Pagination;
 use Mazarini\TestBundle\Tool\Folder;
 use Mazarini\ToolsBundle\Controller\ControllerAbstract;
 use Mazarini\ToolsBundle\Data\Data;
@@ -35,7 +36,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/")
  */
-class StepController extends ControllerAbstract
+class StepController extends baseController
 {
     public function __construct(RequestStack $requestStack, Hrefs $hrefs, Data $data)
     {

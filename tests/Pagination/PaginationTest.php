@@ -19,7 +19,7 @@
 
 namespace App\Tests\Pagination;
 
-use App\Pagination\Pagination;
+use Mazarini\TestBundle\Fake\Pagination;
 use PHPUnit\Framework\TestCase;
 
 class PaginationTest extends TestCase
