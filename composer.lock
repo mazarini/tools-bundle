@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9608e29801bc95122787ea04d3d44ee8",
+    "content-hash": "2825fb57a4131df6297a2ee7423fd220",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -367,23 +367,23 @@
         },
         {
             "name": "mazarini/test-bundle",
-            "version": "dev-master",
+            "version": "v0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "f2afdc2b6a33a7628f6fedc6881a276e3cd10184"
+                "reference": "a30dfc8655c49b7df694a342b626a43d047821c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/f2afdc2b6a33a7628f6fedc6881a276e3cd10184",
-                "reference": "f2afdc2b6a33a7628f6fedc6881a276e3cd10184",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/a30dfc8655c49b7df694a342b626a43d047821c7",
+                "reference": "a30dfc8655c49b7df694a342b626a43d047821c7",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-iconv": "*",
                 "ext-mbstring": "*",
-                "mazarini/tools-bundle": "^1.0@dev",
+                "mazarini/tools-bundle": "^0.9|^1.0@dev",
                 "php": "^7.2|^8.0",
                 "symfony/flex": "^1.4"
             },
@@ -427,7 +427,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2019-11-28T17:21:47+00:00"
+            "time": "2019-11-29T17:25:40+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3402,9 +3402,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mazarini/test-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

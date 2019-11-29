@@ -25,7 +25,7 @@
     },
     "require-dev": {
         "mazarini/package": "^1.0",
-        "mazarini/test-bundle": "^1.0@dev",
+        "mazarini/test-bundle": "^0.9",
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.14",
         "symfony/test-pack": "^1.0"
@@ -49,7 +49,8 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd"
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
