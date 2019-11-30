@@ -76,7 +76,7 @@ abstract class ControllerAbstract extends AbstractController
             $this->addUrl($hrefs, 'index', ['page' => $last - 1], 'next');
             $this->addUrl($hrefs, 'index', ['page' => $last], 'last');
         }
-        if (($last = $pagination->getLastPage()) <= 5) {
+        if (($last = $pagination->getLastPage()) <= 20) {
             for ($i = 1; $i <= $last; ++$i) {
                 $this->addUrl($hrefs, 'index', ['page' => $i], 'page_'.$i);
             }
