@@ -22,15 +22,9 @@ namespace App\Controller;
 use App\Collection\Collection;
 use App\Collection\Property;
 use Mazarini\TestBundle\Controller\StepController as baseController;
-use Mazarini\TestBundle\Fake\Entity;
-use Mazarini\TestBundle\Fake\Pagination;
-use Mazarini\TestBundle\Tool\Folder;
-use Mazarini\ToolsBundle\Controller\ControllerAbstract;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Href\Hrefs;
-use Mazarini\ToolsBundle\Href\Link;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -41,49 +35,7 @@ class StepController extends baseController
     public function __construct(RequestStack $requestStack, Hrefs $hrefs, Data $data)
     {
         parent::__construct($requestStack, $hrefs, $data);
-        $this->parameters['symfony']['version'] = Kernel::VERSION;
         $this->parameters['collection'] = new Collection();
         $this->parameters['property'] = new Property();
-    }
-
-    /**
-     * @Route("/", name="step_INDEX")
-     * @Route("/{step}.html", name="step_index")
-     */
-    public function index(Folder $folder, $step = '')
-    {
-        $steps = $folder->getSteps();
-        if (!isset($steps[$step])) {
-            $step = array_key_first($steps);
-        }
-
-        foreach ($steps as $name => $dummy) {
-            $parameters['steps'][$name] = $this->generateUrl('step_index', ['step' => $name]);
-        }
-        $parameters['step'] = $step;
-        $parameters['steps'][$step] = '';
-        $parameters['entity'] = new Entity(1);
-        $parameters['pagination'] = new Pagination(3, 50, 10);
-
-        return $this->dataRender('step/'.$steps[$step], $parameters);
-    }
-
-    protected function InitUrl(Data $data): ControllerAbstract
-    {
-        $data->getHrefs()['current'] = new Link('');
-        $data->getHrefs()['disabled'] = new Link('#');
-        $this->addUrl($data->getHrefs(), 'INDEX');
-
-        return $this;
-    }
-
-    protected function addUrl(Hrefs $hrefs, string $name, array $parameters = [], string $complement = null): ControllerAbstract
-    {
-        if (null === $complement) {
-            $complement = $name;
-        }
-        $hrefs->addLink($complement, '#'.$complement);
-
-        return $this;
     }
 }
