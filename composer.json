@@ -7,7 +7,7 @@
         "bundle",
         "toolset"
     ],
-    "homepage": "https://github.com/mazarini/tools-test",
+    "homepage": "https://github.com/mazarini/tools-bundle",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
@@ -21,7 +21,7 @@
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "doctrine/annotations": "^1.8",
-        "symfony/flex": "^1.4"
+        "symfony/flex": "^1.5"
     },
     "require-dev": {
         "mazarini/package": "^1.0",
@@ -64,7 +64,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": true
+            "allow-contrib": true,
+            "require": "5.0.*"
         },
         "branch-alias": {
             "dev-master": "1.0.x-dev"
