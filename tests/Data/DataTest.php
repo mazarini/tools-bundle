@@ -20,9 +20,9 @@
 namespace App\Tests\Data;
 
 use Mazarini\TestBundle\Fake\Entity;
-use Mazarini\TestBundle\Fake\Pagination;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Href\Hrefs;
+use Mazarini\ToolsBundle\Pagination\Pagination;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -38,20 +38,16 @@ class DataTest extends KernelTestCase
         $hrefs = new Hrefs($requestStack);
         $data->setHrefs($hrefs);
         $data->addHref('example', '/example');
-        $pagination = new Pagination(2, 11, 10);
-        $data->setPagination($pagination);
-        $entity = new Entity();
+        $entity = new Entity(1);
         $data->setEntity($entity);
+        $pagination = new Pagination(new \ArrayIterator([$entity]), 1, 1, 10);
+        $data->setPagination($pagination);
         $entities = $data->getEntities();
 
         $this->assertSame($data->getEntity(), $entity);
         $this->assertSame($data->getPagination(), $pagination);
         $this->assertSame($data->getHrefs()['example']->getUrl(), '/example');
         $this->assertSame($data->getHrefs()['x']->getClass(), ' disabled');
-        if (is_a($entities, 'Mazarini\ToolsBundle\Collection\Collection')) {
-            $this->assertSame($entities[11]->getId(), 11);
-        } else {
-            $this->assertTrue(is_a($entities, 'Mazarini\ToolsBundle\Collection\Collection'));
-        }
+        $this->assertSame($entities->current(), $entity);
     }
 }

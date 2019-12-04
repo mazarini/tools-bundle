@@ -21,9 +21,7 @@ namespace Mazarini\ToolsBundle\Pagination;
 
 interface PaginationInterface
 {
-    public function getEntities(): \Traversable;
-
-    public function getPageSize(): int;
+    public function getEntities(): \ArrayIterator;
 
     public function hasToPaginate(): bool;
 

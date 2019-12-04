@@ -19,31 +19,11 @@
 
 namespace Mazarini\ToolsBundle\Pagination;
 
-trait PageTrait
+class Pagination extends Pages implements PaginationInterface
 {
-    /**
-     * @var int
-     */
-    protected $currentPage = 0;
-    /**
-     * @var int
-     */
-    protected $lastPage = 0;
-    /**
-     * @var int
-     */
-    protected $pageSize = -1;
-
-    abstract public function count(): int;
-
-    public function getPageSize(): int
-    {
-        return $this->pageSize;
-    }
-
     public function hasToPaginate(): bool
     {
-        return $this->lastPage > 1;
+        return $this->getLastPage() > 1;
     }
 
     public function hasPreviousPage(): bool
@@ -51,24 +31,9 @@ trait PageTrait
         return $this->currentPage > 1;
     }
 
-    public function getFirstPage(): int
-    {
-        return 1;
-    }
-
     public function getPreviousPage(): int
     {
         return $this->currentPage - 1;
-    }
-
-    public function getCurrentPage(): int
-    {
-        return $this->currentPage;
-    }
-
-    public function getNextPage(): int
-    {
-        return $this->currentPage + 1;
     }
 
     public function hasNextPage(): bool
@@ -76,23 +41,8 @@ trait PageTrait
         return $this->currentPage < $this->getLastPage();
     }
 
-    public function getLastPage(): int
+    public function getNextPage(): int
     {
-        return $this->lastPage;
-    }
-
-    protected function initPage(): PaginationInterface
-    {
-        $this->setLastPage();
-        $this->currentPage = min(max(1, $this->currentPage), $this->lastPage);
-
-        return $this;
-    }
-
-    protected function setLastPage(): PaginationInterface
-    {
-        $this->lastPage = (int) ceil($this->count() / $this->getPageSize());
-
-        return $this;
+        return $this->currentPage + 1;
     }
 }
