@@ -81,15 +81,15 @@ stable:
 ############################################
 
 start:
-	bin/console server:start
+	symfony server:start --no-tls
 
 stop:
-	bin/console server:stop
+	symfony server:stop
 
 restart: stop start
 
 status:
-	bin/console server:status
+	symfony server:status
 
 ############################################
 #             D A T A B A S E              #
