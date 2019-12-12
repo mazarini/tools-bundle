@@ -33,7 +33,7 @@ class Pagination extends Pages implements PaginationInterface
 
     public function getPreviousPage(): int
     {
-        return $this->currentPage - 1;
+        return max(1, $this->currentPage - 1);
     }
 
     public function hasNextPage(): bool
@@ -43,6 +43,6 @@ class Pagination extends Pages implements PaginationInterface
 
     public function getNextPage(): int
     {
-        return $this->currentPage + 1;
+        return (int) min($this->currentPage + 1, $this->getLastPage());
     }
 }

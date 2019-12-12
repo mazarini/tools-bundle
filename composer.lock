@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0710eeb3d0f7dade190a97d89f4f2ad7",
+    "content-hash": "1f014144b22b192b510c83f5207b236b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -367,16 +367,16 @@
         },
         {
             "name": "mazarini/test-bundle",
-            "version": "v0.9.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "a30dfc8655c49b7df694a342b626a43d047821c7"
+                "reference": "1e22e400d0b19d50031dd815c7e56f2441ba3f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/a30dfc8655c49b7df694a342b626a43d047821c7",
-                "reference": "a30dfc8655c49b7df694a342b626a43d047821c7",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/1e22e400d0b19d50031dd815c7e56f2441ba3f9b",
+                "reference": "1e22e400d0b19d50031dd815c7e56f2441ba3f9b",
                 "shasum": ""
             },
             "require": {
@@ -427,7 +427,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2019-11-29T17:25:40+00:00"
+            "time": "2019-12-05T14:01:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3403,7 +3403,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mazarini/test-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -28,10 +28,12 @@ namespace Mazarini\ToolsBundle\Pagination;
   *         . total entities of page.
   */
 
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+
 class Entities
 {
     /**
-     * @var \ArrayIterator
+     * @var \ArrayIterator<int,EntityInterface>
      */
     private $entities;
 
@@ -45,13 +47,34 @@ class Entities
      */
     private $pageSize;
 
-    public function __construct(\ArrayIterator $entities, int $totalCount, int $pageSize)
+    /**
+     * __construct.
+     *
+     * @param \Traversable<mixed, mixed> $entities
+     *
+     * @return void
+     */
+    public function __construct(\Traversable $entities, int $totalCount, int $pageSize)
     {
-        $this->entities = $entities;
+        $this->entities = new \ArrayIterator();
+        foreach ($entities as $entity) {
+            $this->entities[] = $entity;
+        }
         $this->totalCount = $totalCount;
         $this->pageSize = $pageSize;
     }
 
+    /**
+     * getEntities.
+     *
+     * @return ArrayIterator<int,EntityInterface>
+     */
+
+    /**
+     * getEntities.
+     *
+     * @return \ArrayIterator<int,EntityInterface>
+     */
     public function getEntities(): \ArrayIterator
     {
         return $this->entities;

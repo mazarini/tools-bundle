@@ -19,8 +19,17 @@
 
 namespace Mazarini\ToolsBundle\Pagination;
 
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+
 interface PaginationInterface
 {
+    public static function CURRENT_PAGE(int $currentPage, int $pageSize, int $totalCount): int;
+
+    /**
+     * getEntities.
+     *
+     * @return \ArrayIterator<int,EntityInterface>
+     */
     public function getEntities(): \ArrayIterator;
 
     public function hasToPaginate(): bool;

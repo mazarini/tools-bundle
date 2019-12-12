@@ -19,11 +19,7 @@
 
 namespace App\Controller;
 
-use App\Collection\Collection;
-use App\Collection\Property;
-use Mazarini\TestBundle\Controller\StepController as baseController;
-use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Href\Hrefs;
+use Mazarini\ToolsBundle\Controller\StepController as baseController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,10 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StepController extends baseController
 {
-    public function __construct(RequestStack $requestStack, Hrefs $hrefs, Data $data)
+    public function __construct(RequestStack $requestStack)
     {
-        parent::__construct($requestStack, $hrefs, $data);
-        $this->parameters['collection'] = new Collection();
-        $this->parameters['property'] = new Property();
+        parent::__construct($requestStack);
     }
 }

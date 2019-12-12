@@ -19,25 +19,19 @@
 
 namespace App\Tests\Data;
 
-use Mazarini\TestBundle\Fake\Entity;
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Href\Hrefs;
+use Mazarini\ToolsBundle\Fake\Entity;
+use Mazarini\ToolsBundle\Fake\UrlGenerator;
 use Mazarini\ToolsBundle\Pagination\Pagination;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class DataTest extends KernelTestCase
 {
-    public function testData()
+    public function testData(): void
     {
-        $data = new Data();
-        $requestStack = new RequestStack();
-        $request = new Request();
-        $requestStack->push($request);
-        $hrefs = new Hrefs($requestStack);
-        $data->setHrefs($hrefs);
-        $data->addHref('example', '/example');
+        $data = new Data(new UrlGenerator(), 'base', 'route', '/current');
+        $data->addLink('url', '/url');
+        $data->addLink('_base', '_route');
         $entity = new Entity(1);
         $data->setEntity($entity);
         $pagination = new Pagination(new \ArrayIterator([$entity]), 1, 1, 10);
@@ -46,8 +40,9 @@ class DataTest extends KernelTestCase
 
         $this->assertSame($data->getEntity(), $entity);
         $this->assertSame($data->getPagination(), $pagination);
-        $this->assertSame($data->getHrefs()['example']->getUrl(), '/example');
-        $this->assertSame($data->getHrefs()['x']->getClass(), ' disabled');
+        $this->assertSame($data->getLinks()['url']->getUrl(), '/url');
+        $this->assertSame($data->getLinks()['base']->getUrl(), '#base_route');
+        $this->assertSame($data->getLinks()['x']->getClass(), ' disabled');
         $this->assertSame($entities->current(), $entity);
     }
 }

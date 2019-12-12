@@ -20,32 +20,74 @@
 namespace Mazarini\ToolsBundle\Data;
 
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Href\Hrefs;
 use Mazarini\ToolsBundle\Pagination\PaginationInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Data
 {
-    protected $entity;
-    protected $pagination;
-    protected $hrefs;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
+    /**
+     * @var string
+     */
+    private $baseRoute;
 
-    public function setEntity(EntityInterface $entity): self
+    /**
+     * @var string
+     */
+    private $currentRoute;
+
+    /**
+     * @var PaginationInterface
+     */
+    private $pagination;
+
+    /**
+     * @var EntityInterface
+     */
+    private $entity;
+
+    /**
+     * @var Links
+     */
+    private $links;
+
+    public function __construct(UrlGeneratorInterface $router, string $baseRoute, string $currentRoute, string $currentUrl)
     {
-        $this->entity = $entity;
-
-        return $this;
+        $this->router = $router;
+        $this->baseRoute = $baseRoute;
+        $this->currentRoute = $currentRoute;
+        $this->links = new Links($currentRoute, $currentUrl);
     }
 
-    public function getEntity(): ?EntityInterface
+    public function isSetEntities(): bool
     {
-        return $this->entity;
+        return isset($this->pagination);
     }
 
+    /**
+     * Get the value of entities.
+     *
+     * @return \ArrayIterator<int,EntityInterface>
+     */
     public function getEntities(): \ArrayIterator
     {
         return $this->pagination->getEntities();
     }
 
+    /**
+     * Get the value of entities.
+     */
+    public function getPagination(): PaginationInterface
+    {
+        return $this->pagination;
+    }
+
+    /**
+     * Set the value of pagination.
+     */
     public function setPagination(PaginationInterface $pagination): self
     {
         $this->pagination = $pagination;
@@ -53,27 +95,73 @@ class Data
         return $this;
     }
 
-    public function getPagination(): PaginationInterface
+    /**
+     * IsSet the value of entity ?
+     */
+    public function isSetEntity(): bool
     {
-        return $this->pagination;
+        return isset($this->entity);
     }
 
-    public function setHrefs(Hrefs $hrefs): self
+    /**
+     * Get the value of entity.
+     */
+    public function getEntity(): EntityInterface
     {
-        $this->hrefs = $hrefs;
+        return $this->entity;
+    }
+
+    /**
+     * Set the value of entity.
+     */
+    public function setEntity(EntityInterface $entity): self
+    {
+        $this->entity = $entity;
 
         return $this;
     }
 
-    public function getHrefs(): Hrefs
+    /**
+     * Get the value of links.
+     */
+    public function getLinks(): Links
     {
-        return $this->hrefs;
+        return $this->links;
     }
 
-    public function addHref(string $name, string $url): self
+    /**
+     * addLink.
+     *
+     * @param array<string,mixed> $parameters
+     */
+    public function addLink(string $name, string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): self
     {
-        $this->hrefs->addLink($name, $url);
+        if ('/' === mb_substr($route, 0, 1)) {
+            $url = $route;
+        } else {
+            if ('_' === mb_substr($route, 0, 1)) {
+                $route = $this->baseRoute.$route;
+            }
+            $url = $this->router->generate($route, $parameters, $referenceType);
+        }
+        $this->links->addLink(trim($name, '_'), $url);
 
         return $this;
+    }
+
+    /**
+     * Get the value of currentRoute.
+     */
+    public function getCurrentRoute(): string
+    {
+        return trim($this->currentRoute, '_');
+    }
+
+    /**
+     * Get the value of Route.
+     */
+    public function getRoute(string $route): string
+    {
+        return trim($this->baseRoute, '_').$route;
     }
 }

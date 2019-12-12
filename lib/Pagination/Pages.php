@@ -26,7 +26,12 @@ class Pages extends Entities
      */
     protected $currentPage;
 
-    public function __construct(\ArrayIterator $entities, int $currentPage, int $totalCount, int $pageSize)
+    /**
+     * __construct.
+     *
+     * @param \Traversable<mixed, mixed> $entities
+     */
+    public function __construct(\Traversable $entities, int $currentPage, int $totalCount, int $pageSize)
     {
         parent::__construct($entities, $totalCount, $pageSize);
         /*
@@ -36,7 +41,7 @@ class Pages extends Entities
         $this->currentPage = self::CURRENT_PAGE($currentPage, $pageSize, $totalCount);
     }
 
-    public static function CURRENT_PAGE(int $currentPage, int $pageSize, int $totalCount)
+    public static function CURRENT_PAGE(int $currentPage, int $pageSize, int $totalCount): int
     {
         return max(1, min($currentPage, self::PAGES_COUNT($pageSize, $totalCount)));
     }

@@ -17,8 +17,34 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace Mazarini\ToolsBundle\Collection;
+namespace Mazarini\ToolsBundle\Data;
 
-interface CollectionInterface extends \Countable, \ArrayAccess, \Iterator
+class Link
 {
+    /**
+     * @var string
+     */
+    protected $url = '';
+
+    public function __construct(string $url)
+    {
+        $this->url = $url;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getClass(): string
+    {
+        if ('' === $this->url) {
+            return ' active';
+        }
+        if ('#' === $this->url) {
+            return ' disabled';
+        }
+
+        return '';
+    }
 }
