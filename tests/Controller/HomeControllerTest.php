@@ -19,9 +19,9 @@
 
 namespace App\Tests\Controller;
 
-use Mazarini\TestBundle\Test\Controller\UrlControllerAbstractTest;
+use Mazarini\TestBundle\Test\Controller\HomeControllerAbstractTest;
 
-class UrlControllerTest extends UrlControllerAbstractTest
+class HomeControllerTest extends HomeControllerAbstractTest
 {
     /**
      * getUrls.
@@ -30,14 +30,6 @@ class UrlControllerTest extends UrlControllerAbstractTest
      */
     public function getUrls(): \Traversable
     {
-        yield ['', 302];
-        yield ['/', 302];
-        yield ['/Index.html'];
-        yield ['/Entity.html'];
-        yield ['/Entities.html'];
-        yield ['/Links.html'];
-        yield ['/Pagination.html'];
-        yield ['/Data.html'];
-        yield ['/Data.html'];
+        yield [''];
     }
 }
