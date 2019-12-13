@@ -19,9 +19,9 @@
 
 namespace App\Tests\Data;
 
+use Mazarini\TestBundle\Fake\Entity;
+use Mazarini\TestBundle\Fake\UrlGenerator;
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Fake\Entity;
-use Mazarini\ToolsBundle\Fake\UrlGenerator;
 use Mazarini\ToolsBundle\Pagination\Pagination;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
