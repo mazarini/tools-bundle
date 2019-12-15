@@ -27,6 +27,11 @@ class Links extends \ArrayIterator
     /**
      * @var string
      */
+    protected $label = '';
+
+    /**
+     * @var string
+     */
     protected $currentUrl = '';
 
     /**
@@ -38,14 +43,20 @@ class Links extends \ArrayIterator
      */
     protected $disable;
 
-    public function __construct(string $name, string $url)
+    public function __construct(string $name, string $url, string $label = '')
     {
         parent::__construct();
-        $this->disable = new Link('#');
-        $this->current = new Link('');
-        $this->addLink($name, $url);
-        $this->addLink('current', $url);
         $this->currentUrl = $url;
+        if ('' === $label) {
+            $this->label = $name;
+        } else {
+            $this->label = $label;
+        }
+        $this->disable = new Link('#', '');
+        $this->current = new Link('', $label);
+        if ('' !== $name) {
+            $this->addLink($name, $url);
+        }
     }
 
     /**
@@ -53,9 +64,12 @@ class Links extends \ArrayIterator
      *
      * @return self<string,Link>
      */
-    public function addLink(string $name, string $url = ''): self
+    public function addLink(string $name, string $url, string $label = ''): self
     {
-        $this[mb_strtolower($name)] = new Link($url);
+        if ('' === $label) {
+            $label = $name;
+        }
+        $this[mb_strtolower($name)] = new Link($url, $label);
 
         return $this;
     }
@@ -86,9 +100,19 @@ class Links extends \ArrayIterator
         $link = parent::offsetGet(mb_strtolower($offset));
 
         if ($link->getUrl() === $this->currentUrl) {
-            return $this->current;
+            return $this->current->setLabel($link->getLabel());
         }
 
         return $link;
+    }
+
+    /**
+     * current.
+     *
+     * @return Link
+     */
+    public function current()
+    {
+        return $this->offsetGet($this->key());
     }
 }

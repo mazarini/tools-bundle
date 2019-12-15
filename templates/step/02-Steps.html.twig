@@ -1,7 +1,7 @@
 {% extends '@MazariniTest/step/layout.html.twig' %}
 
 {% block content %}
-	{{ dump(data.links) }}
+	{{ dump(steps) }}
 	<table>
 		<tr>
 			<th>
@@ -14,20 +14,16 @@
 				Class
 			</th>
 			<th>
-				[Key].url
-			</th>
-			<th>
-				[Key].class
+				Label
 			</th>
 		</tr>
-		{% embed '@MazariniTools/iterative.html.twig' with {'items': data.links} %}
+		{% embed '@MazariniTools/iterative.html.twig' with {'items': steps} %}
 			{% block item_container %}
 				<tr>
 					<td>{{ key }}</td>
 					<td>{{ item.url }}</td>
 					<td>{{ item.class }}</td>
-					<td>{{ data.links[key].url }}</td>
-					<td>{{ data.links[key].class }}</td>
+					<td>{{ item.label }}</td>
 				</tr>
 			{% endblock item_container %}
 		{% endembed %}

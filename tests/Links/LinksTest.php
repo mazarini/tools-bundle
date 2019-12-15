@@ -26,22 +26,26 @@ class LinksTest extends KernelTestCase
 {
     public function testLink(): void
     {
-        $links = new Links('active', '/');
-        $links->addLink('disable', '#');
-        $links->addLink('example', '/example');
+        $links = new Links('', '/active');
+        $links->addLink('Disable', '#');
+        $links->addLink('Example', '/example');
+        $links->addLink('Active', '/active');
 
-        $this->assertSame(\count($links), 4);
+        $this->assertSame(\count($links), 3);
 
-        $this->assertSame($links['current']->getUrl(), '');
         $this->assertSame($links['active']->getUrl(), '');
         $this->assertSame($links['disable']->getUrl(), '#');
         $this->assertSame($links['unknow']->getUrl(), '#');
         $this->assertSame($links['example']->getUrl(), '/example');
 
-        $this->assertSame($links['current']->getClass(), ' active');
         $this->assertSame($links['active']->getClass(), ' active');
         $this->assertSame($links['disable']->getClass(), ' disabled');
         $this->assertSame($links['unknow']->getClass(), ' disabled');
         $this->assertSame($links['example']->getClass(), '');
+
+        $this->assertSame($links['active']->getLabel(), 'Active');
+        $this->assertSame($links['disable']->getLabel(), 'Disable');
+        $this->assertSame($links['unknow']->getLabel(), '');
+        $this->assertSame($links['example']->getLabel(), 'Example');
     }
 }

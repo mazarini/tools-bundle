@@ -29,15 +29,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-3">
-						<div class="list-group">
-							{% embed '@MazariniTools/iterative.html.twig' with {'items': steps} %}
-								{% block item_container %}
-									<a href="{{ item.url }}" class="list-group-item list-group-item-action{{ item.class }}">
-										{{ key }}
-									</a>
-								{% endblock item_container %}
-							{% endembed %}
-						</div>
+						{% include '@MazariniTest/step/menu.html.twig' %}
 					</div>
 					<div class="col-9">
 						<h1>

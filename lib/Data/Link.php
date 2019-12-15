@@ -26,14 +26,32 @@ class Link
      */
     protected $url = '';
 
-    public function __construct(string $url)
+    /**
+     * @var string
+     */
+    protected $label = '';
+
+    public function __construct(string $url, string $label)
     {
         $this->url = $url;
+        $this->label = $label;
     }
 
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function setLabel(string $label): self
+    {
+        $this->label = $label;
+
+        return $this;
     }
 
     public function getClass(): string

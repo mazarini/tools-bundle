@@ -20,6 +20,11 @@
 namespace App\Controller;
 
 use Mazarini\TestBundle\Controller\StepController as baseController;
+use Mazarini\TestBundle\Fake\Entity;
+use Mazarini\TestBundle\Fake\Repository;
+use Mazarini\TestBundle\Tool\Folder;
+use Mazarini\ToolsBundle\Data\Links;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,4 +32,29 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StepController extends baseController
 {
+    /**
+     * @Route("/{step}.html", name="step_index")
+     */
+    public function index(Folder $folder, string $step): Response
+    {
+        $steps = $folder->getSteps();
+        if (!isset($steps[$step])) {
+            $currentUrl = $this->generateUrl('step_index', ['step' => $step]);
+            $try = array_key_first($steps);
+            $tryUrl = $this->generateUrl('step_index', ['step' => $try]);
+            throw $this->createNotFoundException(sprintf('The page "%s" does not exist. Try <a href="%s">%s</a>', $currentUrl, $tryUrl, $tryUrl));
+        }
+        $this->data->setEntity(new Entity(1));
+        $repository = new Repository();
+        $this->data->setPagination($repository->getPage(3, 50, 10));
+
+        $menu = new Links('', $this->generateUrl('step_index', ['step' => $step]), 'Main menu');
+        $this->parameters['steps'] = $menu;
+        foreach (array_keys($steps) as $name) {
+            $menu->addLink($name, $this->generateUrl('step_index', ['step' => $name]), $name);
+        }
+        $parameters['step'] = $step;
+
+        return $this->dataRender('step/'.$steps[$step], $parameters);
+    }
 }
