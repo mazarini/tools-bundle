@@ -29,17 +29,19 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-3">
-						{% include '@MazariniTest/step/menu.html.twig' %}
+						{% block menu %}
+							{% include '@MazariniTest/step/menu.html.twig' %}
+						{% endblock menu %}
 					</div>
 					<div class="col-9">
 						<h1>
-							{% block title %}{% endblock %}
+							{% block title %}{% endblock title %}
 						</h1>
-						{% block content %}{% endblock %}
+						{% block content %}{% endblock content %}
 					</div>
 				</div>
 			</div>
-		{% endblock %}
-		{% block javascripts %}{% endblock %}
+		{% endblock body %}
+		{% block javascripts %}{% endblock javascripts %}
 	</body>
-</html></body></html>
+</html>

@@ -134,7 +134,7 @@ class Data
      *
      * @param array<string,mixed> $parameters
      */
-    public function addLink(string $name, string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): self
+    public function addLink(string $name, string $route, array $parameters = [], string $label = '', int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): self
     {
         if ('/' === mb_substr($route, 0, 1)) {
             $url = $route;
@@ -144,7 +144,7 @@ class Data
             }
             $url = $this->router->generate($route, $parameters, $referenceType);
         }
-        $this->links->addLink(trim($name, '_'), $url);
+        $this->links->addLink(trim($name, '_'), $url, $label);
 
         return $this;
     }

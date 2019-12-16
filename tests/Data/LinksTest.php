@@ -19,56 +19,38 @@
 
 namespace App\Tests\Data;
 
-use Mazarini\TestBundle\Fake\Entity;
-use Mazarini\TestBundle\Fake\UrlGenerator;
-use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Data\Link;
-use Mazarini\ToolsBundle\Pagination\Pagination;
+use Mazarini\ToolsBundle\Data\Links;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DataTest extends KernelTestCase
+class LinksTest extends KernelTestCase
 {
     /**
-     * @var Data
+     * @var Links
      */
-    protected $data;
-
-    /**
-     * @var Entity
-     */
-    protected $entity;
+    protected $links;
 
     public function setUp(): void
     {
-        $this->data = new Data(new UrlGenerator(), 'base', 'route', '/current');
-        $this->data->addLink('url', '/url', [], 'Url');
-        $this->data->addLink('_base', '_route', ['p1' => 'v1', 'p2' => 'v2'], 'Url with parameters');
-        $this->data->addLink('current', '/current', [], 'Current');
-
-        $this->entity = new Entity(1);
-        $this->data->setEntity($this->entity);
-        $this->data->setPagination(new Pagination(new \ArrayIterator([$this->entity]), 1, 1, 10));
+        $this->links = new Links('', '/active');
+        $this->links->addLink('Disable', '#');
+        $this->links->addLink('Example', '/example');
+        $this->links->addLink('Active', '/active');
     }
 
-    public function testEntity(): void
+    public function testCount(): void
     {
-        $this->assertSame($this->data->getEntity(), $this->entity);
-    }
-
-    public function testEntities(): void
-    {
-        $this->assertSame($this->data->getEntities()->current(), $this->entity);
+        $this->assertSame(\count($this->links), 3);
     }
 
     /**
-     * testUrls.
+     * testLink.
      *
      * @dataProvider getLink
      */
     public function testLink(string $name, string $url, string $class, string $label): void
     {
-        $link = $this->data->getLinks()[$name];
-        $this->assertTrue(is_a($link, Link::class));
+        $link = $this->links[$name];
         if (is_a($link, Link::class)) {
             $this->assertSame($link->getUrl(), $url);
             $this->assertSame($link->getClass(), $class);
@@ -83,9 +65,9 @@ class DataTest extends KernelTestCase
      */
     public function getLink(): \Traversable
     {
-        yield ['url', '/url', '', 'Url'];
-        yield ['base', '#base_route-v1-v2', '', 'Url with parameters'];
-        yield ['x', '#', ' disabled', '', ''];
-        yield ['current', '', ' active', 'Current'];
+        yield ['active', '', ' active', 'Active'];
+        yield ['disable', '#', ' disabled', 'Disable'];
+        yield ['unknow', '#', ' disabled', ''];
+        yield ['example', '/example', '', 'Example'];
     }
 }

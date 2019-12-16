@@ -14,22 +14,9 @@
 				Class
 			</th>
 			<th>
-				[Key].url
-			</th>
-			<th>
-				[Key].class
+				Label
 			</th>
 		</tr>
-		{% embed '@MazariniTools/iterative.html.twig' with {'items': data.links} %}
-			{% block item_container %}
-				<tr>
-					<td>{{ key }}</td>
-					<td>{{ item.url }}</td>
-					<td>{{ item.class }}</td>
-					<td>{{ data.links[key].url }}</td>
-					<td>{{ data.links[key].class }}</td>
-				</tr>
-			{% endblock item_container %}
-		{% endembed %}
+		{% include 'step/links.html.twig' with {'items': data.links} only %}
 	</table>
 {% endblock %}

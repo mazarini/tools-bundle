@@ -20,7 +20,7 @@
 namespace Mazarini\ToolsBundle\Data;
 
 /**
- * @template-extends \ArrayIterator<string, Link>
+ * @template-extends \ArrayIterator<string, Link | Links>
  */
 class Links extends \ArrayIterator
 {
@@ -53,16 +53,33 @@ class Links extends \ArrayIterator
             $this->label = $label;
         }
         $this->disable = new Link('#', '');
-        $this->current = new Link('', $label);
+        $this->current = new Link('', $this->label);
         if ('' !== $name) {
             $this->addLink($name, $url);
         }
     }
 
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    /**
+     * addLinks.
+     *
+     * @return self<string,Link | Links>
+     */
+    public function addLinks(string $name, self $links): self
+    {
+        $this[mb_strtolower($name)] = $links;
+
+        return $this;
+    }
+
     /**
      * addLink.
      *
-     * @return self<string,Link>
+     * @return self<string,Link | Links>
      */
     public function addLink(string $name, string $url, string $label = ''): self
     {
@@ -70,6 +87,13 @@ class Links extends \ArrayIterator
             $label = $name;
         }
         $this[mb_strtolower($name)] = new Link($url, $label);
+
+        return $this;
+    }
+
+    public function setCurrentUrl(string $url): self
+    {
+        $this->currentUrl = $url;
 
         return $this;
     }
@@ -89,15 +113,23 @@ class Links extends \ArrayIterator
      *
      * @param string $offset
      *
-     * @return Link
+     * @return Link|Links
      */
     public function offsetGet($offset)
     {
+        if ('@LABEL@' === $offset) {
+            return new Link('', $this->label);
+        }
+
         if (!parent::offsetExists(mb_strtolower($offset))) {
             return $this->disable;
         }
 
         $link = parent::offsetGet(mb_strtolower($offset));
+
+        if (is_a($link, self::class)) {
+            return $link;
+        }
 
         if ($link->getUrl() === $this->currentUrl) {
             return $this->current->setLabel($link->getLabel());
@@ -109,7 +141,7 @@ class Links extends \ArrayIterator
     /**
      * current.
      *
-     * @return Link
+     * @return Link|Links
      */
     public function current()
     {
