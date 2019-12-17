@@ -138,16 +138,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.5.3",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "59b42aa1d3385a21683601c15e63eb35d2ebe8a4"
+                "reference": "952f45d1c5077e658cb16a61d11603bee873f968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/59b42aa1d3385a21683601c15e63eb35d2ebe8a4",
-                "reference": "59b42aa1d3385a21683601c15e63eb35d2ebe8a4",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/952f45d1c5077e658cb16a61d11603bee873f968",
+                "reference": "952f45d1c5077e658cb16a61d11603bee873f968",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +183,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2019-12-01T15:56:52+00:00"
+            "time": "2019-12-13T18:05:11+00:00"
         }
     ],
     "packages-dev": [
@@ -371,12 +371,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "489040c9ac361d9f66f0eb5797df03dc341f7fab"
+                "reference": "6c0446d1d3cb8d4908cd664d72063589de9a0746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/489040c9ac361d9f66f0eb5797df03dc341f7fab",
-                "reference": "489040c9ac361d9f66f0eb5797df03dc341f7fab",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/6c0446d1d3cb8d4908cd664d72063589de9a0746",
+                "reference": "6c0446d1d3cb8d4908cd664d72063589de9a0746",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2019-12-15T17:11:06+00:00"
+            "time": "2019-12-17T11:30:07+00:00"
         },
         {
             "name": "monolog/monolog",

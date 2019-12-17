@@ -107,7 +107,6 @@ dbreset: dbdrop dbinit
 
 fixtures: dbreset
 	bin/console doctrine:fixtures:load
-	cp var/data/sqlite.db var/data/origine.db
 
 ############################################
 #                T E S T S                 #
@@ -118,7 +117,6 @@ fixtures: dbreset
 clean:
 	bin/console cache:clear --env=test
 	bin/console cache:clear --env=dev
-	cp var/data/origine.db var/data/sqlite.db
 
 test:
 	vendor/bin/simple-phpunit -v
