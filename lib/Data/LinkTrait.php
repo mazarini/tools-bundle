@@ -19,30 +19,35 @@
 
 namespace Mazarini\ToolsBundle\Data;
 
-class Link implements LinkInterface
+trait LinkTrait
 {
-    use LinkTrait;
+    /**
+     * @var string
+     */
+    protected $name = '';
 
-    public function __construct(string $name, string $url, string $label = '')
+    /**
+     * @var string
+     */
+    protected $url = '';
+
+    /**
+     * @var string
+     */
+    protected $label = '';
+
+    public function getName(): string
     {
-        $this->name = $name;
-        $this->url = $url;
-        if ('' === $label) {
-            $this->label = ucfirst($name);
-        } else {
-            $this->label = $label;
-        }
+        return $this->name;
     }
 
-    public function getClass(): string
+    public function getUrl(): string
     {
-        if ('' === $this->url) {
-            return ' active';
-        }
-        if ('#' === $this->url) {
-            return ' disabled';
-        }
+        return $this->url;
+    }
 
-        return '';
+    public function getLabel(): string
+    {
+        return $this->label;
     }
 }

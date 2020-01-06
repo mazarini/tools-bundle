@@ -20,28 +20,35 @@
 namespace App\Tests\Data;
 
 use Mazarini\ToolsBundle\Data\Link;
-use Mazarini\ToolsBundle\Data\Links;
+use Mazarini\ToolsBundle\Data\LinkTree;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class LinksTest extends KernelTestCase
+class LinkTreeTest extends KernelTestCase
 {
     /**
-     * @var Links
+     * @var LinkTree
      */
-    protected $links;
+    protected $linkTree;
 
     public function setUp(): void
     {
-        $this->links = new Links('/active');
-        $this->links->addLink(new Link('disable', '#'));
-        $this->links->addLink(new Link('example', '/example'));
-        $this->links->addLink(new Link('active', '/active'));
-        $this->links->addLink(new Link('blank', ''));
+        $this->linkTree = new LinkTree('tree', 'Tree Label');
+        $this->linkTree->addLink(new Link('example', '/example'));
+        $active = new LinkTree('active');
+        $active->disable();
+        $active->active();
+        $this->linkTree->addLink($active);
+        $disable = new LinkTree('disable');
+        $disable->active();
+        $disable->disable();
+        $this->linkTree->addLink($disable);
+        $standard = new LinkTree('standard');
+        $this->linkTree->addLink($standard);
     }
 
     public function testCount(): void
     {
-        $this->assertSame(\count($this->links), 4);
+        $this->assertSame(4, \count($this->linkTree));
     }
 
     /**
@@ -51,7 +58,7 @@ class LinksTest extends KernelTestCase
      */
     public function testLink(string $name, string $url, string $class, string $label): void
     {
-        $link = $this->links[$name];
+        $link = $this->linkTree[$name];
         $this->assertSame($name, $link->getName());
         $this->assertSame($url, $link->getUrl());
         $this->assertSame($label, $link->getLabel());
@@ -63,29 +70,9 @@ class LinksTest extends KernelTestCase
      */
     public function testIterator(): void
     {
-        foreach ($this->links as $name => $link) {
+        foreach ($this->linkTree as $name => $link) {
             $this->assertSame($name, $link->getName());
-            if ('active' === $name) {
-                $this->assertSame('', $link->getUrl());
-            }
         }
-    }
-
-    /**
-     * testActive.
-     */
-    public function testActive(): void
-    {
-        $active = new Link('active', '/active', 'Active');
-        $links = new Links('');
-        $links['active'] = $active;
-        $this->assertTrue($links['active'] === $active);
-        $links->setCurrentUrl('/active');
-        $this->assertFalse($links['active'] === $active);
-        $this->assertSame('active', $links['active']->getName());
-        $this->assertSame('', $links['active']->getUrl());
-        $this->assertSame('Active', $links['active']->getLabel());
-        $this->assertSame(' active', $links['active']->getClass());
     }
 
     /**
@@ -95,10 +82,9 @@ class LinksTest extends KernelTestCase
      */
     public function getLink(): \Traversable
     {
-        yield ['active', '', ' active', 'Active'];
-        yield ['blank', '', ' active', 'Blank'];
+        yield ['active', '#', ' active', 'Active'];
         yield ['disable', '#', ' disabled', 'Disable'];
-        yield ['unknow', '#', ' disabled', 'Unknow'];
+        yield ['standard', '#', '', 'Standard'];
         yield ['example', '/example', '', 'Example'];
     }
 }

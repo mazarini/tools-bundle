@@ -19,14 +19,27 @@
 
 namespace Mazarini\ToolsBundle\Data;
 
-class Link implements LinkInterface
+/**
+ * @template-extends \ArrayIterator<string, LinkInterface>
+ */
+class LinkTree extends \ArrayIterator implements LinkInterface
 {
     use LinkTrait;
 
-    public function __construct(string $name, string $url, string $label = '')
+    /**
+     * @var bool
+     */
+    protected $active = false;
+
+    /**
+     * @var bool
+     */
+    protected $disable = false;
+
+    public function __construct(string $name, string $label = '')
     {
         $this->name = $name;
-        $this->url = $url;
+        $this->url = '#';
         if ('' === $label) {
             $this->label = ucfirst($name);
         } else {
@@ -34,15 +47,43 @@ class Link implements LinkInterface
         }
     }
 
+    public function active(): self
+    {
+        $this->active = true;
+        $this->disable = false;
+
+        return $this;
+    }
+
+    public function disable(): self
+    {
+        $this->active = false;
+        $this->disable = true;
+
+        return $this;
+    }
+
     public function getClass(): string
     {
-        if ('' === $this->url) {
+        if ($this->active) {
             return ' active';
         }
-        if ('#' === $this->url) {
+        if ($this->disable) {
             return ' disabled';
         }
 
         return '';
+    }
+
+    /**
+     * addLink.
+     *
+     * @return self<string,LinkInterface>
+     */
+    public function addLink(LinkInterface $link): self
+    {
+        $this[$link->getName()] = $link;
+
+        return $this;
     }
 }

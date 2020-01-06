@@ -20,58 +20,29 @@
 namespace Mazarini\ToolsBundle\Data;
 
 /**
- * @template-extends \ArrayIterator<string, Link | Links>
+ * @template-extends \ArrayIterator<string, Link>
  */
 class Links extends \ArrayIterator
 {
     /**
      * @var string
      */
-    protected $label = '';
+    private $currentUrl;
 
-    /**
-     * @var string
-     */
-    protected $currentUrl = '';
-
-    /**
-     * @var Link
-     */
-    protected $current;
-    /**
-     * @var Link
-     */
-    protected $disable;
-
-    public function __construct(string $name, string $url, string $label = '')
+    public function __construct(string $currentUrl)
     {
         parent::__construct();
-        $this->currentUrl = $url;
-        if ('' === $label) {
-            $this->label = $name;
-        } else {
-            $this->label = $label;
-        }
-        $this->disable = new Link('#', '');
-        $this->current = new Link('', $this->label);
-        if ('' !== $name) {
-            $this->addLink($name, $url);
-        }
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label;
+        $this->currentUrl = $currentUrl;
     }
 
     /**
-     * addLinks.
+     * Set the value of currentUrl.
      *
-     * @return self<string,Link | Links>
+     * @return self
      */
-    public function addLinks(string $name, self $links): self
+    public function setCurrentUrl(string $currentUrl)
     {
-        $this[mb_strtolower($name)] = $links;
+        $this->currentUrl = $currentUrl;
 
         return $this;
     }
@@ -79,33 +50,13 @@ class Links extends \ArrayIterator
     /**
      * addLink.
      *
-     * @return self<string,Link | Links>
+     * @return self<string,Link>
      */
-    public function addLink(string $name, string $url, string $label = ''): self
+    public function addLink(Link $link): self
     {
-        if ('' === $label) {
-            $label = $name;
-        }
-        $this[mb_strtolower($name)] = new Link($url, $label);
+        $this[$link->getName()] = $link;
 
         return $this;
-    }
-
-    public function setCurrentUrl(string $url): self
-    {
-        $this->currentUrl = $url;
-
-        return $this;
-    }
-
-    /**
-     * offsetExists.
-     *
-     * @param string $offset
-     */
-    public function offsetExists($offset): bool
-    {
-        return true;
     }
 
     /**
@@ -113,26 +64,17 @@ class Links extends \ArrayIterator
      *
      * @param string $offset
      *
-     * @return Link|Links
+     * @return Link
      */
     public function offsetGet($offset)
     {
-        if ('@LABEL@' === $offset) {
-            return new Link('', $this->label);
-        }
-
-        if (!parent::offsetExists(mb_strtolower($offset))) {
-            return $this->disable;
-        }
-
-        $link = parent::offsetGet(mb_strtolower($offset));
-
-        if (is_a($link, self::class)) {
-            return $link;
-        }
-
-        if ($link->getUrl() === $this->currentUrl) {
-            return $this->current->setLabel($link->getLabel());
+        if ($this->offsetExists($offset)) {
+            $link = parent::offsetGet($offset);
+            if ($link->getUrl() === $this->currentUrl) {
+                $link = new Link($offset, '', $link->getLabel());
+            }
+        } else {
+            $link = new Link($offset, '#');
         }
 
         return $link;
@@ -141,7 +83,7 @@ class Links extends \ArrayIterator
     /**
      * current.
      *
-     * @return Link|Links
+     * @return Link
      */
     public function current()
     {

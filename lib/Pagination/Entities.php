@@ -67,7 +67,7 @@ class Entities
     /**
      * getEntities.
      *
-     * @return ArrayIterator<int,EntityInterface>
+     * @return \ArrayIterator<int,EntityInterface>
      */
 
     /**

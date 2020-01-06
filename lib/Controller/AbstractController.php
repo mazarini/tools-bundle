@@ -20,6 +20,7 @@
 namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
+use Mazarini\ToolsBundle\Data\LinkTree;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyControler;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,27 +39,33 @@ abstract class AbstractController extends SymfonyControler
     protected $data;
 
     /**
+     * @var LinkTree
+     */
+    protected $menu;
+
+    /**
      * @var array<string,mixed>
      */
     protected $parameters;
 
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $baseRoute)
+    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $baseRoute = '')
     {
-        $base = '';
-        $currentUrl = '';
-        $current = '';
         $request = $requestStack->getMasterRequest();
-        if (null !== $request) {
+        if (null === $request) {
+            $currentUrl = '';
+            $currentAction = '';
+        } else {
             $currentUrl = $request->getPathInfo();
-            $current = $request->attributes->get('_route');
-            if (mb_substr($current, 0, mb_strlen($baseRoute)) === $baseRoute) {
-                $base = $baseRoute;
-                $current = mb_substr($current, mb_strlen($baseRoute));
+            if ('' === $baseRoute) {
+                $routeParts = explode('_', $request->attributes->get('_route'));
+                unset($routeParts[\count($routeParts) - 1]);
+                $baseRoute = implode('_', $routeParts);
             }
+            $currentAction = mb_substr($request->attributes->get('_route'), mb_strlen($baseRoute));
         }
 
-        $this->data = new Data($router, $base, $current, $currentUrl);
-        $this->parameters['data'] = $this->data;
+        $this->parameters['data'] = $this->data = new Data($router, $baseRoute, $currentAction, $currentUrl);
+        $this->parameters['menu'] = $this->menu = new LinkTree('main', 'Menu');
     }
 
     /**
@@ -70,9 +77,15 @@ abstract class AbstractController extends SymfonyControler
     {
         $parameters = array_merge($this->parameters, $parameters);
         $this->initUrl($this->data);
+        $this->initMenu($this->menu);
 
         return $this->render($this->twigFolder.$view, $parameters, $response);
     }
 
     abstract protected function initUrl(Data $data): self;
+
+    protected function initMenu(LinkTree $menu): self
+    {
+        return $this;
+    }
 }

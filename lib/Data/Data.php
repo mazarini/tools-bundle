@@ -33,11 +33,10 @@ class Data
      * @var string
      */
     private $baseRoute;
-
     /**
      * @var string
      */
-    private $currentRoute;
+    private $currentAction;
 
     /**
      * @var PaginationInterface
@@ -54,12 +53,12 @@ class Data
      */
     private $links;
 
-    public function __construct(UrlGeneratorInterface $router, string $baseRoute, string $currentRoute, string $currentUrl)
+    public function __construct(UrlGeneratorInterface $router, string $baseRoute, string $currentAction, string $currentUrl)
     {
         $this->router = $router;
         $this->baseRoute = $baseRoute;
-        $this->currentRoute = $currentRoute;
-        $this->links = new Links($currentRoute, $currentUrl);
+        $this->currentAction = $currentAction;
+        $this->links = new Links($currentUrl);
     }
 
     public function isSetEntities(): bool
@@ -130,38 +129,44 @@ class Data
     }
 
     /**
-     * addLink.
+     * generateUrl.
      *
      * @param array<string,mixed> $parameters
      */
-    public function addLink(string $name, string $route, array $parameters = [], string $label = '', int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): self
+    public function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        if ('/' === mb_substr($route, 0, 1)) {
-            $url = $route;
-        } else {
-            if ('_' === mb_substr($route, 0, 1)) {
-                $route = $this->baseRoute.$route;
-            }
-            $url = $this->router->generate($route, $parameters, $referenceType);
+        if ('_' === mb_substr($route, 0, 1)) {
+            $route = $this->baseRoute.$route;
         }
-        $this->links->addLink(trim($name, '_'), $url, $label);
+
+        return $this->router->generate($route, $parameters, $referenceType);
+    }
+
+    /**
+     * addLink.
+     */
+    public function addLink(string $name, string $url, string $label = ''): self
+    {
+        $this->links->addLink(new Link($name, $url, $label));
 
         return $this;
     }
 
     /**
-     * Get the value of currentRoute.
+     * Get the value of currentAction.
      */
-    public function getCurrentRoute(): string
+    public function getCurrentAction(): string
     {
-        return trim($this->currentRoute, '_');
+        return $this->currentAction;
     }
 
     /**
-     * Get the value of Route.
+     * Set the value of currentAction.
      */
-    public function getRoute(string $route): string
+    public function setCurrentAction(string $currentAction): self
     {
-        return trim($this->baseRoute, '_').$route;
+        $this->currentAction = $currentAction;
+
+        return $this;
     }
 }
