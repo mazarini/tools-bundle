@@ -11,6 +11,7 @@ env:
   global:
     - SYMFONY_PHPUNIT_DIR=./var/cache/phpunit
     - SYMFONY_DEPRECATIONS_HELPER=0
+    - COMPOSER_MEMORY_LIMIT=-1
     - OPTION=
     - INSTALL="update"
     - SYNFONY=
