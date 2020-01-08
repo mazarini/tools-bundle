@@ -60,6 +60,16 @@ class Links extends \ArrayIterator
     }
 
     /**
+     * offsetExists.
+     *
+     * @param string $offset
+     */
+    public function offsetExists($offset): bool
+    {
+        return true;
+    }
+
+    /**
      * offsetGet.
      *
      * @param string $offset
@@ -68,7 +78,7 @@ class Links extends \ArrayIterator
      */
     public function offsetGet($offset)
     {
-        if ($this->offsetExists($offset)) {
+        if (parent::offsetExists($offset)) {
             $link = parent::offsetGet($offset);
             if ($link->getUrl() === $this->currentUrl) {
                 $link = new Link($offset, '', $link->getLabel());
