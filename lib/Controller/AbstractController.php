@@ -61,7 +61,7 @@ abstract class AbstractController extends SymfonyControler
                 unset($routeParts[\count($routeParts) - 1]);
                 $baseRoute = implode('_', $routeParts);
             }
-            $currentAction = mb_substr($request->attributes->get('_route'), mb_strlen($baseRoute));
+            $currentAction = mb_substr($request->attributes->get('_route'), mb_strlen($baseRoute) + 1);
         }
 
         $this->parameters['data'] = $this->data = new Data($router, $baseRoute, $currentAction, $currentUrl);
