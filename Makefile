@@ -23,7 +23,6 @@ twig:
 	twigcs templates -vv
 	twigcs lib/Resources/views -vv
 
-
 yaml:
 	bin/console lint:yaml config lib/Resources/config phpstan.neon.dist .travis.yml
 
@@ -107,6 +106,7 @@ dbreset: dbdrop dbinit
 
 fixtures: dbreset
 	bin/console doctrine:fixtures:load
+	cp var/data/sqlite.db var/data/origine.db
 
 ############################################
 #                T E S T S                 #
@@ -117,12 +117,14 @@ fixtures: dbreset
 clean:
 	bin/console cache:clear --env=test
 	bin/console cache:clear --env=dev
+	cp var/data/origine.db var/data/sqlite.db
 
 test:
-	vendor/bin/simple-phpunit -v
+	cp var/data/origine.db var/data/sqlite.db
+	bin/phpunit -v
 
 cover-text: clean
-	vendor/bin/simple-phpunit -v --coverage-text
+	bin/phpunit -v --coverage-text
 
 cover: clean
-	vendor/bin/simple-phpunit --coverage-html var/test-coverage
+	bin/phpunit --coverage-html var/test-coverage
