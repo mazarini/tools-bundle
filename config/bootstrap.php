@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2019 Mazarini <mazarini@protonmail.com>.
+ * Copyright (C) 2019-2020 Mazarini <mazarini@protonmail.com>.
  * This file is part of mazarini/tools-bundle.
  *
  * mazarini/tools-bundle is free software: you can redistribute it and/or
@@ -31,7 +31,7 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php') && (!isset($env
     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
 } elseif (method_exists(Dotenv::class, 'bootEnv')) {
     // boot from all the .env files
-    (new Dotenv(false))->bootEnv(dirname(__DIR__).'/.env');
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 } else {
     // load all the .env files
     (new Dotenv(false))->loadEnv(dirname(__DIR__).'/.env');
