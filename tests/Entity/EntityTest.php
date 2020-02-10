@@ -21,6 +21,7 @@ namespace App\Tests\Entity;
 
 use Mazarini\TestBundle\Fake\Entity;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class EntityTest extends TestCase
 {
@@ -39,8 +40,13 @@ class EntityTest extends TestCase
      */
     public function testEntity(): void
     {
-        $entity = new Entity(1);
+        $entity = new Entity();
+        $reflectionClass = new ReflectionClass(Entity::class);
+        $reflectionProperty = $reflectionClass->getProperty('id');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($entity, 1);
+
         $this->assertSame($entity->getId(), 1);
-        $this->assertTrue(!$entity->isNew());
+        $this->assertFalse($entity->isNew());
     }
 }
