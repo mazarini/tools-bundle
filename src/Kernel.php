@@ -20,7 +20,7 @@
 namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
+// use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -63,7 +63,10 @@ class Kernel extends BaseKernel
     /**
      * configureRoutes.
      *
-     * @param RouteCollectionBuilder|RoutingConfigurator $routes
+     * RouteCollectionBuilder : 4.4 => 5.0
+     * RoutingConfigurator : 5.1 => ?
+     *
+     * @param object $routes
      */
     protected function configureRoutes($routes): void
     {
@@ -72,7 +75,7 @@ class Kernel extends BaseKernel
             $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
             $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
             $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
-        } else {
+        } elseif (method_exists($routes, 'import')) {
             $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
             $routes->import('../config/{routes}/*.yaml');
             $routes->import('../config/{routes}.yaml');
