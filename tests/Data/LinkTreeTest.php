@@ -59,10 +59,14 @@ class LinkTreeTest extends KernelTestCase
     public function testLink(string $name, string $url, string $class, string $label): void
     {
         $link = $this->linkTree[$name];
-        $this->assertSame($name, $link->getName());
-        $this->assertSame($url, $link->getUrl());
-        $this->assertSame($label, $link->getLabel());
-        $this->assertSame($class, $link->getClass());
+        if ($link instanceof LinkTree) {
+            $this->assertSame($name, $link->getName());
+            $this->assertSame($url, $link->getUrl());
+            $this->assertSame($label, $link->getLabel());
+            $this->assertSame($class, $link->getClass());
+        } else {
+            $this->assertFalse(null === $link, sprintf('Name "%s" is not a LinkTree (null)', $name));
+        }
     }
 
     /**
