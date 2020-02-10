@@ -19,6 +19,8 @@
 
 namespace Mazarini\ToolsBundle\Pagination;
 
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+
 class Pages extends Entities
 {
     /**
@@ -29,9 +31,9 @@ class Pages extends Entities
     /**
      * __construct.
      *
-     * @param \Traversable<mixed, mixed> $entities
+     * @param \ArrayIterator<int, EntityInterface> $entities
      */
-    public function __construct(\Traversable $entities, int $currentPage, int $totalCount, int $pageSize)
+    public function __construct(\ArrayIterator $entities, int $currentPage, int $totalCount, int $pageSize)
     {
         parent::__construct($entities, $totalCount, $pageSize);
         /*

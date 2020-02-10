@@ -50,11 +50,11 @@ class Entities
     /**
      * __construct.
      *
-     * @param \Traversable<mixed, mixed> $entities
+     * @param \ArrayIterator<int, EntityInterface> $entities
      *
      * @return void
      */
-    public function __construct(\Traversable $entities, int $totalCount, int $pageSize)
+    public function __construct(\ArrayIterator $entities, int $totalCount, int $pageSize)
     {
         $this->entities = new \ArrayIterator();
         foreach ($entities as $entity) {

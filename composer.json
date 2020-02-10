@@ -24,10 +24,12 @@
         "symfony/flex": "^1.5"
     },
     "require-dev": {
+        "laminas/laminas-code": "^3.4",
         "mazarini/package": "^1.0",
         "mazarini/test-bundle": "^0.9|^1.0dev",
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.14",
+        "symfony/orm-pack": "^1.0",
         "symfony/test-pack": "^1.0"
     },
     "config": {
