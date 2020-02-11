@@ -22,6 +22,7 @@ namespace Mazarini\ToolsBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Pagination\Pagination;
+use Mazarini\ToolsBundle\Pagination\PaginationInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,7 +32,7 @@ use Mazarini\ToolsBundle\Pagination\Pagination;
  */
 abstract class EntityRepositoryAbstract extends ServiceEntityRepository
 {
-    public function getPage(int $currentPage = 1, int $pageSize = 10): Pagination
+    public function getPage(int $currentPage = 1, int $pageSize = 10): PaginationInterface
     {
         $totalCount = $this->totalCount();
         $result = [];

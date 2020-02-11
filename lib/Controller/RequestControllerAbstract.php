@@ -77,7 +77,7 @@ abstract class RequestControllerAbstract extends AbstractController
     protected function getTwigFolder(): string
     {
         if (null === $this->twigFolder) {
-            $this->twigFolder = $this->getBaseRoute();
+            $this->twigFolder = $this->getBaseRoute().'/';
         }
 
         return $this->twigFolder;
