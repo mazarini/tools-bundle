@@ -23,4 +23,8 @@ use Mazarini\TestBundle\Controller\StepController as BaseController;
 
 class StepController extends BaseController
 {
+    protected function getTwigFolder(): string
+    {
+        return '';
+    }
 }

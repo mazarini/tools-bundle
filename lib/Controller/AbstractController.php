@@ -21,18 +21,12 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Data\LinkTree;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyControler;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-abstract class AbstractController extends SymfonyControler
+abstract class AbstractController extends RequestControllerAbstract
 {
-    /**
-     * @var string
-     */
-    protected $twigFolder = '';
-
     /**
      * @var Data
      */
@@ -46,26 +40,14 @@ abstract class AbstractController extends SymfonyControler
     /**
      * @var array<string,mixed>
      */
-    protected $parameters;
+    protected $parameters = [];
 
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $baseRoute = '')
+    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
     {
-        $request = $requestStack->getMasterRequest();
-        if (null === $request) {
-            $currentUrl = '';
-            $currentAction = '';
-        } else {
-            $currentUrl = $request->getPathInfo();
-            if ('' === $baseRoute) {
-                $routeParts = explode('_', $request->attributes->get('_route'));
-                unset($routeParts[\count($routeParts) - 1]);
-                $baseRoute = implode('_', $routeParts);
-            }
-            $currentAction = mb_substr($request->attributes->get('_route'), mb_strlen($baseRoute) + 1);
-        }
-
-        $this->parameters['data'] = $this->data = new Data($router, $baseRoute, $currentAction, $currentUrl);
+        parent::__construct($requestStack);
+        $this->parameters['data'] = $this->data = new Data($router, $this->getBaseRoute(), $this->getAction(), $this->getUrl());
         $this->parameters['menu'] = $this->menu = new LinkTree('main', 'Menu');
+        $this->beforeAction($this->getAction());
     }
 
     /**
@@ -75,17 +57,32 @@ abstract class AbstractController extends SymfonyControler
      */
     protected function dataRender(string $view, array $parameters = [], Response $response = null): Response
     {
+        $this->afterAction($this->getAction());
         $parameters = array_merge($this->parameters, $parameters);
         $this->initUrl($this->data);
         $this->initMenu($this->menu);
+        $this->beforeRender($this->getAction());
 
-        return $this->render($this->twigFolder.$view, $parameters, $response);
+        return $this->render($this->getTwigFolder().$view, $parameters, $response);
     }
 
-    abstract protected function initUrl(Data $data): self;
-
-    protected function initMenu(LinkTree $menu): self
+    protected function beforeAction(string $action): void
     {
-        return $this;
+    }
+
+    protected function afterAction(string $action): void
+    {
+    }
+
+    protected function beforeRender(string $action): void
+    {
+    }
+
+    protected function initUrl(Data $data): void
+    {
+    }
+
+    protected function initMenu(LinkTree $menu): void
+    {
     }
 }
