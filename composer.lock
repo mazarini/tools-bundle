@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9c17acf3a5833cb8cf47f512db44640",
+    "content-hash": "049c53f92eb8f897ee06234edb219ba8",
     "packages": [
+        {
+            "name": "symfony/flex",
+            "version": "v1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/flex.git",
+                "reference": "e4f5a2653ca503782a31486198bd1dd1c9a47f83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/e4f5a2653ca503782a31486198bd1dd1c9a47f83",
+                "reference": "e4f5a2653ca503782a31486198bd1dd1c9a47f83",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0.2",
+                "symfony/dotenv": "^3.4|^4.0|^5.0",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8|^5.0",
+                "symfony/process": "^2.7|^3.0|^4.0|^5.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                },
+                "class": "Symfony\\Flex\\Flex"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Flex\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@gmail.com"
+                }
+            ],
+            "description": "Composer plugin for Symfony",
+            "time": "2020-01-30T12:06:45+00:00"
+        }
+    ],
+    "packages-dev": [
         {
             "name": "doctrine/annotations",
             "version": "v1.8.0",
@@ -74,119 +125,6 @@
             ],
             "time": "2019-10-01T18:55:10+00:00"
         },
-        {
-            "name": "doctrine/lexer",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/lexer.git",
-                "reference": "5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6",
-                "reference": "5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^6.0",
-                "phpstan/phpstan": "^0.11.8",
-                "phpunit/phpunit": "^8.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Lexer\\": "lib/Doctrine/Common/Lexer"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
-            "keywords": [
-                "annotations",
-                "docblock",
-                "lexer",
-                "parser",
-                "php"
-            ],
-            "time": "2019-10-30T14:39:59+00:00"
-        },
-        {
-            "name": "symfony/flex",
-            "version": "v1.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/flex.git",
-                "reference": "e4f5a2653ca503782a31486198bd1dd1c9a47f83"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/e4f5a2653ca503782a31486198bd1dd1c9a47f83",
-                "reference": "e4f5a2653ca503782a31486198bd1dd1c9a47f83",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0",
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.0.2",
-                "symfony/dotenv": "^3.4|^4.0|^5.0",
-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8|^5.0",
-                "symfony/process": "^2.7|^3.0|^4.0|^5.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                },
-                "class": "Symfony\\Flex\\Flex"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Flex\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien.potencier@gmail.com"
-                }
-            ],
-            "description": "Composer plugin for Symfony",
-            "time": "2020-01-30T12:06:45+00:00"
-        }
-    ],
-    "packages-dev": [
         {
             "name": "doctrine/cache",
             "version": "1.10.0",
@@ -874,6 +812,68 @@
             "time": "2019-10-21T16:45:58+00:00"
         },
         {
+            "name": "doctrine/lexer",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/lexer.git",
+                "reference": "5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6",
+                "reference": "5242d66dbeb21a30dd8a3e66bf7a73b66e05e1f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^6.0",
+                "phpstan/phpstan": "^0.11.8",
+                "phpunit/phpunit": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Lexer\\": "lib/Doctrine/Common/Lexer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "lexer",
+                "parser",
+                "php"
+            ],
+            "time": "2019-10-30T14:39:59+00:00"
+        },
+        {
             "name": "doctrine/migrations",
             "version": "2.2.1",
             "source": {
@@ -1537,27 +1537,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "2ef6f4fecdfc517eb2190dfb7b7ee6e2214d7e23"
+                "reference": "5a6e08179141ced3d36163e3b263516afbca12a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/2ef6f4fecdfc517eb2190dfb7b7ee6e2214d7e23",
-                "reference": "2ef6f4fecdfc517eb2190dfb7b7ee6e2214d7e23",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/5a6e08179141ced3d36163e3b263516afbca12a9",
+                "reference": "5a6e08179141ced3d36163e3b263516afbca12a9",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-iconv": "*",
                 "ext-mbstring": "*",
+                "laminas/laminas-code": "^3.4",
                 "mazarini/tools-bundle": "^0.9|^1.0@dev",
                 "php": "^7.2|^8.0",
-                "symfony/flex": "^1.4"
+                "symfony/flex": "^1.6"
             },
             "conflict": {
                 "symfony/symfony": "*"
             },
             "require-dev": {
-                "mazarini/package": "^1.0",
+                "doctrine/doctrine-bundle": "^2.0",
+                "doctrine/orm": "^2.7",
+                "mazarini/package": "^1.1",
                 "symfony/debug-pack": "^1.0",
                 "symfony/maker-bundle": "^1.14",
                 "symfony/test-pack": "^1.0"
@@ -1594,7 +1597,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-01-08T11:30:29+00:00"
+            "time": "2020-02-12T16:21:49+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3634,23 +3637,22 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "c57f5e05232ca40626eb9fa52a32bc8565e9231c"
+                "reference": "c9bcc08102061f406dc908192c0f33524a675666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/c57f5e05232ca40626eb9fa52a32bc8565e9231c",
-                "reference": "c57f5e05232ca40626eb9fa52a32bc8565e9231c",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/c9bcc08102061f406dc908192c0f33524a675666",
+                "reference": "c9bcc08102061f406dc908192c0f33524a675666",
                 "shasum": ""
             },
             "require": {
-                "doctrine/doctrine-bundle": "^1.6.10|^2.0",
-                "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
-                "doctrine/orm": "^2.5.11",
-                "php": "^7.0"
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/doctrine-migrations-bundle": "*",
+                "doctrine/orm": "*"
             },
             "type": "symfony-pack",
             "notification-url": "https://packagist.org/downloads/",
@@ -3658,7 +3660,7 @@
                 "MIT"
             ],
             "description": "A pack for the Doctrine ORM",
-            "time": "2019-10-18T05:41:09+00:00"
+            "time": "2020-02-10T18:03:48+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -4752,16 +4754,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.0.1",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "28f856a4c57eeb24485916e8a68403f41a133616"
+                "reference": "3b88ccd180a6b61ebb517aea3b1a8906762a1dc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/28f856a4c57eeb24485916e8a68403f41a133616",
-                "reference": "28f856a4c57eeb24485916e8a68403f41a133616",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3b88ccd180a6b61ebb517aea3b1a8906762a1dc2",
+                "reference": "3b88ccd180a6b61ebb517aea3b1a8906762a1dc2",
                 "shasum": ""
             },
             "require": {
@@ -4810,7 +4812,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-12-28T07:17:28+00:00"
+            "time": "2020-02-11T15:33:47+00:00"
         }
     ],
     "aliases": [],

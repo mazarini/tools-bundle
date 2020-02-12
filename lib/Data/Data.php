@@ -61,6 +61,11 @@ class Data
         $this->links = new Links($currentUrl);
     }
 
+    public function isCrud(): bool
+    {
+        return $this->isSetEntities() || $this->isSetEntity();
+    }
+
     public function isSetEntities(): bool
     {
         return isset($this->pagination);

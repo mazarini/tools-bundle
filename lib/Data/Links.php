@@ -36,11 +36,14 @@ class Links extends \ArrayIterator
     }
 
     /**
-     * Set the value of currentUrl.
-     *
-     * @return self
+     * Get the value of currentUrl.
      */
-    public function setCurrentUrl(string $currentUrl)
+    public function getCurrentUrl(): string
+    {
+        return $this->currentUrl;
+    }
+
+    public function setCurrentUrl(string $currentUrl): self
     {
         $this->currentUrl = $currentUrl;
 

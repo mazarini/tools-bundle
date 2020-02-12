@@ -49,12 +49,16 @@ trait PageUrlTrait
 
     protected function setNewUrl(Data $data): void
     {
-        $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'Create');
+        if ($data->isCrud()) {
+            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'Create');
+        }
     }
 
     protected function setPageUrl(Data $data): void
     {
-        $this->AddPageUrl($data, 'first', true, 1, 'List');
+        if ($data->isCrud()) {
+            $this->AddPageUrl($data, 'index', true, 1, 'List');
+        }
         if ($data->isSetEntities()) {
             $pagination = $data->getPagination();
             $this->AddPageUrl($data, 'first', $pagination->hasPreviousPage(), $pagination->getFirstPage(), '1');
