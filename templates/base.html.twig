@@ -10,13 +10,13 @@
 			{% endblock head_title %}
 		</title>
 		{% block stylesheets %}
-			{ parent()}
+			{{ parent() }}
 		{% endblock stylesheets %}
 
 	</head>
 	<body>
 		{% block body %}
-			{ parent()}
+			{{ parent() }}
 		{% endblock body %}
 		{% block javascripts %}{% endblock javascripts %}
 	</body>
