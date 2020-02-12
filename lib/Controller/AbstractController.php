@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-abstract class AbstractController extends RequestControllerAbstract
+abstract class AbstractController extends UrlControllerAbstract
 {
     /**
      * @var Data
@@ -59,8 +59,8 @@ abstract class AbstractController extends RequestControllerAbstract
     {
         $this->afterAction($this->getAction());
         $parameters = array_merge($this->parameters, $parameters);
-        $this->initUrl($this->data);
-        $this->initMenu($this->menu);
+        $this->setUrl($this->data);
+        $this->setMenu($this->menu);
         $this->beforeRender($this->getAction());
 
         return $this->render($this->getTwigFolder().$view, $parameters, $response);
@@ -78,11 +78,7 @@ abstract class AbstractController extends RequestControllerAbstract
     {
     }
 
-    protected function initUrl(Data $data): void
-    {
-    }
-
-    protected function initMenu(LinkTree $menu): void
+    protected function setMenu(LinkTree $menu): void
     {
     }
 }
