@@ -158,6 +158,32 @@ class Data
     }
 
     /**
+     * Get the value of route.
+     */
+    public function getRoute(): string
+    {
+        return $this->baseRoute.'_'.$this->currentAction;
+    }
+
+    /**
+     * Get the value of baseRoute.
+     */
+    public function getBaseRoute(): string
+    {
+        return $this->baseRoute;
+    }
+
+    /**
+     * Set the value of baseRoute.
+     */
+    public function setBaseRoute(string $baseRoute): self
+    {
+        $this->baseRoute = $baseRoute;
+
+        return $this;
+    }
+
+    /**
      * Get the value of currentAction.
      */
     public function getCurrentAction(): string

@@ -30,8 +30,8 @@ abstract class UrlControllerAbstract extends RequestControllerAbstract
     protected function setUrl(Data $data): void
     {
         $this->setCrudUrl($data);
-        $this->setListUrl($data);
-        $this->setPageUrl($data);
         $this->setNewUrl($data);
+        $this->setPageUrl($data);
+        $this->setListUrl($data);
     }
 }

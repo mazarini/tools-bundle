@@ -86,6 +86,8 @@ class Links extends \ArrayIterator
             if ($link->getUrl() === $this->currentUrl) {
                 $link = new Link($offset, '', $link->getLabel());
             }
+        } elseif ('current' === $offset) {
+            $link = new Link($offset, $this->currentUrl);
         } else {
             $link = new Link($offset, '#');
         }

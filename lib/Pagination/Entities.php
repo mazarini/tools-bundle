@@ -83,6 +83,14 @@ class Entities
     /**
      * count.
      */
+    public function totalCount(): int
+    {
+        return $this->totalCount;
+    }
+
+    /**
+     * count.
+     */
     public function count(): int
     {
         return \count($this->entities);
