@@ -1,5 +1,1 @@
-{% extends '@MazariniTest/step/layout.html.twig' %}
-
-{% block content %}
-	{{ dump(dataPagination.pagination) }}
-{% endblock %}
+{% include '@MazariniTest/step/Pagination.html.twig' with {'currentPagination': dataPagination.pagination} %}

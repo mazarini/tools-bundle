@@ -63,7 +63,7 @@ trait PageUrlTrait
             $pagination = $data->getPagination();
             $this->AddPageUrl($data, 'first', $pagination->hasPreviousPage(), $pagination->getFirstPage(), '1');
             $this->AddPageUrl($data, 'previous', $pagination->hasPreviousPage(), $pagination->getPreviousPage(), 'Previous');
-            $this->AddPageUrl($data, 'previous', $pagination->hasNextPage(), $pagination->getNextPage(), 'Next');
+            $this->AddPageUrl($data, 'next', $pagination->hasNextPage(), $pagination->getNextPage(), 'Next');
             $this->AddPageUrl($data, 'last', $pagination->hasNextPage(), $pagination->getLastPage(), (string) $pagination->getLastPage());
 
             for ($i = 1; $i <= $pagination->getLastPage(); ++$i) {

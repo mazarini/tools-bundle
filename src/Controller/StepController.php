@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class StepController extends BaseController
 {
-    protected function afterAction(string $action): void
+    protected function afterAction2(string $action): void
     {
         if ('System' === $this->step) {
             $this->parameters['symfony']['version'] = Kernel::VERSION;
