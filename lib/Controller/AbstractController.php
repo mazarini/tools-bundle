@@ -58,12 +58,12 @@ abstract class AbstractController extends UrlControllerAbstract
     protected function dataRender(string $view, array $parameters = [], Response $response = null): Response
     {
         $this->afterAction($this->getAction());
-        $parameters = array_merge($this->parameters, $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
         $this->setUrl($this->data);
         $this->setMenu($this->menu);
         $this->beforeRender($this->getAction());
 
-        return $this->render($this->getTwigFolder().$view, $parameters, $response);
+        return $this->render($this->getTwigFolder().$view, $this->parameters, $response);
     }
 
     protected function beforeAction(string $action): void
