@@ -50,20 +50,20 @@ trait PageUrlTrait
     protected function setNewUrl(Data $data): void
     {
         if ($data->isCrud()) {
-            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'Create');
+            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'button.Create');
         }
     }
 
     protected function setPageUrl(Data $data): void
     {
         if ($data->isCrud()) {
-            $this->AddPageUrl($data, 'index', true, 1, 'List');
+            $this->AddPageUrl($data, 'index', true, 1, 'Button.List');
         }
         if ($data->isSetEntities()) {
             $pagination = $data->getPagination();
             $this->AddPageUrl($data, 'first', $pagination->hasPreviousPage(), $pagination->getFirstPage(), '1');
-            $this->AddPageUrl($data, 'previous', $pagination->hasPreviousPage(), $pagination->getPreviousPage(), 'Previous');
-            $this->AddPageUrl($data, 'next', $pagination->hasNextPage(), $pagination->getNextPage(), 'Next');
+            $this->AddPageUrl($data, 'previous', $pagination->hasPreviousPage(), $pagination->getPreviousPage(), 'button.Previous');
+            $this->AddPageUrl($data, 'next', $pagination->hasNextPage(), $pagination->getNextPage(), 'button.Next');
             $this->AddPageUrl($data, 'last', $pagination->hasNextPage(), $pagination->getLastPage(), (string) $pagination->getLastPage());
 
             for ($i = 1; $i <= $pagination->getLastPage(); ++$i) {

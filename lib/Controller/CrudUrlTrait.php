@@ -30,7 +30,9 @@ trait CrudUrlTrait
      */
     protected function getCrudAction(): array
     {
-        return ['_edit' => 'Edit', '_show' => 'Show', '_delete' => 'Delete'];
+        return ['_edit' => 'EDIT', '_show' => 'SHOW', '_delete' => 'DELETE'];
+        return ['_edit' => 'button.Edit', '_show' => 'button.Show', '_delete' => 'button.Delete'];
+
     }
 
     /**

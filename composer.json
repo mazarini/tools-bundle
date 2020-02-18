@@ -20,7 +20,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "symfony/flex": "^1.6"
+        "symfony/flex": "^1.6",
+        "symfony/translation": "5.0.*"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "*",

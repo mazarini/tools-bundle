@@ -30,7 +30,7 @@ trait ListUrlTrait
      */
     protected function getListAction(): array
     {
-        return ['_edit' => 'Edit', '_show' => 'Show'];
+        return ['_edit' => 'button.Edit', '_show' => 'button.Show'];
     }
 
     /**
