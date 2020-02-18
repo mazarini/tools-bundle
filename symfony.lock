@@ -83,6 +83,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.1"
     },
+    "mazarini/bootstrap-bundle": {
+        "version": "1.0.x-dev"
+    },
     "mazarini/package": {
         "version": "v1.1.0"
     },

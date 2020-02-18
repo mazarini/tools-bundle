@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "105997538d47117fc0f539e3d4fd3cef",
+    "content-hash": "f86a571390ecb9c7afa257a38cf2fc01",
     "packages": [
         {
             "name": "symfony/flex",
@@ -1513,6 +1513,73 @@
                 "zf"
             ],
             "time": "2020-01-07T22:58:31+00:00"
+        },
+        {
+            "name": "mazarini/bootstrap-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mazarini/bootstrap-bundle.git",
+                "reference": "54f678e8c35fcf57b70acd80fd36ab2f10f0944e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/54f678e8c35fcf57b70acd80fd36ab2f10f0944e",
+                "reference": "54f678e8c35fcf57b70acd80fd36ab2f10f0944e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "mazarini/tools-bundle": "^0.9|^1.0@dev",
+                "php": "^7.2|^8.0",
+                "symfony/flex": "^1.5",
+                "symfony/twig-bundle": "^4.4|^5.0"
+            },
+            "conflict": {
+                "symfony/symfony": "*"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/orm": "*",
+                "mazarini/package": "^1.0",
+                "mazarini/test-bundle": "^0.9|^1.0@dev",
+                "symfony/debug-pack": "^1.0",
+                "symfony/maker-bundle": "^1.14",
+                "symfony/test-pack": "^1.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "allow-contrib": true,
+                    "require": "5.0.*"
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mazarini\\BootstrapBundle\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Mazarini",
+                    "email": "mazarini@protonmail.com"
+                }
+            ],
+            "description": "Set of template using bootstrap for twig",
+            "homepage": "https://github.com/mazarini/bootstrap-bundle",
+            "keywords": [
+                "symfony"
+            ],
+            "time": "2020-02-15T15:51:25+00:00"
         },
         {
             "name": "mazarini/package",
@@ -4649,6 +4716,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "mazarini/bootstrap-bundle": 20,
         "mazarini/test-bundle": 20
     },
     "prefer-stable": false,

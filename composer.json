@@ -27,6 +27,7 @@
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "*",
         "laminas/laminas-code": "^3.4",
+        "mazarini/bootstrap-bundle": "^0.9|^1.0dev",
         "mazarini/package": "^1.1",
         "mazarini/test-bundle": "^0.9|^1.0dev",
         "symfony/debug-pack": "^1.0",
