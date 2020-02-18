@@ -3301,12 +3301,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/bootstrap-bundle.git",
-                "reference": "54f678e8c35fcf57b70acd80fd36ab2f10f0944e"
+                "reference": "c3ab14afac4074e232d197da63fc815e598ef97f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/54f678e8c35fcf57b70acd80fd36ab2f10f0944e",
-                "reference": "54f678e8c35fcf57b70acd80fd36ab2f10f0944e",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/c3ab14afac4074e232d197da63fc815e598ef97f",
+                "reference": "c3ab14afac4074e232d197da63fc815e598ef97f",
                 "shasum": ""
             },
             "require": {
@@ -3315,8 +3315,13 @@
                 "ext-mbstring": "*",
                 "mazarini/tools-bundle": "^0.9|^1.0@dev",
                 "php": "^7.2|^8.0",
-                "symfony/flex": "^1.5",
-                "symfony/twig-bundle": "^4.4|^5.0"
+                "symfony/console": "^4.4|^5.0",
+                "symfony/dotenv": "^4.4|^5.0",
+                "symfony/flex": "^1.6",
+                "symfony/framework-bundle": "^4.4|^5.0",
+                "symfony/translation": "^4.4|^5.0",
+                "symfony/twig-bundle": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0"
             },
             "conflict": {
                 "symfony/symfony": "*"
@@ -3360,7 +3365,7 @@
             "keywords": [
                 "symfony"
             ],
-            "time": "2020-02-15T15:51:25+00:00"
+            "time": "2020-02-18T19:00:32+00:00"
         },
         {
             "name": "mazarini/package",
@@ -3429,22 +3434,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "f7804340414033882316017f673d5e15b5baf275"
+                "reference": "d57f31222a75daf875dfae19ab55b003e826b0c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/f7804340414033882316017f673d5e15b5baf275",
-                "reference": "f7804340414033882316017f673d5e15b5baf275",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/d57f31222a75daf875dfae19ab55b003e826b0c0",
+                "reference": "d57f31222a75daf875dfae19ab55b003e826b0c0",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-iconv": "*",
                 "ext-mbstring": "*",
-                "laminas/laminas-code": "^3.4",
                 "mazarini/tools-bundle": "^0.9|^1.0@dev",
                 "php": "^7.2|^8.0",
-                "symfony/flex": "^1.6"
+                "symfony/console": "^4.4|^5.0",
+                "symfony/dotenv": "^4.4|^5.0",
+                "symfony/flex": "^1.6",
+                "symfony/framework-bundle": "^4.4|^5.0",
+                "symfony/translation": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0"
             },
             "conflict": {
                 "symfony/symfony": "*"
@@ -3452,6 +3461,7 @@
             "require-dev": {
                 "doctrine/doctrine-bundle": "^2.0",
                 "doctrine/orm": "^2.7",
+                "mazarini/bootstrap-bundle": "^0.9|^1.0@dev",
                 "mazarini/package": "^1.1",
                 "symfony/debug-pack": "^1.0",
                 "symfony/maker-bundle": "^1.14",
@@ -3489,7 +3499,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-02-14T16:26:10+00:00"
+            "time": "2020-02-18T17:32:47+00:00"
         },
         {
             "name": "monolog/monolog",
