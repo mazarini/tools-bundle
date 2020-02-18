@@ -20,12 +20,16 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
+        "symfony/console": "^4.4|^5.0",
+        "symfony/dotenv": "^4.4|^5.0",
         "symfony/flex": "^1.6",
-        "symfony/translation": "5.0.*"
+        "symfony/framework-bundle": "^4.4|^5.0",
+        "symfony/translation": "^4.4|^5.0",
+        "symfony/yaml": "^4.4|^5.0"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "*",
-        "doctrine/orm": "*",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/orm": "^2.7",
         "laminas/laminas-code": "^3.4",
         "mazarini/bootstrap-bundle": "^0.9|^1.0dev",
         "mazarini/package": "^1.1",
