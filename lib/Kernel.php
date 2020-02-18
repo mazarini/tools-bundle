@@ -43,21 +43,43 @@ class Kernel extends BaseKernel
         }
     }
 
-    public function getProjectDir(): string
+    public static function isOlder(int $version): bool
     {
-        return \dirname(__DIR__);
+        return $version <= self::VERSION_ID;
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
+    /**
+     * configureContainer.
+     *
+     * ContainerBuilder : 4.4 => 5.0
+     * ContainerConfigurator : 5.1 => ?
+     *
+     * @param object $container
+     */
+    protected function configureContainer($container, ?LoaderInterface $loader = null): void
     {
-        $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
-        $container->setParameter('container.dumper.inline_class_loader', true);
-        $confDir = $this->getProjectDir().'/config';
-
-        $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+        if ($container instanceof ContainerBuilder) {
+            /*
+             * 4.4 and 5.0.
+             */
+            $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
+            $container->setParameter('container.dumper.inline_class_loader', true);
+            $confDir = $this->getProjectDir().'/config';
+            if (null !== $loader) {
+                $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+                $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+                $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+                $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+            }
+        } elseif (method_exists($container, 'import')) {
+            /*
+             * 5.1 and later
+             */
+            $container->import('../config/{packages}/*.yaml');
+            $container->import('../config/{packages}/'.$this->environment.'/*.yaml');
+            $container->import('../config/{services}.yaml');
+            $container->import('../config/{services}_'.$this->environment.'.yaml');
+        }
     }
 
     /**
@@ -70,15 +92,23 @@ class Kernel extends BaseKernel
      */
     protected function configureRoutes($routes): void
     {
-        if ($routes instanceof RouteCollectionBuilder) {
-            $confDir = $this->getProjectDir().'/config';
-            $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
-            $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
-            $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
-        } elseif (method_exists($routes, 'import')) {
-            $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
-            $routes->import('../config/{routes}/*.yaml');
-            $routes->import('../config/{routes}.yaml');
+        if (method_exists($routes, 'import')) {
+            if (self::isOlder(50100)) {
+                /*
+                 * 5.1 and later
+                 */
+                $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
+                $routes->import('../config/{routes}/*.yaml');
+                $routes->import('../config/{routes}.yaml');
+            } else {
+                /**
+                 * 4.4 and 5.0.
+                 */
+                $confDir = $this->getProjectDir().'/config';
+                $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
+                $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
+                $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+            }
         }
     }
 }
