@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-abstract class AbstractController extends UrlControllerAbstract
+abstract class AbstractController extends RequestControllerAbstract
 {
     /**
      * @var Data
@@ -78,7 +78,11 @@ abstract class AbstractController extends UrlControllerAbstract
     {
     }
 
-    protected function setMenu(LinkTree $menu): void
+    protected function setUrl(Data $data): void
+    {
+    }
+
+    protected function setMenu(LinkTree $tree): void
     {
     }
 }

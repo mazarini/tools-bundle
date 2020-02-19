@@ -21,8 +21,10 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
 
-trait CrudUrlTrait
+trait CrudTrait
 {
+    use PaginationTrait;
+
     /**
      * getCrudAction.
      *
@@ -34,17 +36,27 @@ trait CrudUrlTrait
     }
 
     /**
-     * setCrudUrl.
+     * getListAction.
+     *
+     * @return array<string,string>
      */
-    protected function setCrudUrl(Data $data): void
+    protected function getListAction(): array
     {
-        if ($data->isSetEntity()) {
-            $entity = $data->getEntity();
-            if (!$entity->Isnew()) {
-                foreach ($this->getCrudAction() as $action => $label) {
-                    $data->addLink(trim($action, '_'), $data->generateUrl($action, ['id' => $entity->getId()]), $label);
-                }
-            }
+        return ['_edit' => 'button.Edit', '_show' => 'button.Show'];
+    }
+
+    protected function setUrl(Data $data): void
+    {
+        $this->setCrudUrl($data);
+        $this->setPageUrl($data);
+        $this->setListUrl($data);
+        $this->setNewUrl($data);
+    }
+
+    protected function setNewUrl(Data $data): void
+    {
+        if ($data->isCrud()) {
+            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'button.Create');
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
 
-trait PageUrlTrait
+trait PaginationTrait
 {
     /**
      * getPageParameters.
@@ -34,23 +34,44 @@ trait PageUrlTrait
     }
 
     /**
-     * AddPageUrl.
+     * getCrudAction.
+     *
+     * @return array<string,string>
      */
-    protected function AddPageUrl(Data $data, string $key, bool $active, int $page, string $label): void
+    protected function getCrudAction(): array
     {
-        $url = '#';
-        if ($active) {
-            $parameters = $this->getPageParameters();
-            $parameters['page'] = $page;
-            $url = $data->generateUrl('_page', $parameters);
-        }
-        $data->addLink($key, $url, $label);
+        return ['_show' => 'button.Show'];
     }
 
-    protected function setNewUrl(Data $data): void
+    /**
+     * getListAction.
+     *
+     * @return array<string,string>
+     */
+    protected function getListAction(): array
     {
-        if ($data->isCrud()) {
-            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'button.Create');
+        return ['_show' => 'button.Show'];
+    }
+
+    protected function setUrl(Data $data): void
+    {
+        $this->setCrudUrl($data);
+        $this->setPageUrl($data);
+        $this->setListUrl($data);
+    }
+
+    /**
+     * setCrudUrl.
+     */
+    protected function setCrudUrl(Data $data): void
+    {
+        if ($data->isSetEntity()) {
+            $entity = $data->getEntity();
+            if (!$entity->Isnew()) {
+                foreach ($this->getCrudAction() as $action => $label) {
+                    $data->addLink(trim($action, '_'), $data->generateUrl($action, ['id' => $entity->getId()]), $label);
+                }
+            }
         }
     }
 
@@ -70,5 +91,34 @@ trait PageUrlTrait
                 $this->AddPageUrl($data, 'page-'.$i, true, $i, (string) $i);
             }
         }
+    }
+
+    /**
+     * setListUrl.
+     */
+    protected function setListUrl(Data $data): void
+    {
+        if ($data->isSetEntities()) {
+            foreach ($data->getEntities() as $entity) {
+                $parameters = ['id' => $entity->getId()];
+                foreach ($this->getListAction() as $action => $label) {
+                    $data->addLink(trim($action, '_').'-'.$parameters['id'], $data->generateUrl($action, $parameters), $label);
+                }
+            }
+        }
+    }
+
+    /**
+     * AddPageUrl.
+     */
+    protected function AddPageUrl(Data $data, string $key, bool $active, int $page, string $label): void
+    {
+        $url = '#';
+        if ($active) {
+            $parameters = $this->getPageParameters();
+            $parameters['page'] = $page;
+            $url = $data->generateUrl('_page', $parameters);
+        }
+        $data->addLink($key, $url, $label);
     }
 }

@@ -19,32 +19,24 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
-use Mazarini\ToolsBundle\Data\Data;
+use Mazarini\TestBundle\Fake\UrlGenerator;
+use Mazarini\ToolsBundle\Tool\Factory;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-trait ListUrlTrait
+class TestControllerAbstract extends AbstractController
 {
     /**
-     * getListAction.
-     *
-     * @return array<string,string>
+     * @var Factory
      */
-    protected function getListAction(): array
-    {
-        return ['_edit' => 'button.Edit', '_show' => 'button.Show'];
-    }
+    protected $fakeFactory;
 
     /**
-     * setListUrl.
+     * __construct.
      */
-    protected function setListUrl(Data $data): void
+    public function __construct(RequestStack $requestStack, Factory $fakeFactory)
     {
-        if ($data->isSetEntities()) {
-            foreach ($data->getEntities() as $entity) {
-                $parameters = ['id' => $entity->getId()];
-                foreach ($this->getListAction() as $action => $label) {
-                    $data->addLink(trim($action, '_').'-'.$parameters['id'], $data->generateUrl($action, $parameters), $label);
-                }
-            }
-        }
+        $this->fakeFactory = $fakeFactory;
+
+        parent::__construct($requestStack, new UrlGenerator());
     }
 }
