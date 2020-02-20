@@ -19,13 +19,10 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+// use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/")
- */
 abstract class HomeControllerAbstract extends AbstractController
 {
     protected function getRedirectUrl(): string
@@ -33,11 +30,19 @@ abstract class HomeControllerAbstract extends AbstractController
         return '/';
     }
 
-    /**
-     * @Route("/-/", name="homepage")
-     */
-    public function home(): Response
+    protected function getTwigFolder(): string
     {
-        return  $this->redirect($this->getRedirectUrl(), Response::HTTP_MOVED_PERMANENTLY);
+        return '';
+    }
+
+    public function home(Request $request): Response
+    {
+        $currentUrl = $request->getPathInfo();
+        $url = $this->getRedirectUrl();
+        if ($url === $currentUrl) {
+            return $this->dataRender('layout.html.twig');
+        }
+
+        return  $this->redirect($url, Response::HTTP_MOVED_PERMANENTLY);
     }
 }

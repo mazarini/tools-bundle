@@ -20,7 +20,25 @@
 namespace App\Tests\Controller;
 
 use Mazarini\TestBundle\Test\Controller\StepControllerAbstractTest;
+use Mazarini\TestBundle\Tool\Folder;
 
 class StepControllerTest extends StepControllerAbstractTest
 {
+    /**
+     * getUrls.
+     *
+     * @return \Traversable<int,array>
+     */
+    public function getUrls(): \Traversable
+    {
+        $folder = new Folder();
+        $steps = $folder->getSteps();
+        foreach ($steps as $step => $dummy) {
+            yield ['/step/'.$step, 302];
+            $pages = $folder->getPages($steps[$step]);
+            foreach ($pages as $page => $dummy) {
+                yield ['/step/'.$step.'/'.$page.'.html'];
+            }
+        }
+    }
 }

@@ -31,18 +31,6 @@ class HomeController extends HomeControllerAbstract
      */
     protected function getRedirectUrl(): string
     {
-        /*
-        Example 1 : depending connected or not
-        if (null === $this->getUser()) {
-            return $this->generateUrl('security_login');
-        }
-
-        return $this->generateUrl('profile_show');
-
-        Example 2 : Always root
-        return '/';
-    */
-
-        return parent::getRedirectUrl();
+        return '/step';
     }
 }

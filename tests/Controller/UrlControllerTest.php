@@ -30,8 +30,8 @@ class UrlControllerTest extends UrlControllerAbstractTest
      */
     public function getUrls(): \Traversable
     {
-        yield ['/', 302];
-        yield ['/System/Versions.html'];
+        yield ['/', 301];
+        yield ['/step/System/Versions.html'];
         yield ['/KO-404.html', 404];
     }
 }

@@ -20,7 +20,11 @@
 namespace App\Controller;
 
 use Mazarini\TestBundle\Controller\StepController as Base;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/step")
+ */
 class StepController extends Base
 {
 }
