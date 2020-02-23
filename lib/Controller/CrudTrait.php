@@ -32,7 +32,7 @@ trait CrudTrait
      */
     protected function getCrudAction(): array
     {
-        return ['_edit' => 'button.Edit', '_show' => 'button.Show', '_delete' => 'button.Delete'];
+        return ['_edit' => 'Modifier', '_show' => 'Afficher', '_delete' => 'Supprimer'];
     }
 
     /**
@@ -42,7 +42,7 @@ trait CrudTrait
      */
     protected function getListAction(): array
     {
-        return ['_edit' => 'button.Edit', '_show' => 'button.Show'];
+        return ['_edit' => 'Modifier', '_show' => 'Afficher'];
     }
 
     protected function setUrl(Data $data): void
@@ -56,7 +56,7 @@ trait CrudTrait
     protected function setNewUrl(Data $data): void
     {
         if ($data->isCrud()) {
-            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'button.Create');
+            $data->addLink('new', $data->generateUrl('_new', $this->getPageParameters()), 'Ajouter');
         }
     }
 }

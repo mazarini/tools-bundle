@@ -40,7 +40,7 @@ trait PaginationTrait
      */
     protected function getCrudAction(): array
     {
-        return ['_show' => 'button.Show'];
+        return ['_show' => 'Afficher'];
     }
 
     /**
@@ -50,7 +50,7 @@ trait PaginationTrait
      */
     protected function getListAction(): array
     {
-        return ['_show' => 'button.Show'];
+        return ['_show' => 'Afficher'];
     }
 
     protected function setUrl(Data $data): void
@@ -78,13 +78,13 @@ trait PaginationTrait
     protected function setPageUrl(Data $data): void
     {
         if ($data->isCrud()) {
-            $this->AddPageUrl($data, 'index', true, 1, 'Button.List');
+            $this->AddPageUrl($data, 'index', true, 1, 'Retour');
         }
         if ($data->isSetEntities()) {
             $pagination = $data->getPagination();
             $this->AddPageUrl($data, 'first', $pagination->hasPreviousPage(), $pagination->getFirstPage(), '1');
-            $this->AddPageUrl($data, 'previous', $pagination->hasPreviousPage(), $pagination->getPreviousPage(), 'button.Previous');
-            $this->AddPageUrl($data, 'next', $pagination->hasNextPage(), $pagination->getNextPage(), 'button.Next');
+            $this->AddPageUrl($data, 'previous', $pagination->hasPreviousPage(), $pagination->getPreviousPage(), 'Précédent');
+            $this->AddPageUrl($data, 'next', $pagination->hasNextPage(), $pagination->getNextPage(), 'Suivant');
             $this->AddPageUrl($data, 'last', $pagination->hasNextPage(), $pagination->getLastPage(), (string) $pagination->getLastPage());
 
             for ($i = 1; $i <= $pagination->getLastPage(); ++$i) {
