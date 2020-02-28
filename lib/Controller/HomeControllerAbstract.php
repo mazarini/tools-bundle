@@ -37,6 +37,7 @@ abstract class HomeControllerAbstract extends AbstractController
 
     public function home(Request $request): Response
     {
+        @trigger_error(sprintf('Controller "%s" is deprecated', self::class), E_USER_DEPRECATED);
         $currentUrl = $request->getPathInfo();
         $url = $this->getRedirectUrl();
         if ($url === $currentUrl) {

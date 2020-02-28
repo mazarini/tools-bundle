@@ -19,7 +19,6 @@
 
 namespace Mazarini\ToolsBundle;
 
-use App\Controller\HomeController;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -109,13 +108,6 @@ class Kernel extends BaseKernel
                 $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
                 $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
                 $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
-            }
-        }
-        if (method_exists($routes, 'add')) {
-            if ($routes instanceof RoutingConfigurator) {
-                $routes->add('homepage', '/')->controller([HomeController::class, 'home']);
-            } else {
-                $routes->add('/', HomeController::class.'::home', 'homepage')->setMethods('GET');
             }
         }
     }
