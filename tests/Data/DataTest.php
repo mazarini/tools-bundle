@@ -19,12 +19,12 @@
 
 namespace App\Tests\Data;
 
+use Mazarini\PaginationBundle\Tool\Pagination;
 use Mazarini\TestBundle\Fake\Entity;
 use Mazarini\TestBundle\Fake\UrlGenerator;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Data\Link;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Pagination\Pagination;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DataTest extends KernelTestCase

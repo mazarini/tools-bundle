@@ -19,8 +19,8 @@
 
 namespace Mazarini\ToolsBundle\Data;
 
+use Mazarini\PaginationBundle\Tool\PaginationInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Pagination\PaginationInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Data
