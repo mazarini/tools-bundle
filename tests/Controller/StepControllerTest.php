@@ -34,7 +34,7 @@ class StepControllerTest extends StepControllerAbstractTest
         $folder = new Folder();
         $steps = $folder->getSteps();
         foreach ($steps as $step => $dummy) {
-            yield ['/step/'.$step, 302];
+            yield ['/step/'.$step, 301];
             $pages = $folder->getPages($steps[$step]);
             foreach ($pages as $page => $dummy) {
                 yield ['/step/'.$step.'/'.$page.'.html'];
