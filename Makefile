@@ -119,6 +119,12 @@ clean:
 	bin/console cache:clear --env=dev
 	cp var/data/origine.db var/data/sqlite.db
 
+dev:
+	cp var/data/origine.db var/data/sqlite.db
+	sudo rm -r var/cache/test
+	bin/console cache:clear --env=test
+	bin/phpunit -v tests/Controller/HomeControllerTest.php
+
 test:
 	cp var/data/origine.db var/data/sqlite.db
 	bin/phpunit -v

@@ -26,5 +26,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+# imports:
+#    - { resource: '@MazariniToolsBundle/Resources/config/services/redirect.yaml' }
+    mazarini_toolsBundle.HomepageSubscriber:
+        class: Mazarini\ToolsBundle\EventSubscriber\HomepageSubscriber
+        arguments:
+            $homePage: '%home_page%'
+            $homeAdmin: '%home_admin%'

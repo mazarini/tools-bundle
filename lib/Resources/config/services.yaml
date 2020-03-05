@@ -8,12 +8,5 @@ parameters:
 services:
     # default configuration for services in *this* file
     _defaults:
-        # autowire: true      # Automatically injects dependencies in your services.
-        # autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        bind:
-            $homePage: '%home_page%'
-            $homeAdmin: '%home_admin%'
-
-    # Redidect for / and /admin
-    mazarini_toolsBundle.HomepageSubscriber:
-        class: Mazarini\ToolsBundle\EventSubscriber\HomepageSubscriber
+         autowire: true      # Automatically injects dependencies in your services.
+         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
