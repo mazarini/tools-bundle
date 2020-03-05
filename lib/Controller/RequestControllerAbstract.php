@@ -19,10 +19,8 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
-use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 abstract class RequestControllerAbstract extends AbstractController
 {
@@ -46,14 +44,9 @@ abstract class RequestControllerAbstract extends AbstractController
      */
     private $request;
 
-    public function __construct(RequestStack $requestStack)
+    public function setRequest(Request $request): void
     {
-        $request = $requestStack->getMasterRequest();
-        if (null !== $request) {
-            $this->request = $request;
-        } else {
-            new LogicException('No Request found in RequestStack, was null');
-        }
+        $this->request = $request;
     }
 
     protected function getAction(): string

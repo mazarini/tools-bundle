@@ -119,7 +119,7 @@ clean:
 	bin/console cache:clear --env=dev
 	cp var/data/origine.db var/data/sqlite.db
 
-dev:
+testdev:
 	cp var/data/origine.db var/data/sqlite.db
 	sudo rm -r var/cache/test
 	bin/console cache:clear --env=test

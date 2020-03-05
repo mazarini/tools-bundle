@@ -21,9 +21,7 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Data\LinkTree;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class AbstractController extends RequestControllerAbstract
 {
@@ -42,12 +40,18 @@ abstract class AbstractController extends RequestControllerAbstract
      */
     protected $parameters = [];
 
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
+    public function getData(): Data
     {
-        parent::__construct($requestStack);
-        $this->parameters['data'] = $this->data = new Data($router, $this->getBaseRoute(), $this->getAction(), $this->getUrl());
-        $this->parameters['menu'] = $this->menu = new LinkTree('main', 'Menu');
-        $this->beforeAction($this->getAction());
+        if (!isset($this->data)) {
+            $this->parameters['data'] = $this->data = new Data(null, $this->getBaseRoute(), $this->getAction(), $this->getUrl());
+        }
+
+        return $this->data;
+    }
+
+    public function setMenu2(LinkTree $menu): void
+    {
+        $this->parameters['menu'] = $this->menu = $menu;
     }
 
     /**

@@ -28,7 +28,7 @@ class Data
     /**
      * @var UrlGeneratorInterface
      */
-    private $router;
+    private $urlGenerator;
     /**
      * @var string
      */
@@ -53,12 +53,19 @@ class Data
      */
     private $links;
 
-    public function __construct(UrlGeneratorInterface $router, string $baseRoute, string $currentAction, string $currentUrl)
+    public function __construct(?UrlGeneratorInterface $urlGenerator, string $baseRoute, string $currentAction, string $currentUrl)
     {
-        $this->router = $router;
+        if (null !== $urlGenerator) {
+            $this->urlGenerator = $urlGenerator;
+        }
         $this->baseRoute = $baseRoute;
         $this->currentAction = $currentAction;
         $this->links = new Links($currentUrl);
+    }
+
+    public function setUrlGenerator(UrlGeneratorInterface $urlGenerator): void
+    {
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function isCrud(): bool
@@ -144,7 +151,7 @@ class Data
             $route = $this->baseRoute.$route;
         }
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->urlGenerator->generate($route, $parameters, $referenceType);
     }
 
     /**

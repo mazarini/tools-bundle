@@ -20,6 +20,8 @@
 namespace App\Controller;
 
 use Mazarini\TestBundle\Controller\StepController as Base;
+use Mazarini\TestBundle\Tool\Factory;
+use Mazarini\TestBundle\Tool\Folder;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,4 +29,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StepController extends Base
 {
+    public function __construct(Factory $fakeFactory, Folder $folder)
+    {
+        $this->folder = $folder;
+        $this->fakeFactory = $fakeFactory;
+        $this->beforeAction('a');
+    }
 }
