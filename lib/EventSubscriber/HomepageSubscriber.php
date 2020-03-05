@@ -31,11 +31,17 @@ class HomepageSubscriber implements EventSubscriberInterface
     /**
      * @var string
      */
-    private $homepage;
+    private $homePage;
 
-    public function __construct(string $homepage = '/')
+    /**
+     * @var string
+     */
+    private $homeAdmin;
+
+    public function __construct(string $homePage, string $homeAdmin)
     {
-        $this->homepage = $homepage;
+        $this->homePage = $homePage;
+        $this->homeAdmin = $homeAdmin;
     }
 
     /**
@@ -52,13 +58,26 @@ class HomepageSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        if (!$event->getThrowable() instanceof NotFoundHttpException) {
-            return;        // only error 404 (NOT_FOUND)
-        } elseif ('/' !== $event->getRequest()->getPathInfo()) {
-            return;        // only on document root
-        } elseif ('/' === $this->homepage) {
-            return;        // If here, '/' is not found ...
+        if ($event->getThrowable() instanceof NotFoundHttpException && \in_array(trim($event->getRequest()->getPathInfo(), '/'), ['', 'admin'], true)) {
+            if ('/' === $event->getRequest()->getPathInfo()) {
+                $this->redirectHome($event);
+            } else {
+                $this->redirectAdmin($event);
+            }
         }
-        $event->setResponse(new RedirectResponse($this->homepage, Response::HTTP_MOVED_PERMANENTLY));
+    }
+
+    private function redirectAdmin(ExceptionEvent $event): void
+    {
+        if ('admin' !== trim($this->homeAdmin, '/')) {
+            $event->setResponse(new RedirectResponse($this->homeAdmin, Response::HTTP_MOVED_PERMANENTLY));
+        }
+    }
+
+    private function redirectHome(ExceptionEvent $event): void
+    {
+        if ('/' !== $this->homePage) {
+            $event->setResponse(new RedirectResponse($this->homePage, Response::HTTP_MOVED_PERMANENTLY));
+        }
     }
 }

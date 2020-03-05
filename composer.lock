@@ -3130,12 +3130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/bootstrap-bundle.git",
-                "reference": "e3c13ca319d4d7e0d28612338d4bd88eaa837f90"
+                "reference": "b1f1529c2e63a676a6f301036c76330d4cc0012a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/e3c13ca319d4d7e0d28612338d4bd88eaa837f90",
-                "reference": "e3c13ca319d4d7e0d28612338d4bd88eaa837f90",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/b1f1529c2e63a676a6f301036c76330d4cc0012a",
+                "reference": "b1f1529c2e63a676a6f301036c76330d4cc0012a",
                 "shasum": ""
             },
             "require": {
@@ -3159,6 +3159,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/orm": "*",
                 "mazarini/package": "^1.0",
+                "mazarini/pagination-bundle": "^0.9|^1.0@dev",
                 "mazarini/test-bundle": "^0.9|^1.0@dev",
                 "symfony/debug-pack": "^1.0",
                 "symfony/maker-bundle": "^1.14",
@@ -3194,7 +3195,7 @@
             "keywords": [
                 "symfony"
             ],
-            "time": "2020-02-20T08:04:24+00:00"
+            "time": "2020-03-04T12:42:50+00:00"
         },
         {
             "name": "mazarini/package",
@@ -4281,16 +4282,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.14.3",
+            "version": "v1.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded"
+                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c864e7f9b8d1e1f5f60acc3beda11299f637aded",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/b06ebe524357945a4e7ffee42ade880bdf9e1500",
+                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500",
                 "shasum": ""
             },
             "require": {
@@ -4345,7 +4346,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2019-11-07T00:56:03+00:00"
+            "time": "2020-03-02T15:21:16+00:00"
         },
         {
             "name": "symfony/monolog-bridge",

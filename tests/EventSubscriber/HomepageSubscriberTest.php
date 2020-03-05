@@ -37,20 +37,19 @@ class HomepageSubscriberTest extends TestCase
      *
      * @dataProvider getTestCase
      */
-    public function testHomepageSubscriber(string $homepage, string $pathInfo, \Throwable $exception, bool $redirect): void
+    public function testHomepageSubscriber(string $home, string $pathInfo, \Throwable $exception, bool $redirect): void
     {
-        $subscriber = new HomepageSubscriber($homepage);
         $request = new Request();
         $this->setObject($request, ['pathInfo' => $pathInfo]);
         $exceptionEvent = new ExceptionEvent(new Kernel('test', false), $request, 1, $exception);
-        $subscriber = new HomepageSubscriber($homepage);
+        $subscriber = new HomepageSubscriber($home, $home);
         $subscriber->OnKernelException($exceptionEvent);
         $response = $exceptionEvent->getResponse();
         if ($redirect) {
             $this->assertTrue($response instanceof RedirectResponse);
             if ($response instanceof RedirectResponse) {
                 $this->assertSame(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
-                $this->assertSame($homepage, $response->getTargetUrl());
+                $this->assertSame($home, $response->getTargetUrl());
             }
         } else {
             $this->assertNull($response);
@@ -64,10 +63,13 @@ class HomepageSubscriberTest extends TestCase
      */
     public function getTestCase(): \Traversable
     {
-        yield ['/exemple', '/', new NotFoundHttpException(), true];        // redirect to /exemple
-        yield ['/', '/', new NotFoundHttpException(), false];              // not redirect to /
-        yield ['/exemple', '/toto', new NotFoundHttpException(), false];   // not homepage "/"
-        yield ['/exemple', '/', new AccessDeniedHttpException(), false];   // not 404
+        yield ['/exemple', '/', new NotFoundHttpException(), true];            // redirect to /exemple
+        yield ['/exemple', '/admin', new NotFoundHttpException(), true];       // redirect to /exemple
+        yield ['/', '/', new NotFoundHttpException(), false];                  // not redirect to /
+        yield ['/admin', '/admin', new NotFoundHttpException(), false];        // not redirect to /admin
+        yield ['/exemple', '/toto', new NotFoundHttpException(), false];       // not homepage or homeAdmin"/"
+        yield ['/exemple', '/', new AccessDeniedHttpException(), false];       // not 404
+        yield ['/exemple', '/admin', new AccessDeniedHttpException(), false];  // not 404
     }
 
     /**

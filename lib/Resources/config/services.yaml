@@ -8,25 +8,12 @@ parameters:
 services:
     # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        # autowire: true      # Automatically injects dependencies in your services.
+        # autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $homePage: '%home_page%'
+            $homeAdmin: '%home_admin%'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    Mazarini\ToolsBundle\:
-        resource: '../../*'
-        exclude: '../../{DependencyInjection,Entity,EventSubscriber,Migrations,Tests,Kernel.php}'
-
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    Mazarini\ToolsBundle\Controller\:
-        resource: '../../Controller'
-        tags: ['controller.service_arguments']
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-
-    mazarini_tools.homepage_subscriber:
+    # Redidect for / and /admin
+    mazarini_toolsBundle.HomepageSubscriber:
         class: Mazarini\ToolsBundle\EventSubscriber\HomepageSubscriber
-        arguments:
-            $homepage: '/step'
