@@ -20,28 +20,21 @@
 namespace Mazarini\ToolsBundle\Data;
 
 use Mazarini\PaginationBundle\Tool\PaginationInterface;
+use Mazarini\ToolsBundle\Entity\ChildEntityInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Mazarini\ToolsBundle\Entity\ParentEntityInterface;
 
 class Data
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-    /**
-     * @var string
-     */
-    private $baseRoute;
     /**
      * @var string
      */
     private $currentAction;
 
     /**
-     * @var PaginationInterface
+     * @var ParentEntityInterface
      */
-    private $pagination;
+    private $parentEntity;
 
     /**
      * @var EntityInterface
@@ -49,28 +42,34 @@ class Data
     private $entity;
 
     /**
-     * @var Links
+     * @var PaginationInterface
      */
-    private $links;
+    private $pagination;
 
-    public function __construct(?UrlGeneratorInterface $urlGenerator, string $baseRoute, string $currentAction, string $currentUrl)
+    /**
+     * Get the value of currentAction.
+     */
+    public function getCurrentAction(): string
     {
-        if (null !== $urlGenerator) {
-            $this->urlGenerator = $urlGenerator;
-        }
-        $this->baseRoute = $baseRoute;
+        return $this->currentAction;
+    }
+
+    /**
+     * Set the value of currentAction.
+     */
+    public function setCurrentAction(string $currentAction): self
+    {
         $this->currentAction = $currentAction;
-        $this->links = new Links($currentUrl);
+
+        return $this;
     }
 
-    public function setUrlGenerator(UrlGeneratorInterface $urlGenerator): void
+    /**
+     * IsSet the value of entity ?
+     */
+    public function isSetEntity(): bool
     {
-        $this->urlGenerator = $urlGenerator;
-    }
-
-    public function isCrud(): bool
-    {
-        return $this->isSetEntities() || $this->isSetEntity();
+        return isset($this->entity);
     }
 
     public function isSetEntities(): bool
@@ -107,14 +106,6 @@ class Data
     }
 
     /**
-     * IsSet the value of entity ?
-     */
-    public function isSetEntity(): bool
-    {
-        return isset($this->entity);
-    }
-
-    /**
      * Get the value of entity.
      */
     public function getEntity(): EntityInterface
@@ -128,82 +119,27 @@ class Data
     public function setEntity(EntityInterface $entity): self
     {
         $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of links.
-     */
-    public function getLinks(): Links
-    {
-        return $this->links;
-    }
-
-    /**
-     * generateUrl.
-     *
-     * @param array<string,mixed> $parameters
-     */
-    public function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
-        if ('_' === mb_substr($route, 0, 1)) {
-            $route = $this->baseRoute.$route;
+        if ($entity instanceof ChildEntityInterface) {
+            $this->parentEntity = $entity->getParent();
         }
 
-        return $this->urlGenerator->generate($route, $parameters, $referenceType);
-    }
-
-    /**
-     * addLink.
-     */
-    public function addLink(string $name, string $url, string $label = ''): self
-    {
-        $this->links->addLink(new Link($name, $url, $label));
-
         return $this;
     }
 
     /**
-     * Get the value of route.
+     * Get the value of entity.
      */
-    public function getRoute(): string
+    public function getParentEntity(): ParentEntityInterface
     {
-        return $this->baseRoute.'_'.$this->currentAction;
+        return $this->parentEntity;
     }
 
     /**
-     * Get the value of baseRoute.
+     * Set the value of entity.
      */
-    public function getBaseRoute(): string
+    public function setParentEntity(ParentEntityInterface $parentEntity): self
     {
-        return $this->baseRoute;
-    }
-
-    /**
-     * Set the value of baseRoute.
-     */
-    public function setBaseRoute(string $baseRoute): self
-    {
-        $this->baseRoute = $baseRoute;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of currentAction.
-     */
-    public function getCurrentAction(): string
-    {
-        return $this->currentAction;
-    }
-
-    /**
-     * Set the value of currentAction.
-     */
-    public function setCurrentAction(string $currentAction): self
-    {
-        $this->currentAction = $currentAction;
+        $this->parentEntity = $parentEntity;
 
         return $this;
     }

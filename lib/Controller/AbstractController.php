@@ -20,7 +20,6 @@
 namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Data\LinkTree;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController extends RequestControllerAbstract
@@ -31,27 +30,27 @@ abstract class AbstractController extends RequestControllerAbstract
     protected $data;
 
     /**
-     * @var LinkTree
-     */
-    protected $menu;
-
-    /**
      * @var array<string,mixed>
      */
     protected $parameters = [];
 
-    public function getData(): Data
+    /**
+     * beforeAction.
+     *
+     * @param array<string,mixed> $arguments
+     */
+    public function beforeAction(string $method, array $arguments): void
     {
-        if (!isset($this->data)) {
-            $this->parameters['data'] = $this->data = new Data(null, $this->getBaseRoute(), $this->getAction(), $this->getUrl());
-        }
-
-        return $this->data;
+        $this->data = new Data();
+        $this->data->setCurrentAction($this->getAction());
     }
 
-    public function setMenu2(LinkTree $menu): void
+    protected function afterAction(): void
     {
-        $this->parameters['menu'] = $this->menu = $menu;
+    }
+
+    protected function beforeRender(): void
+    {
     }
 
     /**
@@ -61,32 +60,27 @@ abstract class AbstractController extends RequestControllerAbstract
      */
     protected function dataRender(string $view, array $parameters = [], Response $response = null): Response
     {
-        $this->afterAction($this->getAction());
+        /*
+         * Finalize parameters
+         */
+        $this->parameters['data'] = $this->data;
         $this->parameters = array_merge($this->parameters, $parameters);
-        $this->setUrl($this->data);
-        $this->setMenu($this->menu);
-        $this->beforeRender($this->getAction());
+        /**
+         * After an action and only this one if something planned.
+         */
+        $method = 'afterAction'.$this->method;
+        if (method_exists($this, $method)) {
+            $this->$method();
+        }
+        /*
+         * After all action if something planned
+         */
+        $this->afterAction();
+
+        if (method_exists($this, 'beforeRender')) {
+            $this->beforeRender();
+        }
 
         return $this->render($this->getTwigFolder().$view, $this->parameters, $response);
-    }
-
-    protected function beforeAction(string $action): void
-    {
-    }
-
-    protected function afterAction(string $action): void
-    {
-    }
-
-    protected function beforeRender(string $action): void
-    {
-    }
-
-    protected function setUrl(Data $data): void
-    {
-    }
-
-    protected function setMenu(LinkTree $tree): void
-    {
     }
 }

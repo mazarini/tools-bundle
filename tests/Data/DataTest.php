@@ -21,9 +21,7 @@ namespace App\Tests\Data;
 
 use Mazarini\PaginationBundle\Tool\Pagination;
 use Mazarini\TestBundle\Fake\Entity;
-use Mazarini\TestBundle\Fake\UrlGenerator;
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Data\Link;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -41,12 +39,8 @@ class DataTest extends KernelTestCase
 
     public function setUp(): void
     {
-        $this->data = new Data(new UrlGenerator(), 'base', 'route', '/current');
-        $this->data->addLink('url', '/url', 'Url');
-        $this->data->addLink('relative', $this->data->generateUrl('_route', ['p1' => 'v1', 'p2' => 'v2']), 'Relative url with parameters');
-        $this->data->addLink('base', $this->data->generateUrl('route', ['p1' => 'v1', 'p2' => 'v2']), 'Url with parameters');
-        $this->data->addLink('current', '/current', 'Current');
-
+        $this->data = new Data();
+        $this->data->setCurrentAction('route');
         $this->entity = new Entity(1);
     }
 
@@ -73,35 +67,5 @@ class DataTest extends KernelTestCase
         $this->assertSame($pagination, $this->data->getPagination());
         $this->assertTrue($this->data->isSetEntities());
         $this->assertSame($this->entity, $this->data->getEntities()->current());
-    }
-
-    /**
-     * testUrls.
-     *
-     * @dataProvider getLink
-     */
-    public function testLink(string $name, string $url, string $class, string $label): void
-    {
-        $link = $this->data->getLinks()[$name];
-        $this->assertTrue(is_a($link, Link::class));
-        if (is_a($link, Link::class)) {
-            $this->assertSame($link->getUrl(), $url);
-            $this->assertSame($link->getClass(), $class);
-            $this->assertSame($link->getLabel(), $label);
-        }
-    }
-
-    /**
-     * getLink.
-     *
-     * @return \Traversable<int,array>
-     */
-    public function getLink(): \Traversable
-    {
-        yield ['url', '/url', '', 'Url'];
-        yield ['relative', '#base_route-v1-v2', '', 'Relative url with parameters'];
-        yield ['base', '#route-v1-v2', '', 'Url with parameters'];
-        yield ['x', '#', ' disabled', 'X'];
-        yield ['current', '', ' active', 'Current'];
     }
 }

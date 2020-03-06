@@ -19,20 +19,165 @@
 
 namespace App\Controller;
 
-use Mazarini\TestBundle\Controller\StepController as Base;
 use Mazarini\TestBundle\Tool\Factory;
 use Mazarini\TestBundle\Tool\Folder;
+use Mazarini\ToolsBundle\Controller\AbstractController;
+use Mazarini\ToolsBundle\Data\Link;
+use Mazarini\ToolsBundle\Data\LinkTree;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/step")
  */
-class StepController extends Base
+class StepController extends AbstractController
 {
+    /**
+     * @var Folder
+     */
+    protected $folder;
+
+    /**
+     * @var Factory
+     */
+    protected $fakeFactory;
+
+    /**
+     * @var array<string,string>
+     */
+    protected $steps = [];
+
+    /**
+     * @var string
+     */
+    protected $step = '';
+
+    /**
+     * @var array<string,string>
+     */
+    protected $pages = [];
+
+    /**
+     * @var string
+     */
+    protected $page = '';
+
+    /**
+     * __construct.
+     */
     public function __construct(Factory $fakeFactory, Folder $folder)
     {
         $this->folder = $folder;
         $this->fakeFactory = $fakeFactory;
-        $this->beforeAction('a');
+    }
+
+    /**
+     * @Route("/", name="step_home")
+     */
+    public function home(): Response
+    {
+        $step = array_key_first($this->steps);
+        if (null === $step) {
+            $step = '';
+        }
+
+        return $this->homeStep($step);
+    }
+
+    /**
+     * @Route("/{step}", name="step_home_step")
+     */
+    public function homeStep(string $step): Response
+    {
+        if (!isset($this->steps[$step])) {
+            $currentUrl = $this->generateUrl('step_home_step', ['step' => $step]);
+            $tryUrl = $this->generateUrl('step_home_step', ['step' => array_key_first($this->steps)]);
+            throw $this->createNotFoundException(sprintf('The step "%s" does not exist. Try <a href="%s">%s</a>', $currentUrl, $tryUrl, $tryUrl));
+        }
+
+        $this->pages = $this->folder->getPages($this->steps[$step]);
+
+        return $this->redirectToRoute('step_index', ['step' => $step, 'page' => array_key_first($this->pages)], Response::HTTP_MOVED_PERMANENTLY);
+    }
+
+    /**
+     * @Route("/{step}/{page}.html", name="step_index")
+     */
+    public function index(Folder $folder, string $step, string $page): Response
+    {
+        if (!isset($this->steps[$step])) {
+            $currentUrl = $this->generateUrl('step_home_step', ['step' => $step]);
+            $tryUrl = $this->generateUrl('step_home_step', ['step' => array_key_first($this->steps)]);
+            throw $this->createNotFoundException(sprintf('The step "%s" does not exist. Try <a href="%s">%s</a>', $currentUrl, $tryUrl, $tryUrl));
+        }
+
+        $parameters['pages'] = $this->pages = $this->folder->getPages($this->steps[$step]);
+
+        if (!isset($this->pages[$page])) {
+            $currentUrl = $this->generateUrl('step_index', ['step' => $step, 'page' => $page]);
+            $tryUrl = $this->generateUrl('step_index', ['step' => $step, 'page' => array_key_first($this->pages)]);
+            throw $this->createNotFoundException(sprintf('The page "%s" does not exist. Try <a href="%s">%s</a>', $currentUrl, $tryUrl, $tryUrl));
+        }
+
+        $parameters['step'] = $this->step = $step;
+        $parameters['page'] = $this->page = $page;
+
+        return $this->dataRender($this->steps[$step].'/'.$this->pages[$page], $parameters);
+    }
+
+    public function setMenu(LinkTree $menu): void
+    {
+        $this->parameters['menu'] = $menu;
+        foreach (array_keys($this->steps) as $step) {
+            $link = new LinkTree($step);
+            $menu[$step] = $link;
+            if ($step === $this->step) {
+                $link->active();
+                $pages = $this->pages;
+            } else {
+                $pages = $this->folder->getPages($this->steps[$step]);
+            }
+            foreach (array_keys($pages) as $page) {
+                if (($page === $this->page) && ($step === $this->step)) {
+                    $link[$page] = new Link($page, '');
+                } else {
+                    $link[$page] = new Link($page, $this->generateUrl('step_index', ['step' => $step, 'page' => $page]));
+                }
+            }
+        }
+    }
+
+    /**
+     * beforeAction.
+     *
+     * @param array<string,mixed> $arguments
+     */
+    public function beforeAction(string $method, array $arguments): void
+    {
+        parent::beforeAction($method, $arguments);
+        $this->parameters['steps'] = $this->steps = $this->folder->getSteps();
+    }
+
+    protected function afterAction(): void
+    {
+        $this->parameters['symfony']['version'] = Kernel::VERSION;
+        $this->parameters['php']['version'] = PHP_VERSION;
+        $this->parameters['php']['extensions'] = get_loaded_extensions();
+
+        $this->parameters['tree'] = $tree = $this->fakeFactory->getTree('Tree', 'item', 5);
+        $tree['item-1'] = $item1 = $this->fakeFactory->getTree('Item-1', 'item-1', 2);
+        $item1['item-1-1'] = $this->fakeFactory->getTree('Item-1-1', 'item-1-1', 3);
+        $item1['item-1-2'] = $this->fakeFactory->getTree('Item-1-2', 'item-1-2', 2);
+        $tree['item-2'] = $this->fakeFactory->getTree('Item-2', 'item-2', 2);
+        $tree['item-4'] = $this->fakeFactory->getTree('Item-4', 'item-4', 2);
+
+        $this->parameters['list'] = $this->fakeFactory->getLinks('item', 7);
+        $this->parameters['list']['item-4'] = new Link('item-4', '#', 'Disable');
+        /*
+                $this->parameters['dataLinks'] = $this->fakeFactory->getLinksData();
+                $this->parameters['dataPagination'] = $this->fakeFactory->getPaginationData();
+                $this->parameters['dataCrud'] = $this->fakeFactory->getCrudData();
+        */
     }
 }

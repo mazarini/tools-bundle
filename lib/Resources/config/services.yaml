@@ -14,6 +14,5 @@ services:
     mazarini_tools.controller_subscriber:
         class: Mazarini\ToolsBundle\EventSubscriber\ControllerSubscriber
 
-    mazarini_tools.Link_extension:
-        class: Mazarini\ToolsBundle\Twig\LinkExtension
+    Mazarini\ToolsBundle\Twig\LinkExtension:
         tags: ['twig.extension']

@@ -19,8 +19,8 @@
 
 namespace Mazarini\ToolsBundle\EventSubscriber;
 
-use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Data\LinkTree;
+use Mazarini\ToolsBundle\Twig\LinkExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -35,13 +35,19 @@ class ControllerSubscriber implements EventSubscriberInterface
     private $urlGenerator;
 
     /**
+     * @var LinkExtension
+     */
+    private $linkExtension;
+
+    /**
      * @var LinkTree
      */
     private $menu;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, ?LinkTree $menu = null)
+    public function __construct(UrlGeneratorInterface $urlGenerator, LinkExtension $linkExtension, ?LinkTree $menu = null)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->linkExtension = $linkExtension;
         if (null === $menu) {
             $this->menu = new LinkTree('main', 'Menu');
         } else {
@@ -77,10 +83,6 @@ class ControllerSubscriber implements EventSubscriberInterface
         if (method_exists($controller, 'setRequest')) {
             $controller->setRequest($event->getRequest());
         }
-
-        if (method_exists($controller, 'setMenu2')) {
-            $controller->setMenu2($this->menu);
-        }
     }
 
     /**
@@ -93,24 +95,27 @@ class ControllerSubscriber implements EventSubscriberInterface
     {
         $arguments = $event->getArguments();
         $controller = $event->getController();
-        if (\is_array($controller)) {
+        if (\is_array($controller) && isset($controller[0])) {
             $method = $controller[1];
             $controller = $controller[0];
         } else {
             $method = '';
         }
-        if (method_exists($controller, 'getData')) {
-            $this->initData($controller->getData(), $event->getArguments());
+        if (method_exists($controller, 'beforeAction')) {
+            $controller->beforeAction($method, $arguments);
         }
-    }
-
-    /**
-     * initData.
-     *
-     * @param array<string,mixed> $arguments
-     */
-    private function initData(Data $data, array $arguments): void
-    {
-        $data->setUrlGenerator($this->urlGenerator);
+        $before = 'beforeAction'.$method;
+        if ('' !== $method && method_exists($controller, 'beforeAction'.$method)) {
+            $controller->beforeAction($method, $arguments);
+        }
+        if ('' !== $method) {
+            $before = 'beforeAction'.$method;
+            if (method_exists($controller, 'beforeAction'.$method)) {
+                $controller->beforeAction($method, $arguments);
+            }
+        }
+        if (method_exists($controller, 'setMenu')) {
+            $controller->setMenu($this->menu);
+        }
     }
 }

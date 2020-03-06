@@ -44,9 +44,24 @@ abstract class RequestControllerAbstract extends AbstractController
      */
     private $request;
 
+    /**
+     * @var string
+     */
+    protected $method = '';
+
     public function setRequest(Request $request): void
     {
         $this->request = $request;
+    }
+
+    /**
+     * beforeAction.
+     *
+     * @param array<string,mixed> $arguments
+     */
+    public function beforeAction(string $method, array $arguments): void
+    {
+        $this->method = '' === $method ? '_' : $method;
     }
 
     protected function getAction(): string
@@ -74,10 +89,5 @@ abstract class RequestControllerAbstract extends AbstractController
         }
 
         return $this->twigFolder;
-    }
-
-    protected function getUrl(): string
-    {
-        return $this->request->getPathInfo();
     }
 }
