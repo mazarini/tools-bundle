@@ -19,7 +19,14 @@
 
 namespace Mazarini\ToolsBundle\Entity;
 
-class Entity implements EntityInterface
+interface ParentEntityInterface extends EntityInterface
 {
-    use EntityTrait;
+    public function hasChilds(): bool;
+
+    /**
+     * getChilds.
+     *
+     * @return array<int,ChildEntityInterface>
+     */
+    public function getChilds(): array;
 }
