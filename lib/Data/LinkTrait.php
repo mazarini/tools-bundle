@@ -41,13 +41,34 @@ trait LinkTrait
         return $this->name;
     }
 
+    public function setName(string $name): LinkInterface
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getUrl(): string
     {
         return $this->url;
     }
 
+    public function setUrl(string $url): LinkInterface
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
     public function getLabel(): string
     {
         return $this->label;
+    }
+
+    public function setLabel(string $label): LinkInterface
+    {
+        $this->label = $label;
+
+        return $this;
     }
 }

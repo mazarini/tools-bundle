@@ -1,0 +1,9 @@
+{% extends '@MazariniTest/step/layout.html.twig' %}
+
+{% block content %}
+	{{ dump(entityLink('entityLink','route',entityFactory(2))) }}
+	{{ dump(indexLink('indexLink')) }}
+	{{ dump(pageLink(1,'pageLink')) }}
+	{{ dump(childLink('childLink','route')) }}
+	{{ dump(link('link','route',{'id': 1})) }}
+{% endblock content %}

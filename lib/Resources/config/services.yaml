@@ -11,5 +11,9 @@ services:
          autowire: true      # Automatically injects dependencies in your services.
          autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    mazarini_toolsBundle.ControllerSubscriber:
+    mazarini_tools.controller_subscriber:
         class: Mazarini\ToolsBundle\EventSubscriber\ControllerSubscriber
+
+    mazarini_tools.Link_extension:
+        class: Mazarini\ToolsBundle\Twig\LinkExtension
+        tags: ['twig.extension']

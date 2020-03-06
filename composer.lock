@@ -3341,12 +3341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "d44492ee8897e73b1a65f6e087c540791800fbe3"
+                "reference": "e7eb1413802dd833bc6aec96ccaa8f746b89693c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/d44492ee8897e73b1a65f6e087c540791800fbe3",
-                "reference": "d44492ee8897e73b1a65f6e087c540791800fbe3",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/e7eb1413802dd833bc6aec96ccaa8f746b89693c",
+                "reference": "e7eb1413802dd833bc6aec96ccaa8f746b89693c",
                 "shasum": ""
             },
             "require": {
@@ -3413,7 +3413,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-02-29T19:15:49+00:00"
+            "time": "2020-03-05T19:08:46+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4282,16 +4282,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.14.4",
+            "version": "v1.14.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500"
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/b06ebe524357945a4e7ffee42ade880bdf9e1500",
-                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/bc4df88792fbaaeb275167101dc714218475db5f",
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f",
                 "shasum": ""
             },
             "require": {
@@ -4346,7 +4346,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2020-03-02T15:21:16+00:00"
+            "time": "2020-03-04T13:57:29+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
