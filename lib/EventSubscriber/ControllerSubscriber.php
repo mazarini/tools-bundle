@@ -111,12 +111,6 @@ class ControllerSubscriber implements EventSubscriberInterface
         if ('' !== $method && method_exists($controller, 'beforeAction'.$method)) {
             $controller->beforeAction($method, $arguments);
         }
-        if ('' !== $method) {
-            $before = 'beforeAction'.$method;
-            if (method_exists($controller, 'beforeAction'.$method)) {
-                $controller->beforeAction($method, $arguments);
-            }
-        }
         if (method_exists($controller, 'setMenu')) {
             $controller->setMenu($this->menu);
         }

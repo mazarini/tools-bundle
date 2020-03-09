@@ -69,7 +69,7 @@ abstract class RequestControllerAbstract extends AbstractController
     /**
      * beforeAction.
      *
-     * @param array<string,mixed> $arguments
+     * @param array<int,mixed> $arguments
      */
     public function beforeAction(string $method, array $arguments): void
     {
