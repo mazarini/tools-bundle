@@ -19,6 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
+use Mazarini\ToolsBundle\Twig\LinkExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,6 +46,11 @@ abstract class RequestControllerAbstract extends AbstractController
     private $request;
 
     /**
+     * @var LinkExtension
+     */
+    protected $linkExtension;
+
+    /**
      * @var string
      */
     protected $method = '';
@@ -52,6 +58,12 @@ abstract class RequestControllerAbstract extends AbstractController
     public function setRequest(Request $request): void
     {
         $this->request = $request;
+    }
+
+    public function setLinkExtension(LinkExtension $linkExtension): void
+    {
+        $this->linkExtension = $linkExtension;
+        $linkExtension->setBaseRoute($this->getBaseRoute());
     }
 
     /**

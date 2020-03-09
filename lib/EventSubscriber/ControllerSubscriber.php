@@ -83,6 +83,9 @@ class ControllerSubscriber implements EventSubscriberInterface
         if (method_exists($controller, 'setRequest')) {
             $controller->setRequest($event->getRequest());
         }
+        if (method_exists($controller, 'setLinkExtension')) {
+            $controller->setLinkExtension($this->linkExtension);
+        }
     }
 
     /**
