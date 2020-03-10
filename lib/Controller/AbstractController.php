@@ -19,30 +19,31 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
+use Mazarini\PaginationBundle\Repository\EntityRepositoryAbstract;
 use Mazarini\ToolsBundle\Entity\ChildEntityInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentEntityInterface;
 
-abstract class AbstractController extends DataControllerAbstract
+abstract class AbstractController extends ActionControllerAbstract
 {
     /**
      * @var array<string,mixed>
      */
     protected $parentParameters;
 
-    protected function setEntity(EntityInterface $entity)
+    protected function setEntity(EntityInterface $entity): void
     {
         $this->data->setEntity($entity);
         if ($entity instanceof ChildEntityInterface) {
-            $this->setParentEntity($entity->getParent);
+            $this->setParentEntity($entity->getParent());
         }
     }
 
-    protected function setParentEntity(?ParentEntityInterface $parentEntity, ?EntityRepositoryAbstract $repository = null)
+    protected function setParentEntity(?ParentEntityInterface $parentEntity, ?EntityRepositoryAbstract $repository = null): void
     {
         if ($parentEntity instanceof ParentEntityInterface) {
             $this->parentParameters = ['id' => $parentEntity->getId()];
-            $this->linkExtension->setParentParameters($this->parentParameters);
+            $this->linkGenerator->setParentParameters($this->parentParameters);
             $this->data->setParentEntity($parentEntity);
             if (null !== $repository) {
                 if (method_exists($repository, 'setParentEntity')) {

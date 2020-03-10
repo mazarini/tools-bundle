@@ -86,7 +86,7 @@ abstract class RequestControllerAbstract extends AbstractController
 
     protected function getRoute(string $action): string
     {
-        return $this->getBaseRoute.'_'.$action;
+        return trim($this->getBaseRoute().'_'.trim($action, '_'), '_');
     }
 
     protected function getTwigFolder(): string

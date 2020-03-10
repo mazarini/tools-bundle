@@ -25,6 +25,11 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class ActionControllerAbstract extends RequestControllerAbstract
 {
     /**
+     * @var Data
+     */
+    protected $data;
+
+    /**
      * @var array<string,mixed>
      */
     protected $parameters = [];
@@ -69,9 +74,9 @@ abstract class ActionControllerAbstract extends RequestControllerAbstract
         /*
          * After an action and only this one if something planned.
          */
-        if ('' !== $method) {
+        if ('' !== $this->method) {
             $method = 'afterAction'.ucfirst($this->method);
-            if ('' !== $method && method_exists($this, $method)) {
+            if (method_exists($this, $method)) {
                 $this->$method();
             }
         }
