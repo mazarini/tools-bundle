@@ -22,11 +22,4 @@ namespace Mazarini\ToolsBundle\Entity;
 interface ParentEntityInterface extends EntityInterface
 {
     public function hasChilds(): bool;
-
-    /**
-     * getChilds.
-     *
-     * @return array<int,ChildEntityInterface>
-     */
-    public function getChilds(): array;
 }

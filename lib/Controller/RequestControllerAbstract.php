@@ -43,12 +43,12 @@ abstract class RequestControllerAbstract extends AbstractController
     /**
      * @var Request
      */
-    private $request;
+    protected $request;
 
     /**
      * @var LinkExtension
      */
-    protected $linkExtension;
+    protected $linkGenerator;
 
     /**
      * @var string
@@ -62,18 +62,8 @@ abstract class RequestControllerAbstract extends AbstractController
 
     public function setLinkExtension(LinkExtension $linkExtension): void
     {
-        $this->linkExtension = $linkExtension;
+        $this->linkGenerator = $linkExtension;
         $linkExtension->setBaseRoute($this->getBaseRoute());
-    }
-
-    /**
-     * beforeAction.
-     *
-     * @param array<int,mixed> $arguments
-     */
-    public function beforeAction(string $method, array $arguments): void
-    {
-        $this->method = '' === $method ? '_' : $method;
     }
 
     protected function getAction(): string
@@ -92,6 +82,11 @@ abstract class RequestControllerAbstract extends AbstractController
         }
 
         return $this->baseRoute;
+    }
+
+    protected function getRoute(string $action): string
+    {
+        return $this->getBaseRoute.'_'.$action;
     }
 
     protected function getTwigFolder(): string

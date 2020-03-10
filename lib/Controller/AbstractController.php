@@ -19,68 +19,36 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
-use Mazarini\ToolsBundle\Data\Data;
-use Symfony\Component\HttpFoundation\Response;
+use Mazarini\ToolsBundle\Entity\ChildEntityInterface;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Entity\ParentEntityInterface;
 
-abstract class AbstractController extends RequestControllerAbstract
+abstract class AbstractController extends DataControllerAbstract
 {
-    /**
-     * @var Data
-     */
-    protected $data;
-
     /**
      * @var array<string,mixed>
      */
-    protected $parameters = [];
+    protected $parentParameters;
 
-    /**
-     * beforeAction.
-     *
-     * @param array<int,mixed> $arguments
-     */
-    public function beforeAction(string $method, array $arguments): void
+    protected function setEntity(EntityInterface $entity)
     {
-        $this->data = new Data();
-        $this->data->setCurrentAction($this->getAction());
-    }
-
-    protected function afterAction(): void
-    {
-    }
-
-    protected function beforeRender(): void
-    {
-    }
-
-    /**
-     * DataRender.
-     *
-     * @param array<string,mixed> $parameters
-     */
-    protected function dataRender(string $view, array $parameters = [], Response $response = null): Response
-    {
-        /*
-         * Finalize parameters
-         */
-        $this->parameters['data'] = $this->data;
-        $this->parameters = array_merge($this->parameters, $parameters);
-        /**
-         * After an action and only this one if something planned.
-         */
-        $method = 'afterAction'.$this->method;
-        if (method_exists($this, $method)) {
-            $this->$method();
+        $this->data->setEntity($entity);
+        if ($entity instanceof ChildEntityInterface) {
+            $this->setParentEntity($entity->getParent);
         }
-        /*
-         * After all action if something planned
-         */
-        $this->afterAction();
+    }
 
-        if (method_exists($this, 'beforeRender')) {
-            $this->beforeRender();
+    protected function setParentEntity(?ParentEntityInterface $parentEntity, ?EntityRepositoryAbstract $repository = null)
+    {
+        if ($parentEntity instanceof ParentEntityInterface) {
+            $this->parentParameters = ['id' => $parentEntity->getId()];
+            $this->linkExtension->setParentParameters($this->parentParameters);
+            $this->data->setParentEntity($parentEntity);
+            if (null !== $repository) {
+                if (method_exists($repository, 'setParentEntity')) {
+                    $repository->setParentEntity($parentEntity);
+                }
+            }
         }
-
-        return $this->render($this->getTwigFolder().$view, $this->parameters, $response);
     }
 }
