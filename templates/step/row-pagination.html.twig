@@ -1,0 +1,7 @@
+<tr>
+	<td>{{ data.pagination.currentPage ~ ' / ' ~ data.pagination.lastPage }}</td>
+	<td>{{ data.entities.count ~ ' / ' ~ data.pagination.totalCount }}</td>
+	<td>
+		{% block content_pagination %}{% endblock content_pagination %}
+	</td>
+</tr>

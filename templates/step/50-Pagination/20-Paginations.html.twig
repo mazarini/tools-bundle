@@ -1,0 +1,46 @@
+{% extends '@MazariniTest/step/layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.table ul {
+			margin-bottom: 0;
+		}
+	</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Current page</th>
+				<th>Lines</th>
+				<th>Pagination</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% embed 'step/row-pagination.html.twig' with {'data': dataPagination(1,10,0,10)} %}
+                    {% block content_pagination %}
+                    {{ dump(data.pagination) }}
+                    {% endblock content_pagination %}
+            {% endembed %}
+            {% embed 'step/row-pagination.html.twig' with {'data': dataPagination(1,10,9,10)} %}
+                    {% block content_pagination %}
+                    {{ dump(data.pagination) }}
+                    {% endblock content_pagination %}
+            {% endembed %}
+            {% embed 'step/row-pagination.html.twig' with {'data': dataPagination(1,10,19,10)} %}
+                    {% block content_pagination %}
+                    {{ dump(data.pagination) }}
+                    {% endblock content_pagination %}
+            {% endembed %}
+            {% embed 'step/row-pagination.html.twig' with {'data': dataPagination(2,10,19,10)} %}
+                    {% block content_pagination %}
+                    {{ dump(data.pagination) }}
+                    {% endblock content_pagination %}
+            {% endembed %}
+        </tbody>
+	</table>
+
+{% endblock content %}

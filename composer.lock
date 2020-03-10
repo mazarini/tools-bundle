@@ -3130,12 +3130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/bootstrap-bundle.git",
-                "reference": "b1f1529c2e63a676a6f301036c76330d4cc0012a"
+                "reference": "2b880a5b1c9ca0209da2551a3bfab4ac247ad28d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/b1f1529c2e63a676a6f301036c76330d4cc0012a",
-                "reference": "b1f1529c2e63a676a6f301036c76330d4cc0012a",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/2b880a5b1c9ca0209da2551a3bfab4ac247ad28d",
+                "reference": "2b880a5b1c9ca0209da2551a3bfab4ac247ad28d",
                 "shasum": ""
             },
             "require": {
@@ -3195,7 +3195,7 @@
             "keywords": [
                 "symfony"
             ],
-            "time": "2020-03-04T12:42:50+00:00"
+            "time": "2020-03-09T17:41:55+00:00"
         },
         {
             "name": "mazarini/package",
