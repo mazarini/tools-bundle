@@ -23,6 +23,7 @@ use Mazarini\PaginationBundle\Tool\PaginationInterface;
 use Mazarini\ToolsBundle\Entity\ChildEntityInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentEntityInterface;
+use Symfony\Component\Form\FormView;
 
 class Data
 {
@@ -30,6 +31,11 @@ class Data
      * @var string
      */
     private $currentAction;
+
+    /**
+     * @var FormView
+     */
+    private $FormView;
 
     /**
      * @var ParentEntityInterface
@@ -140,6 +146,32 @@ class Data
     public function setParentEntity(ParentEntityInterface $parentEntity): self
     {
         $this->parentEntity = $parentEntity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of FormView.
+     */
+    public function isSetFormView(): bool
+    {
+        return isset($this->FormView);
+    }
+
+    /**
+     * Get the value of FormView.
+     */
+    public function getFormView(): FormView
+    {
+        return $this->FormView;
+    }
+
+    /**
+     * Set the value of FormView.
+     */
+    public function setFormView(FormView $FormView): self
+    {
+        $this->FormView = $FormView;
 
         return $this;
     }
