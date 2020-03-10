@@ -67,6 +67,7 @@ class LinkExtension extends AbstractExtension
             new TwigFunction('indexLink', [$this, 'getIndexLink']),
             new TwigFunction('pageLink', [$this, 'getPageLink']),
             new TwigFunction('childLink', [$this, 'getChildLink']),
+            new TwigFunction('disableLink', [$this, 'getDisableLink']),
             new TwigFunction('link', [$this, 'getLink']),
         ];
     }
@@ -114,7 +115,22 @@ class LinkExtension extends AbstractExtension
      */
     public function getLink(string $label, string $route, array $parameters = []): Link
     {
-        return new Link($label, $this->generateUrl($route, $parameters), $label);
+        if ('/' === mb_substr($route, 0, 1) || '#' === $route) {
+            $url = $route;
+        } else {
+            $url = $this->generateUrl($route, $parameters);
+        }
+        $name = mb_strtolower(str_replace(' ', '_', $label));
+
+        return new Link($label, $url, $label);
+    }
+
+    /**
+     * getDisableLink.
+     */
+    public function getDisableLink(string $label): Link
+    {
+        return $this->getLink($label, '#');
     }
 
     /**
