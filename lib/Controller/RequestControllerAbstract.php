@@ -64,6 +64,7 @@ abstract class RequestControllerAbstract extends AbstractController
     {
         $this->linkGenerator = $linkExtension;
         $linkExtension->setBaseRoute($this->getBaseRoute());
+        $linkExtension->setCurrentUrl($this->request->getPathInfo());
     }
 
     protected function getAction(): string

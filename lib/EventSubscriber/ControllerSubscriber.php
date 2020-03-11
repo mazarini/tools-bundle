@@ -25,15 +25,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ControllerSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
     /**
      * @var LinkExtension
      */
@@ -44,9 +38,8 @@ class ControllerSubscriber implements EventSubscriberInterface
      */
     private $menu;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, LinkExtension $linkExtension, ?LinkTree $menu = null)
+    public function __construct(LinkExtension $linkExtension, ?LinkTree $menu = null)
     {
-        $this->urlGenerator = $urlGenerator;
         $this->linkExtension = $linkExtension;
         if (null === $menu) {
             $this->menu = new LinkTree('main', 'Menu');

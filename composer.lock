@@ -3130,12 +3130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/bootstrap-bundle.git",
-                "reference": "2b880a5b1c9ca0209da2551a3bfab4ac247ad28d"
+                "reference": "9d033c626e220c0a83dc3726619d89d92aee4ead"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/2b880a5b1c9ca0209da2551a3bfab4ac247ad28d",
-                "reference": "2b880a5b1c9ca0209da2551a3bfab4ac247ad28d",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/9d033c626e220c0a83dc3726619d89d92aee4ead",
+                "reference": "9d033c626e220c0a83dc3726619d89d92aee4ead",
                 "shasum": ""
             },
             "require": {
@@ -3195,7 +3195,7 @@
             "keywords": [
                 "symfony"
             ],
-            "time": "2020-03-09T17:41:55+00:00"
+            "time": "2020-03-10T11:02:35+00:00"
         },
         {
             "name": "mazarini/package",
@@ -3264,12 +3264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/pagination-bundle.git",
-                "reference": "10ca9553a8ae476b27317ec01661df36a1d636de"
+                "reference": "af9e5d450a4a6e2f0fa046772ecd5422c0176a83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/pagination-bundle/zipball/10ca9553a8ae476b27317ec01661df36a1d636de",
-                "reference": "10ca9553a8ae476b27317ec01661df36a1d636de",
+                "url": "https://api.github.com/repos/mazarini/pagination-bundle/zipball/af9e5d450a4a6e2f0fa046772ecd5422c0176a83",
+                "reference": "af9e5d450a4a6e2f0fa046772ecd5422c0176a83",
                 "shasum": ""
             },
             "require": {
@@ -3333,7 +3333,7 @@
                 "pagination",
                 "symfony"
             ],
-            "time": "2020-02-29T12:47:02+00:00"
+            "time": "2020-03-10T13:32:40+00:00"
         },
         {
             "name": "mazarini/test-bundle",
@@ -3341,12 +3341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "6cc585ec83594a7f3c46d57df75eef8ebb0a3487"
+                "reference": "f40a82dc321d90da4fdfb02ad5c1d07d943229c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/6cc585ec83594a7f3c46d57df75eef8ebb0a3487",
-                "reference": "6cc585ec83594a7f3c46d57df75eef8ebb0a3487",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/f40a82dc321d90da4fdfb02ad5c1d07d943229c2",
+                "reference": "f40a82dc321d90da4fdfb02ad5c1d07d943229c2",
                 "shasum": ""
             },
             "require": {
@@ -3413,7 +3413,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-03-08T15:29:18+00:00"
+            "time": "2020-03-10T10:15:55+00:00"
         },
         {
             "name": "monolog/monolog",
