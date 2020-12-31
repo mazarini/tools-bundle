@@ -30,7 +30,7 @@ class LinksTest extends KernelTestCase
      */
     protected $links;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->links = new Links('/active');
         $this->links->addLink(new Link('disable', '#'));

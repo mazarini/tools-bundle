@@ -37,7 +37,7 @@ class DataTest extends KernelTestCase
      */
     protected $entity;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->data = new Data();
         $this->data->setCurrentAction('route');

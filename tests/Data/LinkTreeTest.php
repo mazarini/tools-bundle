@@ -30,7 +30,7 @@ class LinkTreeTest extends KernelTestCase
      */
     protected $linkTree;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->linkTree = new LinkTree('tree', 'Tree Label');
         $this->linkTree->addLink(new Link('example', '/example'));
