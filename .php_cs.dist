@@ -46,6 +46,8 @@ $finder = PhpCsFixer\Finder::create()
     ->notName('Kernel.php')
     ->notName('preload.php')
     ->notName('bootstrap.php')
+    ->notName('index.php')
+    ->notName('bundle.php')
 ;
 
 return PhpCsFixer\Config::create()
