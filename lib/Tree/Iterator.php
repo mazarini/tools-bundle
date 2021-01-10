@@ -19,30 +19,12 @@
 
 namespace Mazarini\ToolsBundle\Tree;
 
-trait RootTrait
+/**
+ * Iterator.
+ *
+ * @implements \Iterator<int,object>
+ */
+class Iterator implements \Iterator, \countable
 {
-    protected NodeInterface $current;
-    protected string $name = 'root';
-
-    public function getCurrent(): NodeInterface
-    {
-        return $this->current;
-    }
-
-    public function setCurrent(NodeInterface $current): self
-    {
-        $this->current = $current;
-
-        return $this;
-    }
-
-    public function getName(): string
-    {
-        $name = $this->getName();
-        if ('' === $name) {
-            $name = 'root';
-        }
-
-        return $name;
-    }
+    use IteratorTrait;
 }

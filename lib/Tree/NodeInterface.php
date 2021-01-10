@@ -19,30 +19,15 @@
 
 namespace Mazarini\ToolsBundle\Tree;
 
-trait RootTrait
+interface NodeInterface
 {
-    protected NodeInterface $current;
-    protected string $name = 'root';
+    public function getId(): string;
 
-    public function getCurrent(): NodeInterface
-    {
-        return $this->current;
-    }
+    public function getCurrent(): self;
 
-    public function setCurrent(NodeInterface $current): self
-    {
-        $this->current = $current;
+    public function isCurrent(?self $current): bool;
 
-        return $this;
-    }
+    public function getName(): string;
 
-    public function getName(): string
-    {
-        $name = $this->getName();
-        if ('' === $name) {
-            $name = 'root';
-        }
-
-        return $name;
-    }
+    public function setName(mixed $name): self;
 }

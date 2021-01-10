@@ -20,53 +20,10 @@
 namespace Mazarini\ToolsBundle\Tree;
 
 /**
- * @template-extends \ArrayIterator<string, Node>
+ * @implements \Iterator<int,self>
  */
-class Node extends \ArrayIterator
+class Node extends Child implements \Iterator
 {
-    protected Node $parent;
-    protected string $key;
-
-    /**
-     * add a node.
-     *
-     * @return self<string,Node>
-     */
-    public function add(self $node): self
-    {
-        $node->setParent($this);
-        $key = $this->getChildKey();
-        $this[] = $node;
-
-        return $this;
-    }
-
-    public function hasNodes(): int
-    {
-        return 0 === $this->count();
-    }
-
-    public function getCurrent(): self
-    {
-        return $parent->getCurrent();
-    }
-
-    public function isCurrent(self $current): bool
-    {
-        if ($current === $this) {
-            return true;
-        }
-        foreach ($this as $node) {
-            if (true === $node->isCurrent($current)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected function getKey()
-    {
-        return (string) ($this->count() + 1);
-    }
+    use IteratorTrait;
+    use NodeTrait;
 }

@@ -19,30 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Tree;
 
-trait RootTrait
+class Root extends Node
 {
-    protected NodeInterface $current;
-    protected string $name = 'root';
-
-    public function getCurrent(): NodeInterface
-    {
-        return $this->current;
-    }
-
-    public function setCurrent(NodeInterface $current): self
-    {
-        $this->current = $current;
-
-        return $this;
-    }
-
-    public function getName(): string
-    {
-        $name = $this->getName();
-        if ('' === $name) {
-            $name = 'root';
-        }
-
-        return $name;
-    }
+    use RootTrait;
 }

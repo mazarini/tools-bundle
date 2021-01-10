@@ -33,7 +33,7 @@ cs:
 
 stan:
 	if [ ! -d "var/cache/phpunit/phpunit-8.3-0" ]; then vendor/bin/simple-phpunit install -v; fi
-	~/.config/composer/vendor/bin/phpstan analyse src tests --level max
+	~/.config/composer/vendor/bin/phpstan analyse src lib tests --level max
 
 validate: security composer twig yaml stan cs
 

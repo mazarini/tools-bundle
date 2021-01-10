@@ -19,30 +19,42 @@
 
 namespace Mazarini\ToolsBundle\Tree;
 
-trait RootTrait
+/**
+ * @implements \Iterator<int,self>
+ */
+trait NodeTrait
 {
-    protected NodeInterface $current;
-    protected string $name = 'root';
+    use IteratorTrait;
 
-    public function getCurrent(): NodeInterface
+    /**
+     * add a child.
+     */
+    public function addChild(self $child): self
     {
-        return $this->current;
-    }
-
-    public function setCurrent(NodeInterface $current): self
-    {
-        $this->current = $current;
+        $child->setParent($this);
+        if ('' === $child->getName()) {
+            $child->setName($this->count() + 1);
+        }
+        $this->add($child);
 
         return $this;
     }
 
-    public function getName(): string
+    public function isCurrent(?NodeInterface $current): bool
     {
-        $name = $this->getName();
-        if ('' === $name) {
-            $name = 'root';
+        switch (true) {
+            case null === $current:
+                return $this->isCurrent($this->getCurrent());
+            case $current === $this:
+                return true;
+            case $this->hasChild():
+                foreach ($this as $child) {
+                    if (true === $child->isCurrent($current)) {
+                        return true;
+                    }
+                }
         }
 
-        return $name;
+        return false;
     }
 }
