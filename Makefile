@@ -46,15 +46,16 @@ phpstan:
 # phpunit
 #################################################################
 cover: cover-text
+test: phpunit
 
-test:
-	bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/tool/phpunit/phpunit.xml.dist
+phpunit:
+	bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/php-tools/phpunit/phpunit.xml.dist
 
 cover-html:
-	XDEBUG_MODE=coverage bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/tool/phpunit/phpunit.xml.dist --coverage-html var/cover
+	XDEBUG_MODE=coverage bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/php-tools/phpunit/phpunit.xml.dist --coverage-html var/cover
 
 cover-text:
-	XDEBUG_MODE=coverage bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/tool/phpunit/phpunit.xml.dist --coverage-text
+	XDEBUG_MODE=coverage bin/phpunit --cache-result-file var/cache/phpunit.result.cache --configuration config/php-tools/phpunit/phpunit.xml.dist --coverage-text
 
 #################################################################
 # twig
