@@ -67,7 +67,7 @@ twig:
 # twig
 #################################################################
 yaml:
-	bin/console lint:yaml config config/tool/phpstan/phpstan.neon.dist .github/workflows
+	bin/console lint:yaml config .github/workflows
 
 #################################################################
 # Database

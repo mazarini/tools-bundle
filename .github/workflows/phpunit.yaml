@@ -1,0 +1,51 @@
+name: PHPUNIT
+
+on:
+    pull_request:
+        branches:
+            - dev
+    push:
+        branches:
+            - master
+            - dev
+            - phpunit
+
+permissions:
+    contents: read
+
+env:
+    fail-fast: true
+
+jobs:
+    symfony-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v3
+
+            - name: "Install PHP and extensions"
+              uses: shivammathur/setup-php@2.7.0
+              with:
+                  php-version: "8.1"
+                  extensions: "pdo_sqlite"
+                  tools: composer:v2
+
+            - name: "Install assets"
+              uses: CultureHQ/actions-yarn@master
+              with:
+                  args: install
+
+            - name: "Cache Composer packages"
+              id: composer-cache
+              uses: actions/cache@v3
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-php-
+
+            - name: Install Dependencies
+              run: composer install --quiet --no-ansi --no-interaction --no-progress
+
+            - name: Execute tests (Unit and Feature tests) via PHPUnit
+              run: make phpunit
