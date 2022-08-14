@@ -1,2 +1,5 @@
-# tools-bundle
-Set of basics tools for symfony 
+# mazarini/tools-bundle
+Set of basics tools
+## Entities
+## Repositories
+## Controllers
