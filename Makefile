@@ -28,7 +28,7 @@ container:
 # php-cs-fixer
 #################################################################
 phpcs:
-	php-cs-fixer fix --config config/tool/php-cs-fixer/.php-cs-fixer.dist.php
+	php-cs-fixer fix --config config/php-tools/php-cs-fixer/.php-cs-fixer.dist.php
 
 #################################################################
 # phpmd
@@ -61,7 +61,7 @@ cover-text:
 # twig
 #################################################################
 twig:
-	bin/console lint:twig templates lib
+	bin/console lint:twig templates lib/Resources/views
 
 #################################################################
 # twig
