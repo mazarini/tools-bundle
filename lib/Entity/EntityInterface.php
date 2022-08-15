@@ -43,5 +43,5 @@ interface EntityInterface extends countable
     /**
      * Helper to get number of childs. Return 0 if none.
      */
-    public function Count(): int;
+    public function count(): int;
 }
