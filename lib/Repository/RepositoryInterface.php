@@ -17,30 +17,15 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Mazarini\ToolsBundle\Entity;
+namespace Mazarini\ToolsBundle\Repository;
 
-/**
- * Generic entity child class.
- *
- * @template P of ParentInterface
- * @template PC of ParentChildInterface
- * @template C of ChildInterface
- */
-interface ChildInterface extends EntityInterface
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
+
+interface RepositoryInterface extends ServiceEntityRepositoryInterface
 {
-    /**
-     * Undocumented function.
-     *
-     * @return P|PC
-     */
-    public function getParent(): object;
+    public function add(object $entity): void;
 
-    /**
-     * Setter of Parent.
-     *
-     * @param P|PC|null $parent
-     *
-     * @return ChildInterface<P,PC,C>
-     */
-    public function setParent(object $parent = null): self;
+    public function remove(object $entity): void;
+
+    public function flush(): void;
 }

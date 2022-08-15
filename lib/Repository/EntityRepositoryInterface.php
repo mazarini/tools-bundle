@@ -17,30 +17,29 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Mazarini\ToolsBundle\Entity;
+namespace Mazarini\ToolsBundle\Repository;
+
+use Mazarini\ToolsBundle\Entity\EntityInterface;
 
 /**
- * Generic entity child class.
- *
- * @template P of ParentInterface
- * @template PC of ParentChildInterface
- * @template C of ChildInterface
+ * @template T of EntityInterface
  */
-interface ChildInterface extends EntityInterface
+interface EntityRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Undocumented function.
-     *
-     * @return P|PC
+     * @return T
      */
-    public function getParent(): object;
+    public function getNew(int $id): object;
 
     /**
-     * Setter of Parent.
-     *
-     * @param P|PC|null $parent
-     *
-     * @return ChildInterface<P,PC,C>
+     * @return T
      */
-    public function setParent(object $parent = null): self;
+    public function get(int $id): object;
+
+    /**
+     * @param array<string,string> $order
+     *
+     * @return array<int,T>
+     */
+    public function getPage(array $order, int $page): array;
 }

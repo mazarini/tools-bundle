@@ -19,28 +19,48 @@
 
 namespace Mazarini\ToolsBundle\Entity;
 
+use LogicException;
+
 /**
- * Generic entity child class.
+ * Generic entity M with parent P and childs C class.
  *
  * @template P of ParentInterface
  * @template PC of ParentChildInterface
  * @template C of ChildInterface
+ *
+ * @template-extends ParentEntity<P,PC,C>
+ * @template-implements ParentChildInterface<P,PC,C>
  */
-interface ChildInterface extends EntityInterface
+class ParentChild extends ParentEntity implements ParentChildInterface
 {
     /**
-     * Undocumented function.
-     *
+     * @var P|PC|null
+     */
+    protected ?object $parent;
+
+    /**
      * @return P|PC
      */
-    public function getParent(): object;
+    public function getParent(): object
+    {
+        if (null === $this->parent) {
+            throw new LogicException('You can\'t get parent before set it');
+        }
+
+        return $this->parent;
+    }
 
     /**
      * Setter of Parent.
      *
      * @param P|PC|null $parent
      *
-     * @return ChildInterface<P,PC,C>
+     * @return ParentChildInterface<P,PC,C>
      */
-    public function setParent(object $parent = null): self;
+    public function setParent(object $parent = null): ChildInterface
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
 }

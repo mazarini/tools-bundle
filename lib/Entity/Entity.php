@@ -19,28 +19,40 @@
 
 namespace Mazarini\ToolsBundle\Entity;
 
-/**
- * Generic entity child class.
- *
- * @template P of ParentInterface
- * @template PC of ParentChildInterface
- * @template C of ChildInterface
- */
-interface ChildInterface extends EntityInterface
-{
-    /**
-     * Undocumented function.
-     *
-     * @return P|PC
-     */
-    public function getParent(): object;
+use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * Setter of Parent.
-     *
-     * @param P|PC|null $parent
-     *
-     * @return ChildInterface<P,PC,C>
-     */
-    public function setParent(object $parent = null): self;
+class Entity implements EntityInterface
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    protected ?int $id = null;
+
+    public function getId(): int
+    {
+        return null === $this->id ? 0 : $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return 0 === $this->getId();
+    }
+
+    public function getParentId(): int
+    {
+        if (is_subclass_of($this, ChildInterface::class)) {
+            return $this->getParent()->getId();
+        }
+
+        return 0;
+    }
+
+    public function count(): int
+    {
+        if (is_subclass_of($this, ParentInterface::class)) {
+            return \count($this->getChilds());
+        }
+
+        return 0;
+    }
 }
