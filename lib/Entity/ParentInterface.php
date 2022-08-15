@@ -24,29 +24,30 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Generic entity child class.
  *
- * @template C of ChildInterface|ParentChildInterface
- * @template P of ParentInterface|ParentChildInterface
+ * @template P of ParentInterface
+ * @template PC of ParentChildInterface
+ * @template C of ChildInterface
  */
 interface ParentInterface extends EntityInterface
 {
     /**
      * Getter of childs.
      *
-     * @return Collection<int, C>
+     * @return Collection<int, C|PC>
      */
     public function getChilds(): Collection;
 
     /**
      * Add a child to childs.
      *
-     * @param C $child
+     * @param C|PC $child
      */
     public function addChild(object $child): void;
 
     /**
      * Remove a child from childs.
      *
-     * @param C $child
+     * @param C|PC $child
      */
     public function removeChild(object $child): void;
 }

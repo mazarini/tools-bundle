@@ -40,7 +40,7 @@ phpmd:
 # phpstan
 #################################################################
 phpstan:
-	phpstan -cconfig/tool/phpstan/phpstan.neon.dist
+	phpstan -vvv -cconfig/php-tools/phpstan/phpstan.neon.dist
 
 #################################################################
 # phpunit
