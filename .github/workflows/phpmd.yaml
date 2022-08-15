@@ -28,7 +28,7 @@ jobs:
               with:
                   php-version: "8.1"
                   extensions: "pdo_sqlite"
-                  tools: composer:v2, phpmd
+                  tools: phpmd
 
 #           waiting node 16
 #           - name: "Install assets"
@@ -36,17 +36,17 @@ jobs:
 #             with:
 #                 args: install
 
-            - name: "Cache Composer packages"
-              id: composer-cache
-              uses: actions/cache@v3
-              with:
-                  path: vendor
-                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-php-
+#           - name: "Cache Composer packages"
+#             id: composer-cache
+#             uses: actions/cache@v3
+#             with:
+#                 path: vendor
+#                 key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+#                 restore-keys: |
+#                     ${{ runner.os }}-php-
 
-            - name: Install Dependencies
-              run: composer install --quiet --no-ansi --no-interaction --no-progress
+#           - name: Install Dependencies
+#             run: composer install --quiet --no-ansi --no-interaction --no-progress
 
-            - name: Execute tests (Unit and Feature tests) via PHPUnit
+            - name: Execute phpmd analyse
               run: make phpmd
