@@ -34,7 +34,7 @@ phpcs:
 # phpmd
 #################################################################
 phpmd:
-	phpmd src,lib,tests text config/tool/phpmd/rulesets.xml
+	phpmd src,lib,tests text config/php-tools/phpmd/rulesets.xml
 
 #################################################################
 # phpstan
