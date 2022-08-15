@@ -8,7 +8,7 @@ on:
         branches:
             - master
             - dev
-            - phpstan
+            - action
 
 permissions:
     contents: read
@@ -17,7 +17,7 @@ env:
     fail-fast: true
 
 jobs:
-    symfony-tests:
+    Analyse-PHPSTAN:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout code"
