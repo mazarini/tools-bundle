@@ -30,10 +30,11 @@ jobs:
                   extensions: "pdo_sqlite"
                   tools: composer:v2
 
-            - name: "Install assets"
-              uses: CultureHQ/actions-yarn@master
-              with:
-                  args: install
+#           waiting node 16
+#           - name: "Install assets"
+#             uses: CultureHQ/actions-yarn@master
+#             with:
+#                 args: install
 
             - name: "Cache Composer packages"
               id: composer-cache
