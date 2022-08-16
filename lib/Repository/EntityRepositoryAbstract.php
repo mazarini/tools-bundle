@@ -27,7 +27,7 @@ use TypeError;
  * @template-extends Repository<T>
  * @template-implements EntityRepositoryInterface<T>
  */
-abstract class EntityRepository extends Repository implements EntityRepositoryInterface
+abstract class EntityRepositoryAbstract extends Repository implements EntityRepositoryInterface
 {
     /**
      * @return T

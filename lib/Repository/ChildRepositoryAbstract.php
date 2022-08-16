@@ -24,12 +24,12 @@ use Mazarini\ToolsBundle\Entity\ChildInterface;
 use Mazarini\ToolsBundle\Entity\ParentInterface;
 
 /**
- * @template P of ParentInterface
  * @template T of ChildInterface
+ * @template P of ParentInterface
  *
- * @template-extends EntityRepository<T>
+ * @template-extends EntityRepositoryAbstract<T>
  */
-abstract class ChildRepository extends EntityRepository
+abstract class ChildRepositoryAbstract extends EntityRepositoryAbstract
 {
     /**
      * @var EntityRepositoryInterface<P>
@@ -40,9 +40,9 @@ abstract class ChildRepository extends EntityRepository
      * @param class-string<T>              $entityClass
      * @param EntityRepositoryInterface<P> $parentRepository
      */
-    public function __construct(ManagerRegistry $registry, $entityClass, EntityRepositoryInterface $parentRepository)
+    public function __construct(ManagerRegistry $registry, EntityRepositoryInterface $parentRepository, $entityClass)
     {
-        $parentRepository = $this->parentRepository;
+        $this->parentRepository = $parentRepository;
         parent::__construct($registry, $entityClass);
     }
 
