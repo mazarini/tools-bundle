@@ -19,28 +19,33 @@
 
 namespace Mazarini\ToolsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
  * Generic entity child class.
  *
- * @template P of ParentInterface
- * @template PC of ParentChildInterface
- * @template C of ChildInterface
+ * @template P of ParentInterface|ParentChildInterface
+ * @template C of ChildInterface|ParentChildInterface
  *
- * @template-implements ParentInterface<P,PC,C>
+ * @template-implements ParentInterface<P,C>
  */
-class ParentEntity extends Entity implements ParentInterface
+class ParentAbstract extends EntityAbstract implements ParentInterface
 {
     /**
-     * @var Collection<int, C|PC>
+     * @var Collection<int, C>
      */
     protected Collection $childs;
+
+    public function __construct()
+    {
+        $this->childs = new ArrayCollection();
+    }
 
     /**
      * Getter of childs.
      *
-     * @return Collection<int, C|PC>
+     * @return Collection<int, C>
      */
     public function getChilds(): Collection
     {
@@ -50,22 +55,28 @@ class ParentEntity extends Entity implements ParentInterface
     /**
      * Add a child to childs.
      *
-     * @param C|PC $child
+     * @param C $child
+     *
+     * @return ParentInterface<P,C>
      */
-    public function addChild(object $child): void
+    public function addChild(ChildInterface $child): ParentInterface
     {
         if (!$this->childs->contains($child)) {
             $this->childs->add($child);
             $child->setParent();
         }
+
+        return $this;
     }
 
     /**
-     * Remove a child from childs.
+     * Undocumented function.
      *
-     * @param C|PC $child
+     * @param C $child
+     *
+     * @return ParentInterface<P,C>
      */
-    public function removeChild(object $child): void
+    public function removeChild(ChildInterface $child): ParentInterface
     {
         if ($this->childs->removeElement($child)) {
             // set the owning side to null (unless already changed)
@@ -73,5 +84,7 @@ class ParentEntity extends Entity implements ParentInterface
                 unset($this->parent);
             }
         }
+
+        return $this;
     }
 }

@@ -21,7 +21,7 @@ namespace Mazarini\ToolsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-class Entity implements EntityInterface
+class EntityAbstract implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

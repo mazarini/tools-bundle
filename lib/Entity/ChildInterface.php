@@ -22,25 +22,24 @@ namespace Mazarini\ToolsBundle\Entity;
 /**
  * Generic entity child class.
  *
- * @template P of ParentInterface
- * @template PC of ParentChildInterface
- * @template C of ChildInterface
+ * @template P of ParentInterface|ParentChildInterface
+ * @template C of ChildInterface|ParentChildInterface
  */
 interface ChildInterface extends EntityInterface
 {
     /**
      * Undocumented function.
      *
-     * @return P|PC
+     * @return P
      */
-    public function getParent(): object;
+    public function getParent(): ParentInterface;
 
     /**
      * Setter of Parent.
      *
-     * @param P|PC|null $parent
+     * @param P|null $parent
      *
-     * @return ChildInterface<P,PC,C>
+     * @return ChildInterface<P,C>
      */
-    public function setParent(object $parent = null): self;
+    public function setParent(ParentInterface $parent = null): self;
 }

@@ -20,14 +20,17 @@
 namespace Mazarini\ToolsBundle\Entity;
 
 /**
- * Generic entity M with parent P and childs C class.
+ * Generic entity PC with parent P and childs C class.
  *
- * @template P of ParentInterface
+ * @template P of ParentInterface|ParentChildInterface
  * @template PC of ParentChildInterface
- * @template C of ChildInterface
+ * @template C of ChildInterface|ParentChildInterface
  *
- * @template-extends ParentInterface<P,PC,C>
- * @template-extends ChildInterface<P,PC,C>
+ * PC (self) as child of P
+ * @template-extends ChildInterface<P,PC>
+ *
+ *  PC (self) as parent of C
+ * @template-extends ParentInterface<PC,C>
  */
 interface ParentChildInterface extends ParentInterface, ChildInterface
 {
