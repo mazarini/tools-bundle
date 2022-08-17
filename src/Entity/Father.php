@@ -45,7 +45,7 @@ class Father extends ParentChildAbstract implements ParentChildInterface
     /**
      * @var Grand|null
      */
-    #[ORM\ManyToOne(inversedBy: 'childs')]
+    #[ORM\ManyToOne(targetEntity: Grand::class, inversedBy: 'childs')]
     protected ?ParentInterface $parent;
 
     public function getLabelFather(): string
@@ -58,5 +58,10 @@ class Father extends ParentChildAbstract implements ParentChildInterface
         $this->labelFather = $labelFather;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s (%d)', $this->id, $this->labelFather);
     }
 }

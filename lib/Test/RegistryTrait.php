@@ -17,14 +17,19 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tests;
+namespace Mazarini\ToolsBundle\Test;
 
-use PHPUnit\Framework\TestCase;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use TypeError;
 
-class DummyTest extends TestCase
+trait RegistryTrait
 {
-    public function testSomething(): void
+    protected function getRegistry(): Registry
     {
-        $this->assertTrue(true);
+        $registry = static::getContainer()->get('doctrine');
+        if (null !== $registry && is_a($registry, Registry::class)) {
+            return $registry;
+        }
+        throw new TypeError();
     }
 }

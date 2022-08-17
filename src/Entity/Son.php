@@ -37,7 +37,8 @@ class Son extends ChildAbstract implements ChildInterface
     /**
      * @var Father|null
      */
-    #[ORM\ManyToOne(inversedBy: 'childs')]
+    #[ORM\ManyToOne(targetEntity: Father::class, inversedBy: 'childs')]
+    #[ORM\JoinColumn(nullable: false)]
     protected ?ParentInterface $parent = null;
 
     public function getLabelSon(): string
@@ -50,5 +51,10 @@ class Son extends ChildAbstract implements ChildInterface
         $this->labelSon = $labelSon;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s (%d)', $this->labelSon, $this->id);
     }
 }
