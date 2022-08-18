@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Grand index{% endblock %}
+
+{% block body %}
+    <h1>Grand index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LabelGrand</th>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grand in grands %}
+            <tr>
+                <td>{{ grand.labelGrand }}</td>
+                <td>{{ grand.id }}</td>
+                <td>
+                    <a href="{{ path('app_grand_show', {'id': grand.id}) }}">show</a>
+                    <a href="{{ path('app_grand_edit', {'id': grand.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_grand_new') }}">Create new</a>
+{% endblock %}
