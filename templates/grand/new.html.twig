@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Grand{% endblock %}
+{% block title %}New Grand
+{% endblock %}
 
-{% block body %}
-    <h1>Create new Grand</h1>
+{% block main %}
+	<h1>Create new Grand</h1>
 
-    {{ include('grand/_form.html.twig') }}
+	{{ include('grand/_form.html.twig') }}
 
-    <a href="{{ path('app_grand_index') }}">back to list</a>
+	<a href="{{ path('app_grand_index') }}">back to list</a>
 {% endblock %}

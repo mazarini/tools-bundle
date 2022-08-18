@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Grand{% endblock %}
+{% block title %}Edit Grand
+{% endblock %}
 
-{% block body %}
-    <h1>Edit Grand</h1>
+{% block main %}
+	<h1>Edit Grand</h1>
 
-    {{ include('grand/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('grand/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_grand_index') }}">back to list</a>
+	<a href="{{ path('app_grand_index') }}">back to list</a>
 
-    {{ include('grand/_delete_form.html.twig') }}
+	{{ include('grand/_delete_form.html.twig') }}
 {% endblock %}

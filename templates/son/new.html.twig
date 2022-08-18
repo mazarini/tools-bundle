@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Son{% endblock %}
+{% block title %}New Son
+{% endblock %}
 
-{% block body %}
-    <h1>Create new Son</h1>
+{% block main %}
+	<h1>Create new Son</h1>
 
-    {{ include('son/_form.html.twig') }}
+	{{ include('son/_form.html.twig') }}
 
-    <a href="{{ path('app_son_index') }}">back to list</a>
+	<a href="{{ path('app_son_index') }}">back to list</a>
 {% endblock %}

@@ -1,0 +1,35 @@
+#wrapper {
+    margin: 0;
+}
+
+#header {
+    height: $header;
+    border: 1px #000;
+    border-style: solid;
+}
+
+#sidebar {
+    margin-top: -$header;
+    padding-top: $header + 12px;
+    margin-bottom: -$footer;
+    padding-bottom: $footer + 12px;
+    min-height: 100vh;
+    border: 1px #000;
+    border-style: solid;
+}
+
+#main {
+    margin-top: -$header;
+    padding-top: $header + 12px;
+    margin-bottom: -$footer;
+    padding-bottom: $footer + 12px;
+    min-height: 100vh;
+    border: 1px #000;
+    border-style: solid;
+}
+
+#footer {
+    height: $footer;
+    border: 1px #000;
+    border-style: solid;
+}

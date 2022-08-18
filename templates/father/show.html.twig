@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Father{% endblock %}
+{% block title %}Father
+{% endblock %}
 
-{% block body %}
-    <h1>Father</h1>
+{% block main %}
+	<h1>Father</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>LabelFather</th>
-                <td>{{ father.labelFather }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ father.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>LabelFather</th>
+				<td>{{ father.labelFather }}</td>
+			</tr>
+			<tr>
+				<th>Id</th>
+				<td>{{ father.id }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_father_index') }}">back to list</a>
+	<a href="{{ path('app_father_index') }}">back to list</a>
 
-    <a href="{{ path('app_father_edit', {'id': father.id}) }}">edit</a>
+	<a href="{{ path('app_father_edit', {'id': father.id}) }}">edit</a>
 
-    {{ include('father/_delete_form.html.twig') }}
+	{{ include('father/_delete_form.html.twig') }}
 {% endblock %}
