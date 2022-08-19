@@ -1,17 +1,34 @@
 <?php
 
+/*
+ * This file is part of mazarini/tools-bundles.
+ *
+ * mazarini/tools-bundles is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mazarini/tools-bundles is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Grand;
 use App\Form\GrandType;
 use App\Repository\GrandRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Mazarini\ToolsBundle\Controller\ControllerAbstract;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/grand')]
-class GrandController extends AbstractController
+class GrandController extends ControllerAbstract
 {
     #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
     public function index(GrandRepository $grandRepository, int $id = 0): Response
@@ -29,7 +46,7 @@ class GrandController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $grandRepository->add($grand, true);
+            $grandRepository->add($grand);
 
             return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -55,7 +72,7 @@ class GrandController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $grandRepository->add($grand, true);
+            $grandRepository->add($grand);
 
             return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,8 +86,8 @@ class GrandController extends AbstractController
     #[Route('/{id}/delete.html', name: 'app_grand_delete', methods: ['POST'])]
     public function delete(Request $request, Grand $grand, GrandRepository $grandRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$grand->getId(), $request->request->get('_token'))) {
-            $grandRepository->remove($grand, true);
+        if ($this->isCsrfTokenValid('delete'.$grand->getId(), $this->getRequestStringValue('_token'))) {
+            $grandRepository->remove($grand);
         }
 
         return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);

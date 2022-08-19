@@ -63,6 +63,9 @@ class FatherTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function urlProvider(): array
     {
         return [

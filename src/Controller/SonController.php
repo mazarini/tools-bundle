@@ -1,18 +1,35 @@
 <?php
 
+/*
+ * This file is part of mazarini/tools-bundles.
+ *
+ * mazarini/tools-bundles is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mazarini/tools-bundles is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Father;
 use App\Entity\Son;
 use App\Form\SonType;
 use App\Repository\SonRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Mazarini\ToolsBundle\Controller\ControllerAbstract;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/son')]
-class SonController extends AbstractController
+class SonController extends ControllerAbstract
 {
     #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
     public function index(SonRepository $sonRepository, Father $father): Response
@@ -31,7 +48,7 @@ class SonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sonRepository->add($son, true);
+            $sonRepository->add($son);
 
             return $this->redirectToRoute('app_son_index', ['id' => $son->getParentId()], Response::HTTP_SEE_OTHER);
         }
@@ -57,7 +74,7 @@ class SonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sonRepository->add($son, true);
+            $sonRepository->add($son);
 
             return $this->redirectToRoute('app_son_index', ['id' => $son->getParentId()], Response::HTTP_SEE_OTHER);
         }
@@ -71,8 +88,8 @@ class SonController extends AbstractController
     #[Route('/{id}/delete.html', name: 'app_son_delete', methods: ['POST'])]
     public function delete(Request $request, Son $son, SonRepository $sonRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$son->getId(), $request->request->get('_token'))) {
-            $sonRepository->remove($son, true);
+        if ($this->isCsrfTokenValid('delete'.$son->getId(), $this->getRequestStringValue('_token'))) {
+            $sonRepository->remove($son);
         }
 
         return $this->redirectToRoute('app_son_index', [], Response::HTTP_SEE_OTHER);
