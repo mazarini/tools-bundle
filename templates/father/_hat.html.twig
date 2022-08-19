@@ -1,0 +1,14 @@
+{% include 'grand/_hat.html.twig' with {'entity':entity.parent} %}
+<table class="table">
+	<tbody>
+		<tr>
+			<th>Id</th>
+			<td>{{ entity.id }}</td>
+			<th>LabelFather</th>
+			<td>{{ entity.labelFather }}</td>
+			<td>
+				<a class="btn btn-primary btn-sm" href="{{ path('app_father_show', {'id': entity.id }) }}">Back</a>
+			</td>
+		</tr>
+	</tbody>
+</table>

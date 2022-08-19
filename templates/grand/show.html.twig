@@ -1,0 +1,35 @@
+{% embed 'default/show.html.twig' with {'path': 'app_grand'} %}
+
+	{% block head_title %}
+		Grand
+	{% endblock %}
+
+	{% block title %}
+		Grand
+	{% endblock %}
+
+	{% block main %}
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>LabelGrand</th>
+					<td>{{ entity.labelGrand }}</td>
+				</tr>
+				<tr>
+					<th>Id</th>
+					<td>{{ entity.id }}</td>
+				</tr>
+			</tbody>
+		</table>
+	{% endblock %}
+
+	{% block button_delete %}
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
+	{% endblock %}
+
+	{% block modal %}
+		{{ parent() }}
+		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+	{% endblock %}
+
+{% endembed %}

@@ -1,0 +1,39 @@
+{% embed 'default/show.html.twig' with {'entity': father, 'path': 'app_father'} %}
+
+	{% block head_title %}
+		Father
+	{% endblock %}
+
+	{% block title %}
+		Father
+	{% endblock %}
+
+	{% block hat %}
+		{% include 'grand/_hat.html.twig' with {'entity':father.parent,} %}
+	{% endblock %}
+
+	{% block main %}
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>LabelFather</th>
+					<td>{{ entity.labelFather }}</td>
+				</tr>
+				<tr>
+					<th>Id</th>
+					<td>{{ entity.id }}</td>
+				</tr>
+			</tbody>
+		</table>
+	{% endblock %}
+
+	{% block button_delete %}
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
+	{% endblock %}
+
+	{% block modal %}
+		{{ parent() }}
+		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+	{% endblock %}
+
+{% endembed %}

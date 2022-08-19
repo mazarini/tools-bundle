@@ -1,0 +1,44 @@
+{% embed 'default/index.html.twig' with {'parent': grand, 'entities': grand.childs, data: 3, action: 2, path: 'app_father'} %}
+
+	{% block head_title %}
+		Father index
+	{% endblock %}
+
+	{% block title %}
+		Father index
+	{% endblock %}
+
+	{% block hat %}
+		{% include 'grand/_hat.html.twig' with {'entity': parent,} %}
+	{% endblock %}
+
+	{% block table_title %}
+		<th>Id</th>
+		<th>Label</th>
+		<th>Number</th>
+	{% endblock %}
+
+	{% block table_data %}
+		<td>{{ entity.id }}</td>
+		<td>{{ entity.labelFather }}</td>
+		<td>
+			<a class="text-decoration-none" href="{{ path('app_son_index', {'id': entity.id}) }}">
+				{% if entity.count == 0 %}
+					None
+				{% else %}
+					{{ entity.count }}
+					fathers
+				{% endif %}
+			</a>
+		</td>
+	{% endblock %}
+
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ path('app_grand_show',{'id': grand.id}) }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+
+{% endembed %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block head_title %}
+	Son
+{% endblock %}
+
+{% block body_main %}
+	<h1>Son</h1>
+	{% include 'son/_view.html.twig' with {'entity':son,} %}
+	<a class="btn btn-secondary" href="{{ path('app_son_index') }}">Cancel</a>
+	<a class="btn btn-primary" href="{{ path('app_son_edit', {'id': son.id}) }}">Edit</a>
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
+{% endblock %}
+
+{% block modal %}
+	{{ parent() }}
+	{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete', 'entity': son, 'route': 'app_son_delete'} %}{% endembed %}
+{% endblock %}

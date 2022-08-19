@@ -1,0 +1,32 @@
+{% embed 'default/index.html.twig' with {'parent':{'id': 0}, 'entities': entities, data: 3, action: 2, path: 'app_grand'} %}
+
+	{% block head_title %}
+		Grand index
+	{% endblock %}
+
+	{% block title %}
+		Grand index
+	{% endblock %}
+
+	{% block table_title %}
+		<th>Id</th>
+		<th>Label</th>
+		<th>Number</th>
+	{% endblock %}
+
+	{% block table_data %}
+		<td>{{ entity.id }}</td>
+		<td>{{ entity.labelGrand }}</td>
+		<td>
+			<a class="text-decoration-none" href="{{ path('app_father_index', {'id': entity.id}) }}">
+				{% if entity.count == 0 %}
+					None
+				{% else %}
+					{{ entity.count }}
+					fathers
+				{% endif %}
+			</a>
+		</td>
+	{% endblock %}
+
+{% endembed %}

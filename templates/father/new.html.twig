@@ -1,0 +1,19 @@
+{% embed 'default/form.html.twig' with {'entity': father, 'path': 'app_father'} %}
+
+	{% block head_title %}
+		New Father
+	{% endblock %}
+
+	{% block title %}
+		New Father
+	{% endblock %}
+
+	{% block hat %}
+		{% include 'grand/_hat.html.twig' with {'entity':entity.parent,} %}
+	{% endblock %}
+
+	{% block button_action_label %}
+		Create
+	{% endblock %}
+
+{% endembed %}

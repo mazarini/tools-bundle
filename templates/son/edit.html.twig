@@ -1,0 +1,19 @@
+{% embed 'default/form.html.twig' with {'entity':son, 'path': 'app_son'} %}
+
+	{% block head_title %}
+		Edit Son
+	{% endblock %}
+
+	{% block title %}
+		Edit Son
+	{% endblock %}
+
+	{% block hat %}
+		{% include 'father/_hat.html.twig' with {'entity': entity.parent,} %}
+	{% endblock %}
+
+	{% block button_action_label %}
+		Update
+	{% endblock %}
+
+{% endembed %}
