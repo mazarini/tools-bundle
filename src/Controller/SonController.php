@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/son')]
 class SonController extends AbstractController
 {
-    #[Route('/{id}/index.htmf', name: 'app_son_index', methods: ['GET'])]
+    #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
     public function index(SonRepository $sonRepository, Father $father): Response
     {
         return $this->render('son/index.html.twig', [
