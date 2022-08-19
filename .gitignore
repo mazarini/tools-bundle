@@ -2,6 +2,7 @@
 /node_modules
 /var/*
 !var/data
+/var/data/*
 !var/data/test.db
 /vendor
 /**/*.log

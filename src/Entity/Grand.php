@@ -40,6 +40,7 @@ class Grand extends ParentAbstract implements ParentInterface
      * @var Collection<int,Father>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Father::class)]
+    #[ORM\JoinColumn(nullable: false)]
     protected Collection $childs;
 
     public function getLabelGrand(): string
@@ -52,5 +53,10 @@ class Grand extends ParentAbstract implements ParentInterface
         $this->labelGrand = $labelGrand;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s (%d)', $this->id, $this->labelGrand);
     }
 }
