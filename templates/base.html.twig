@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}
+			{% block head_title %}
 				Welcome!
 			{% endblock %}
 		</title>
@@ -17,7 +17,7 @@
 		<header
 			id="header">
 			<!-- block header start -->
-			{% block header %}
+			{% block body_header %}
 				<div class="text-center">
 					<p>
 						block header
@@ -34,7 +34,7 @@
 						<!-- block sidebar start -->
 						<div class="list-group">
 							<a href="/" class="list-group-item list-group-item-action">Home page</a>
-							<a href="/grand" class="list-group-item list-group-item-action">CRUD Grand</a>
+							<a href="/grand/0/index.html" class="list-group-item list-group-item-action">CRUD Grand</a>
 						</div>
 						<!-- block sidebar end -->
 					{% endblock %}
@@ -50,7 +50,7 @@
 					{% endfor %}
 					<!-- block message end -->
 					<!-- block main start -->
-					{% block main %}
+					{% block body_main %}
 						<div class="text-center">
 							<p>
 								block main to be init
@@ -62,7 +62,7 @@
 			</div>
 			<!-- block footer start -->
 			<footer id="footer">
-				{% block footer %}
+				{% block body_footer %}
 					<div class="text-center">
 						<p>
 							block footer to be init
@@ -73,6 +73,10 @@
 			<!-- block footer end -->
 		{% endblock %}
 		<!-- block body end -->
+		<!-- block modal start -->
+		{% block modal %}{% endblock %}
+		<!-- block modal end -->
+		<!-- block footer start -->
 		{{ encore_entry_script_tags('app') }}
 		{% block javascripts %}{% endblock %}
 	</body>

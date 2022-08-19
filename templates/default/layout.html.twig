@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body_main %}
+	{% block header %}
+		<h1>
+			{% block title %}{% endblock %}
+		</h1>
+		{% block hat %}{% endblock %}
+	{% endblock %}
+	{% block open %}{% endblock %}
+	{% block main %}{% endblock %}
+	{% block button %}
+		{% block button_back %}
+			<a class="btn btn-secondary" href="{{ path(path ~ '_index', {'id': entity.parentId}) }}">
+				{% block button_back_label %}
+					Back
+				{% endblock %}
+			</a>
+		{% endblock %}
+		{% block button_action %}{% endblock %}
+		{% block button_delete %}{% endblock %}
+	{% endblock %}
+	{% block close %}{% endblock %}
+	{% block footer %}{% endblock %}
+{% endblock %}

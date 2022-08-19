@@ -1,36 +1,44 @@
-{% extends 'base.html.twig' %}
+{% embed 'default/index.html.twig' with {'parent': grand, 'entities': grand.childs, data: 3, action: 2, path: 'app_father'} %}
 
-{% block title %}Father index
-{% endblock %}
+	{% block head_title %}
+		Father index
+	{% endblock %}
 
-{% block main %}
-	<h1>Father index</h1>
+	{% block title %}
+		Father index
+	{% endblock %}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>LabelFather</th>
-				<th>Id</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for father in fathers %}
-				<tr>
-					<td>{{ father.labelFather }}</td>
-					<td>{{ father.id }}</td>
-					<td>
-						<a href="{{ path('app_father_show', {'id': father.id}) }}">show</a>
-						<a href="{{ path('app_father_edit', {'id': father.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	{% block hat %}
+		{% include 'grand/_hat.html.twig' with {'entity': parent,} %}
+	{% endblock %}
 
-	<a href="{{ path('app_father_new') }}">Create new</a>
-{% endblock %}
+	{% block table_title %}
+		<th>Id</th>
+		<th>Label</th>
+		<th>Number</th>
+	{% endblock %}
+
+	{% block table_data %}
+		<td>{{ entity.id }}</td>
+		<td>{{ entity.labelFather }}</td>
+		<td>
+			<a class="text-decoration-none" href="{{ path('app_son_index', {'id': entity.id}) }}">
+				{% if entity.count == 0 %}
+					None
+				{% else %}
+					{{ entity.count }}
+					fathers
+				{% endif %}
+			</a>
+		</td>
+	{% endblock %}
+
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ path('app_grand_show',{'id': grand.id}) }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+
+{% endembed %}

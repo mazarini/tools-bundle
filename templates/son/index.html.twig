@@ -1,36 +1,33 @@
-{% extends 'base.html.twig' %}
+{% embed 'default/index.html.twig' with {'parent': father, 'entities': father.childs, data: 2, action: 2, path: 'app_son'} %}
 
-{% block title %}Son index
-{% endblock %}
+	{% block head_title %}
+		Son index
+	{% endblock %}
 
-{% block main %}
-	<h1>Son index</h1>
+	{% block title %}
+		Son index
+	{% endblock %}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>LabelSon</th>
-				<th>Id</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for son in sons %}
-				<tr>
-					<td>{{ son.labelSon }}</td>
-					<td>{{ son.id }}</td>
-					<td>
-						<a href="{{ path('app_son_show', {'id': son.id}) }}">show</a>
-						<a href="{{ path('app_son_edit', {'id': son.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	{% block hat %}
+		{% include 'father/_hat.html.twig' with {'entity': parent,} %}
+	{% endblock %}
 
-	<a href="{{ path('app_son_new') }}">Create new</a>
-{% endblock %}
+	{% block table_title %}
+		<th>Id</th>
+		<th>Label</th>
+	{% endblock %}
+
+	{% block table_data %}
+		<td>{{ entity.id }}</td>
+		<td>{{ entity.labelSon }}</td>
+	{% endblock %}
+
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ path('app_father_show',{'id': father.id}) }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+
+{% endembed %}

@@ -13,16 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/grand')]
 class GrandController extends AbstractController
 {
-    #[Route('/', name: 'app_grand_index', methods: ['GET'])]
-    public function index(GrandRepository $grandRepository): Response
+    #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
+    public function index(GrandRepository $grandRepository, int $id = 0): Response
     {
         return $this->render('grand/index.html.twig', [
-            'grands' => $grandRepository->findAll(),
+            'entities' => $grandRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_grand_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, GrandRepository $grandRepository): Response
+    #[Route('/{id}/new.html', name: 'app_grand_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, GrandRepository $grandRepository, int $id = 0): Response
     {
         $grand = new Grand();
         $form = $this->createForm(GrandType::class, $grand);
@@ -35,20 +35,20 @@ class GrandController extends AbstractController
         }
 
         return $this->renderForm('grand/new.html.twig', [
-            'grand' => $grand,
+            'entity' => $grand,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_grand_show', methods: ['GET'])]
+    #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]
     public function show(Grand $grand): Response
     {
         return $this->render('grand/show.html.twig', [
-            'grand' => $grand,
+            'entity' => $grand,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_grand_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit.html', name: 'app_grand_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Grand $grand, GrandRepository $grandRepository): Response
     {
         $form = $this->createForm(GrandType::class, $grand);
@@ -61,12 +61,12 @@ class GrandController extends AbstractController
         }
 
         return $this->renderForm('grand/edit.html.twig', [
-            'grand' => $grand,
+            'entity' => $grand,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_grand_delete', methods: ['POST'])]
+    #[Route('/{id}/delete.html', name: 'app_grand_delete', methods: ['POST'])]
     public function delete(Request $request, Grand $grand, GrandRepository $grandRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$grand->getId(), $request->request->get('_token'))) {

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block head_title %}New Son
+{% endblock %}
+
+{% block body_main %}
+	<h1>Create new Son</h1>
+	{% embed 'default/_form.html.twig' with {'button_label': 'Create', 'cancelUrl': path('app_son_index')} %}{% endembed %}
+{% endblock %}

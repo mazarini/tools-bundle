@@ -13,7 +13,6 @@ class SonType extends AbstractType
     {
         $builder
             ->add('labelSon')
-            ->add('parent')
         ;
     }
 

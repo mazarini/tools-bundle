@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Father;
+use App\Entity\Grand;
 use App\Form\FatherType;
 use App\Repository\FatherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,25 +14,27 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/father')]
 class FatherController extends AbstractController
 {
-    #[Route('/', name: 'app_father_index', methods: ['GET'])]
-    public function index(FatherRepository $fatherRepository): Response
+    #[Route('/{id}/index.html', name: 'app_father_index', methods: ['GET'])]
+    public function index(FatherRepository $fatherRepository, Grand $entity): Response
     {
         return $this->render('father/index.html.twig', [
-            'fathers' => $fatherRepository->findAll(),
+            'grand' => $entity,
         ]);
     }
 
-    #[Route('/new', name: 'app_father_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, FatherRepository $fatherRepository): Response
+    #[Route('/{id}/new.html', name: 'app_father_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, FatherRepository $fatherRepository, Grand $entity): Response
     {
         $father = new Father();
+        $entity->addChild($father);
+        $father->setParent($entity);
         $form = $this->createForm(FatherType::class, $father);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $fatherRepository->add($father, true);
 
-            return $this->redirectToRoute('app_father_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_father_index', ['id' => $father->getParentId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('father/new.html.twig', [
@@ -40,7 +43,7 @@ class FatherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_father_show', methods: ['GET'])]
+    #[Route('/{id}/show.html', name: 'app_father_show', methods: ['GET'])]
     public function show(Father $father): Response
     {
         return $this->render('father/show.html.twig', [
@@ -48,7 +51,7 @@ class FatherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_father_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit.html', name: 'app_father_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Father $father, FatherRepository $fatherRepository): Response
     {
         $form = $this->createForm(FatherType::class, $father);
@@ -57,7 +60,7 @@ class FatherController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fatherRepository->add($father, true);
 
-            return $this->redirectToRoute('app_father_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_father_index', ['id' => $father->getParentId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('father/edit.html.twig', [
@@ -66,7 +69,7 @@ class FatherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_father_delete', methods: ['POST'])]
+    #[Route('/{id}/delete.html', name: 'app_father_delete', methods: ['POST'])]
     public function delete(Request $request, Father $father, FatherRepository $fatherRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$father->getId(), $request->request->get('_token'))) {

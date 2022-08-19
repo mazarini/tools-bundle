@@ -1,14 +1,15 @@
-{% extends 'base.html.twig' %}
+{% embed 'default/form.html.twig' with {'path': 'app_grand'} %}
 
-{% block title %}Edit Grand
-{% endblock %}
+	{% block head_title %}
+		Edit Grand
+	{% endblock %}
 
-{% block main %}
-	<h1>Edit Grand</h1>
+	{% block title %}
+		Edit Grand
+	{% endblock %}
 
-	{{ include('grand/_form.html.twig', {'button_label': 'Update'}) }}
+	{% block button_action_label %}
+		Update
+	{% endblock %}
 
-	<a href="{{ path('app_grand_index') }}">back to list</a>
-
-	{{ include('grand/_delete_form.html.twig') }}
-{% endblock %}
+{% endembed %}

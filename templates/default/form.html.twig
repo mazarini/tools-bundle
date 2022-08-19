@@ -1,0 +1,33 @@
+{% extends 'default/layout.html.twig' %}
+
+{% block open %}
+	{{ form_start(form) }}
+{% endblock %}
+
+{% block close %}
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block main %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block button %}
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ path(path ~ '_index', {'id': entity.parentId}) }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+	{% block button_action %}
+		<button class="btn btn-primary">
+			{% block button_action_label %}
+				Validate
+			{% endblock %}
+		</a>
+	{% endblock %}
+	{% block button_delete %}
+		<button type="button" class="btn btn-primary" desactived>Delete</button>
+	{% endblock %}
+{% endblock %}

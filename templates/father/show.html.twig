@@ -1,27 +1,39 @@
-{% extends 'base.html.twig' %}
+{% embed 'default/show.html.twig' with {'entity': father, 'path': 'app_father'} %}
 
-{% block title %}Father
-{% endblock %}
+	{% block head_title %}
+		Father
+	{% endblock %}
 
-{% block main %}
-	<h1>Father</h1>
+	{% block title %}
+		Father
+	{% endblock %}
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>LabelFather</th>
-				<td>{{ father.labelFather }}</td>
-			</tr>
-			<tr>
-				<th>Id</th>
-				<td>{{ father.id }}</td>
-			</tr>
-		</tbody>
-	</table>
+	{% block hat %}
+		{% include 'grand/_hat.html.twig' with {'entity':father.parent,} %}
+	{% endblock %}
 
-	<a href="{{ path('app_father_index') }}">back to list</a>
+	{% block main %}
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>LabelFather</th>
+					<td>{{ entity.labelFather }}</td>
+				</tr>
+				<tr>
+					<th>Id</th>
+					<td>{{ entity.id }}</td>
+				</tr>
+			</tbody>
+		</table>
+	{% endblock %}
 
-	<a href="{{ path('app_father_edit', {'id': father.id}) }}">edit</a>
+	{% block button_delete %}
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
+	{% endblock %}
 
-	{{ include('father/_delete_form.html.twig') }}
-{% endblock %}
+	{% block modal %}
+		{{ parent() }}
+		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+	{% endblock %}
+
+{% endembed %}
