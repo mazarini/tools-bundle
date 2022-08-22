@@ -1,4 +1,4 @@
-{% extends 'default/layout.html.twig' %}
+{% extends '@MazariniTools/layout.html.twig' %}
 
 {% block button_action %}
 	<a class="btn btn-primary" href="{{ urls.edit }}">
@@ -15,6 +15,6 @@
 {% block modal %}
 	{{ parent() }}
 	{% block modal_delete %}
-		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+		{% embed '@MazariniTools/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
 	{% endblock %}
 {% endblock %}

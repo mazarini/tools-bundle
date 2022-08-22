@@ -1,4 +1,4 @@
-{% embed 'default/index.html.twig' with {data: 3, action: 2} %}
+{% embed '@MazariniTools/index.html.twig' with {data: 3, action: 2} %}
 
 	{% block head_title %}
 		Father index
@@ -9,7 +9,6 @@
 	{% endblock %}
 
 	{% block hat %}
-		{{ dump(urls) }}
 		{% include 'grand/_hat.html.twig' with {'entity': parent,} %}
 	{% endblock %}
 
