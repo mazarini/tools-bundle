@@ -23,20 +23,25 @@ use App\Entity\Father;
 use App\Entity\Son;
 use App\Form\SonType;
 use App\Repository\SonRepository;
-use Mazarini\ToolsBundle\Controller\ControllerAbstract;
+use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @template-extends CrudControllerAbstract<Son,SonRepository>
+ */
 #[Route('/son')]
-class SonController extends ControllerAbstract
+class SonController extends CrudControllerAbstract
 {
+    protected string $base = 'son';
+
     #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
     public function index(SonRepository $sonRepository, Father $father): Response
     {
-        return $this->render('son/index.html.twig', [
-            'father' => $father,
-        ]);
+        return $this->indexParentAction($father);
     }
 
     #[Route('/{id}/new.html', name: 'app_son_new', methods: ['GET', 'POST'])]
@@ -44,54 +49,35 @@ class SonController extends ControllerAbstract
     {
         $son = new Son();
         $son->setParent($father);
-        $form = $this->createForm(SonType::class, $son);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sonRepository->add($son);
-
-            return $this->redirectToRoute('app_son_index', ['id' => $son->getParentId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('son/new.html.twig', [
-            'son' => $son,
-            'form' => $form,
-        ]);
+        return $this->editAction($son, $sonRepository);
     }
 
     #[Route('/{id}/show.html', name: 'app_son_show', methods: ['GET'])]
     public function show(Son $son): Response
     {
-        return $this->render('son/show.html.twig', [
-            'son' => $son,
-        ]);
+        return $this->showAction($son);
     }
 
     #[Route('/{id}/edit.html', name: 'app_son_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Son $son, SonRepository $sonRepository): Response
     {
-        $form = $this->createForm(SonType::class, $son);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sonRepository->add($son);
-
-            return $this->redirectToRoute('app_son_index', ['id' => $son->getParentId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('son/edit.html.twig', [
-            'son' => $son,
-            'form' => $form,
-        ]);
+        return $this->editAction($son, $sonRepository);
     }
 
     #[Route('/{id}/delete.html', name: 'app_son_delete', methods: ['POST'])]
     public function delete(Request $request, Son $son, SonRepository $sonRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$son->getId(), $this->getRequestStringValue('_token'))) {
-            $sonRepository->remove($son);
-        }
+        return $this->deleteAction(
+            $sonRepository,
+            $son,
+            $this->generateUrl('app_son_show', ['id' => $son->getId()]),
+            $this->generateUrl('app_son_index', ['id' => $son->getParentId()])
+        );
+    }
 
-        return $this->redirectToRoute('app_son_index', [], Response::HTTP_SEE_OTHER);
+    protected function getForm(EntityInterface $entity): FormInterface
+    {
+        return $this->createForm(SonType::class, $entity);
     }
 }

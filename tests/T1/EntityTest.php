@@ -50,7 +50,7 @@ class EntityTest extends KernelTestCase
 
     public function testGrand(): void
     {
-        $new = $this->grandRepository->getNew();
+        $new = $this->grandRepository->getNew(0);
         $this->assertTrue($new->isNew());
         $new = new Grand();
         $this->grandRepository->add($new);
@@ -67,7 +67,7 @@ class EntityTest extends KernelTestCase
 
     public function testFather(): void
     {
-        $new = $this->fatherRepository->getNew();
+        $new = $this->fatherRepository->getNew(0);
         $this->assertTrue($new->isNew());
 
         $this->fatherRepository->add($new);
@@ -104,7 +104,7 @@ class EntityTest extends KernelTestCase
         $grand = $this->grandRepository->getNew();
         $this->grandRepository->add($grand);
 
-        $father = $this->fatherRepository->getNew();
+        $father = $this->fatherRepository->getNew(0);
         $grand->addChild($father);
         $father->setParent($grand);
         $this->fatherRepository->add($father);

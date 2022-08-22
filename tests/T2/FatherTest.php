@@ -78,7 +78,7 @@ class FatherTest extends WebTestCase
 
     protected function initEntity(): void
     {
-        $grand = $this->grandRepository->getNew();
+        $grand = $this->grandRepository->getNew(0);
         $this->grandRepository->add($grand);
 
         $father1 = $this->fatherRepository->getNew(1);

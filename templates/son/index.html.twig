@@ -1,4 +1,4 @@
-{% embed 'default/index.html.twig' with {'parent': father, 'entities': father.childs, data: 2, action: 2, path: 'app_son'} %}
+{% embed 'default/index.html.twig' with {data: 2, action: 2} %}
 
 	{% block head_title %}
 		Son index
@@ -23,7 +23,7 @@
 	{% endblock %}
 
 	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ path('app_father_show',{'id': father.id}) }}">
+		<a class="btn btn-secondary" href="{{ path('app_father_show',{'id': parent.id}) }}">
 			{% block button_back_label %}
 				Back
 			{% endblock %}

@@ -22,10 +22,10 @@
 					{% block table_data %}{% endblock %}
 					{% block action %}
 						<td>
-							<a class="btn btn-primary btn-sm" href="{{ path(path ~ '_show', {'id': entity.id}) }}">Show</a>
+							<a class="btn btn-primary btn-sm" href="{{ path(routes.show, {'id': entity.id}) }}">Show</a>
 						</td>
 						<td>
-							<a class="btn btn-primary btn-sm" href="{{ path(path ~ '_edit', {'id': entity.id}) }}">Edit</a>
+							<a class="btn btn-primary btn-sm" href="{{ path(routes.edit, {'id': entity.id}) }}">Edit</a>
 						</td>
 					{% endblock %}
 				</tr>
@@ -42,7 +42,7 @@
 				<tr>
 					<td colspan="{{ data + action - 1 }}"></td>
 					<td>
-						<a class="btn btn-primary btn-sm" href="{{ path(path ~ '_new', {'id': parent.id }) }}">New</a>
+						<a class="btn btn-primary btn-sm" href="{{ urls.new }}">New</a>
 					</td>
 				</tr>
 			</tfoot>

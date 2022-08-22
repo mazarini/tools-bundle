@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block head_title %}Edit Son
-{% endblock %}
-
-{% block body_main %}
-	<h1>Edit Son</h1>
-	{% embed 'default/_form.html.twig' with {'button_label': 'Update', 'cancelUrl': path('app_son_index')} %}{% endembed %}
-{% endblock %}

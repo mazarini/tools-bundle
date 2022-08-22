@@ -26,7 +26,15 @@ use UnexpectedValueException;
 
 class ControllerAbstract extends AbstractController
 {
-    public function getRequestStringValue(string $name, string $default = null): ?string
+    /**
+     * @param string $message
+     */
+    protected function addFlash(string $type, mixed $message): void
+    {
+        parent::addFlash('message', ['type' => $type, 'message' => $message]);
+    }
+
+    protected function getRequestStringValue(string $name, string $default = null): ?string
     {
         $value = $this->getRequest()->get($name);
         if (null === $value) {
@@ -38,7 +46,7 @@ class ControllerAbstract extends AbstractController
         throw new UnexpectedValueException(sprintf('%s from request isn\'t a string', $name));
     }
 
-    public function getRequest(): Request
+    protected function getRequest(): Request
     {
         $request = $this->getRequestStack()->getCurrentRequest();
         if (null !== $request) {
@@ -47,7 +55,7 @@ class ControllerAbstract extends AbstractController
         throw new UnexpectedValueException(sprintf('%s has no request in controller', RequestStack::class));
     }
 
-    public function getRequestStack(): RequestStack
+    protected function getRequestStack(): RequestStack
     {
         $requestStack = $this->container->get('request_stack');
         if (\is_object($requestStack)) {

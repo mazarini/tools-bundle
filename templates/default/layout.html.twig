@@ -11,7 +11,7 @@
 	{% block main %}{% endblock %}
 	{% block button %}
 		{% block button_back %}
-			<a class="btn btn-secondary" href="{{ path(path ~ '_index', {'id': entity.parentId}) }}">
+			<a class="btn btn-secondary" href="{{ urls.index }}">
 				{% block button_back_label %}
 					Back
 				{% endblock %}

@@ -23,13 +23,4 @@
 		</table>
 	{% endblock %}
 
-	{% block button_delete %}
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
-	{% endblock %}
-
-	{% block modal %}
-		{{ parent() }}
-		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
-	{% endblock %}
-
 {% endembed %}

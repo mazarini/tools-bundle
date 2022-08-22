@@ -22,6 +22,7 @@ namespace App\Entity;
 use App\Repository\FatherRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentChildAbstract;
 use Mazarini\ToolsBundle\Entity\ParentChildInterface;
 use Mazarini\ToolsBundle\Entity\ParentInterface;
@@ -31,13 +32,11 @@ use Mazarini\ToolsBundle\Entity\ParentInterface;
  * @template-implements ParentChildInterface<Grand,Father,Son>
  */
 #[ORM\Entity(repositoryClass: FatherRepository::class)]
-class Father extends ParentChildAbstract implements ParentChildInterface
+class Father extends ParentChildAbstract implements ParentChildInterface, EntityInterface
 {
     #[ORM\Column(length: 31)]
     private string $labelFather = '';
     /**
-     * Undocumented variable.
-     *
      * @var Collection<int,Son>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Son::class)]

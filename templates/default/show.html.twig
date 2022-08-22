@@ -1,7 +1,7 @@
 {% extends 'default/layout.html.twig' %}
 
 {% block button_action %}
-	<a class="btn btn-primary" href="{{ path(path ~ '_edit', {'id': entity.id }) }}">
+	<a class="btn btn-primary" href="{{ urls.edit }}">
 		{% block button_edit_label %}
 			Edit
 		{% endblock %}
@@ -14,5 +14,7 @@
 
 {% block modal %}
 	{{ parent() }}
-	{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+	{% block modal_delete %}
+		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
+	{% endblock %}
 {% endblock %}

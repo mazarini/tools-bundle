@@ -27,6 +27,7 @@ use Mazarini\ToolsBundle\Repository\ChildRepositoryAbstract;
 /**
  * @template-extends  ChildRepositoryAbstract<Father,Grand>
  *
+ * @method Father      getNew($id)
  * @method Father|null find($id, $lockMode = null, $lockVersion = null)
  * @method Father|null findOneBy(array $criteria, array $orderBy = null)
  * @method Father[]    findAll()

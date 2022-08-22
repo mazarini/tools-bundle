@@ -22,74 +22,61 @@ namespace App\Controller;
 use App\Entity\Grand;
 use App\Form\GrandType;
 use App\Repository\GrandRepository;
-use Mazarini\ToolsBundle\Controller\ControllerAbstract;
+use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @template-extends CrudControllerAbstract<Grand,GrandRepository>
+ */
 #[Route('/grand')]
-class GrandController extends ControllerAbstract
+class GrandController extends CrudControllerAbstract
 {
+    protected string $base = 'grand';
+
     #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
     public function index(GrandRepository $grandRepository, int $id = 0): Response
     {
-        return $this->render('grand/index.html.twig', [
-            'entities' => $grandRepository->findAll(),
-        ]);
+        return $this->indexEntityAction($id, $grandRepository);
     }
 
     #[Route('/{id}/new.html', name: 'app_grand_new', methods: ['GET', 'POST'])]
     public function new(Request $request, GrandRepository $grandRepository, int $id = 0): Response
     {
-        $grand = new Grand();
-        $form = $this->createForm(GrandType::class, $grand);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $grandRepository->add($grand);
-
-            return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('grand/new.html.twig', [
-            'entity' => $grand,
-            'form' => $form,
-        ]);
+        return $this->editAction(new Grand(), $grandRepository);
     }
 
     #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]
     public function show(Grand $grand): Response
     {
-        return $this->render('grand/show.html.twig', [
-            'entity' => $grand,
-        ]);
+        return $this->showAction($grand);
     }
 
     #[Route('/{id}/edit.html', name: 'app_grand_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Grand $grand, GrandRepository $grandRepository): Response
+    public function edit(Grand $grand, GrandRepository $grandRepository): Response
     {
-        $form = $this->createForm(GrandType::class, $grand);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $grandRepository->add($grand);
-
-            return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('grand/edit.html.twig', [
-            'entity' => $grand,
-            'form' => $form,
-        ]);
+        return $this->editAction($grand, $grandRepository);
     }
 
     #[Route('/{id}/delete.html', name: 'app_grand_delete', methods: ['POST'])]
     public function delete(Request $request, Grand $grand, GrandRepository $grandRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$grand->getId(), $this->getRequestStringValue('_token'))) {
-            $grandRepository->remove($grand);
-        }
+        return $this->deleteAction(
+            $grandRepository,
+            $grand,
+            $this->generateUrl('app_father_show', ['id' => $grand->getId()]),
+            $this->generateUrl('app_father_index', ['id' => $grand->getParentId()])
+        );
+    }
 
-        return $this->redirectToRoute('app_grand_index', [], Response::HTTP_SEE_OTHER);
+    /**
+     * @param Grand $entity
+     */
+    protected function getForm(EntityInterface $entity): FormInterface
+    {
+        return $this->createForm(GrandType::class, $entity);
     }
 }

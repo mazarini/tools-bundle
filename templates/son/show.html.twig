@@ -1,4 +1,4 @@
-{% embed 'default/show.html.twig' with {'entity': son, 'path': 'app_son'} %}
+{% embed 'default/show.html.twig' %}
 
 	{% block head_title %}
 		Son
@@ -9,7 +9,7 @@
 	{% endblock %}
 
 	{% block hat %}
-		{% include 'father/_hat.html.twig' with {'entity':son.parent,} %}
+		{% include 'father/_hat.html.twig' with {'entity':entity.parent,} %}
 	{% endblock %}
 
 	{% block main %}
@@ -29,11 +29,6 @@
 
 	{% block button_delete %}
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
-	{% endblock %}
-
-	{% block modal %}
-		{{ parent() }}
-		{% embed 'default/_delete_form.html.twig' with {'target': 'confirmDelete'} %}{% endembed %}
 	{% endblock %}
 
 {% endembed %}
