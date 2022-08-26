@@ -20,49 +20,10 @@
 namespace Mazarini\ToolsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use UnexpectedValueException;
 
 class ControllerAbstract extends AbstractController
 {
-    /**
-     * @param string $message
-     */
-    protected function addFlash(string $type, mixed $message): void
-    {
-        parent::addFlash('message', ['type' => $type, 'message' => $message]);
-    }
-
-    protected function getRequestStringValue(string $name, string $default = null): ?string
-    {
-        $value = $this->getRequest()->get($name);
-        if (null === $value) {
-            return $default;
-        }
-        if (\is_string($value)) {
-            return (string) $value;
-        }
-        throw new UnexpectedValueException(sprintf('%s from request isn\'t a string', $name));
-    }
-
-    protected function getRequest(): Request
-    {
-        $request = $this->getRequestStack()->getCurrentRequest();
-        if (null !== $request) {
-            return $request;
-        }
-        throw new UnexpectedValueException(sprintf('%s has no request in controller', RequestStack::class));
-    }
-
-    protected function getRequestStack(): RequestStack
-    {
-        $requestStack = $this->container->get('request_stack');
-        if (\is_object($requestStack)) {
-            if (is_a($requestStack, RequestStack::class)) {
-                return $requestStack;
-            }
-        }
-        throw new UnexpectedValueException(sprintf('Container don\'t have a valid "%s"', RequestStack::class));
-    }
+    use DoctrineTrait;
+    use RequestTrait;
+    use ResponseTrait;
 }

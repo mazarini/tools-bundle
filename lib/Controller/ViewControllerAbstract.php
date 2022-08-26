@@ -22,6 +22,7 @@ namespace Mazarini\ToolsBundle\Controller;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use UnexpectedValueException;
 
 /**
  * @template E of EntityInterface
@@ -34,32 +35,40 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     protected string $routeFormat = 'app_%s_%s';
 
     /**
+     * param E|R<E> $repository.
+     */
+    protected function indexAction(object $object): Response
+    {
+        if ($object instanceof EntityRepositoryInterface) {
+            return $this->indexEntityAction($object);
+        }
+        if ($object instanceof EntityInterface) {
+            return $this->indexParentAction($object);
+        }
+        throw new UnexpectedValueException(sprintf('Accept EntityInterface or EntityRepositoryInterface "%s" given.', \get_class($object)));
+    }
+
+    /**
      * @param R<E> $repository
      */
-    protected function indexEntityAction(int $id, EntityRepositoryInterface $repository): Response
+    protected function indexEntityAction(EntityRepositoryInterface $repository): Response
     {
         return $this->render($this->getTemplate('index'), [
             'entities' => $repository->getPage([], 1),
-            'parent' => ['id' => 0],
-            'parent_id' => 0,
-            'routes' => $this->getRoutes(),
-            'urls' => $this->getUrls(0, 0),
         ]);
     }
 
     protected function indexParentAction(EntityInterface $parent): Response
     {
         $entities = null;
-        if (method_exists($parent, 'getChilds')) {
-            $entities = $parent->getChilds();
+        $getChilds = 'getChilds';
+        if (method_exists($parent, $getChilds)) {
+            $entities = $parent->$getChilds();
         }
 
         return $this->render($this->getTemplate('index'), [
             'entities' => $entities,
             'parent' => $parent,
-            'parent_id' => $parent->getId(),
-            'routes' => $this->getRoutes(),
-            'urls' => $this->getUrls(0, $parent->getId()),
         ]);
     }
 
@@ -67,63 +76,6 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     {
         return $this->render($this->getTemplate('show'), [
             'entity' => $entity,
-            'parent_id' => $entity->getParentId(),
-            'routes' => $this->getRoutes(),
-            'urls' => $this->getUrls($entity->getid(), $entity->getParentId()),
         ]);
-    }
-
-    protected function getTemplate(string $function): string
-    {
-        $method = __METHOD__.ucfirst($function);
-        if (method_exists($this, $method)) {
-            return $this->$method();
-        }
-
-        return sprintf($this->templateFormat, $this->base, $function);
-    }
-
-    protected function getRoute(string $function): string
-    {
-        $method = __METHOD__.ucfirst($function);
-        if (method_exists($this, $method)) {
-            return $this->$method();
-        }
-
-        return sprintf($this->routeFormat, $this->base, $function);
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    protected function getRoutes(): array
-    {
-        $routes = [];
-        foreach ($this->getFunctions() as $function => $id) {
-            $routes[$function] = $this->getRoute($function);
-        }
-
-        return $routes;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    protected function getUrls(int $entityId, int $parentId): array
-    {
-        $urls = [];
-        foreach ($this->getFunctions($entityId, $parentId) as $function => $id) {
-            $urls[$function] = $this->generateUrl($this->getRoute($function), ['id' => $id]);
-        }
-
-        return $urls;
-    }
-
-    /**
-     * @return array<string,int>
-     */
-    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
-    {
-        return ['index' => $parentId, 'show' => $entityId];
     }
 }

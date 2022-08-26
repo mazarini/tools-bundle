@@ -23,9 +23,7 @@ use App\Entity\Grand;
 use App\Form\GrandType;
 use App\Repository\GrandRepository;
 use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,13 +38,13 @@ class GrandController extends CrudControllerAbstract
     #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
     public function index(GrandRepository $grandRepository, int $id = 0): Response
     {
-        return $this->indexEntityAction($id, $grandRepository);
+        return $this->indexAction($grandRepository);
     }
 
     #[Route('/{id}/new.html', name: 'app_grand_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, GrandRepository $grandRepository, int $id = 0): Response
+    public function new(int $id = 0): Response
     {
-        return $this->editAction(new Grand(), $grandRepository);
+        return $this->editAction(new Grand());
     }
 
     #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]
@@ -58,14 +56,13 @@ class GrandController extends CrudControllerAbstract
     #[Route('/{id}/edit.html', name: 'app_grand_edit', methods: ['GET', 'POST'])]
     public function edit(Grand $grand, GrandRepository $grandRepository): Response
     {
-        return $this->editAction($grand, $grandRepository);
+        return $this->editAction($grand);
     }
 
     #[Route('/{id}/delete.html', name: 'app_grand_delete', methods: ['POST'])]
-    public function delete(Request $request, Grand $grand, GrandRepository $grandRepository): Response
+    public function delete(Grand $grand): Response
     {
         return $this->deleteAction(
-            $grandRepository,
             $grand,
             $this->generateUrl('app_father_show', ['id' => $grand->getId()]),
             $this->generateUrl('app_father_index', ['id' => $grand->getParentId()])
@@ -75,7 +72,7 @@ class GrandController extends CrudControllerAbstract
     /**
      * @param Grand $entity
      */
-    protected function getForm(EntityInterface $entity): FormInterface
+    protected function getForm($entity): FormInterface
     {
         return $this->createForm(GrandType::class, $entity);
     }

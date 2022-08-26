@@ -24,9 +24,7 @@ use App\Entity\Son;
 use App\Form\SonType;
 use App\Repository\SonRepository;
 use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,18 +37,18 @@ class SonController extends CrudControllerAbstract
     protected string $base = 'son';
 
     #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
-    public function index(SonRepository $sonRepository, Father $father): Response
+    public function index(Father $father): Response
     {
-        return $this->indexParentAction($father);
+        return $this->indexAction($father);
     }
 
     #[Route('/{id}/new.html', name: 'app_son_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SonRepository $sonRepository, Father $father): Response
+    public function new(Father $father): Response
     {
         $son = new Son();
         $son->setParent($father);
 
-        return $this->editAction($son, $sonRepository);
+        return $this->editAction($son);
     }
 
     #[Route('/{id}/show.html', name: 'app_son_show', methods: ['GET'])]
@@ -60,23 +58,25 @@ class SonController extends CrudControllerAbstract
     }
 
     #[Route('/{id}/edit.html', name: 'app_son_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Son $son, SonRepository $sonRepository): Response
+    public function edit(Son $son): Response
     {
-        return $this->editAction($son, $sonRepository);
+        return $this->editAction($son);
     }
 
     #[Route('/{id}/delete.html', name: 'app_son_delete', methods: ['POST'])]
-    public function delete(Request $request, Son $son, SonRepository $sonRepository): Response
+    public function delete(Son $son): Response
     {
         return $this->deleteAction(
-            $sonRepository,
             $son,
             $this->generateUrl('app_son_show', ['id' => $son->getId()]),
             $this->generateUrl('app_son_index', ['id' => $son->getParentId()])
         );
     }
 
-    protected function getForm(EntityInterface $entity): FormInterface
+    /**
+     * @param Son $entity
+     */
+    protected function getForm($entity): FormInterface
     {
         return $this->createForm(SonType::class, $entity);
     }

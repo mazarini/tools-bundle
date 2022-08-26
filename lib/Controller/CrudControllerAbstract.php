@@ -21,7 +21,6 @@ namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryInterface;
-use Mazarini\ToolsBundle\Repository\RepositoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,34 +32,20 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class CrudControllerAbstract extends ViewControllerAbstract
 {
-    /**
-     * @return array<string,int>
-     */
-    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
-    {
-        $urls = parent::getFunctions($entityId, $parentId);
-        $urls['new'] = $parentId;
-        $urls['edit'] = $entityId;
-        $urls['delete'] = $entityId;
-
-        return $urls;
-    }
-
     // ==============================================================
     // | New and edit actions                                       |
     // ==============================================================
 
     /**
-     * @param E    $entity
-     * @param R<E> $repository
+     * @param E $entity
      */
-    public function editAction(EntityInterface $entity, EntityRepositoryInterface $repository): Response
+    public function editAction(EntityInterface $entity): Response
     {
         $form = $this->getForm($entity);
         $form->handleRequest($this->getRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $repository->add($entity);
+            $this->persist($entity)->flush();
 
             return $this->redirectToRoute($this->getRoute('show'), ['id' => $entity->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -68,22 +53,19 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
         return $this->renderForm($this->getTemplate($entity->isNew() ? 'new' : 'edit'), [
             'entity' => $entity,
             'form' => $form,
-            'parent_id' => $entity->getParentId(),
-            'routes' => $this->getRoutes(),
-            'urls' => $this->getUrls($entity->getId(), $entity->getParentId()),
         ]);
     }
 
     /**
      * @param E $entity
      */
-    abstract protected function getForm(EntityInterface $entity): FormInterface;
+    abstract protected function getForm($entity): FormInterface;
 
     // ==============================================================
     // | Delete action                                              |
     // ==============================================================
 
-    protected function deleteAction(RepositoryInterface $repository, EntityInterface $entity, string $errorUrl, string $successUrl): Response
+    protected function deleteAction(EntityInterface $entity, string $errorUrl, string $successUrl): Response
     {
         switch (false) {
             case $this->isDeletePossible($entity):
@@ -93,7 +75,7 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
                 $this->addflash('danger', 'Technical problem, retry delete');
                 break;
             default:
-                $repository->remove($entity);
+                $this->remove($entity)->flush();
                 $this->addflash('success', 'Entity is removed');
 
                 return $this->redirect($successUrl, Response::HTTP_SEE_OTHER);
@@ -106,7 +88,7 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     {
         switch (false) {
             case $entity->count() > 0:
-                $this->addflash('danger', 'You sould delete childs before parent entity');
+                $this->addflash('danger', 'You should delete childs before parent entity');
                 break;
             default:
                 return true;

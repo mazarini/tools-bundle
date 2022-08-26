@@ -24,9 +24,7 @@ use App\Entity\Grand;
 use App\Form\FatherType;
 use App\Repository\FatherRepository;
 use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -41,7 +39,7 @@ class FatherController extends CrudControllerAbstract
     #[Route('/{id}/index.html', name: 'app_father_index', methods: ['GET'])]
     public function index(Grand $grand): Response
     {
-        return $this->indexParentAction($grand);
+        return $this->indexAction($grand);
     }
 
     #[Route('/{id}/show.html', name: 'app_father_show', methods: ['GET'])]
@@ -51,30 +49,32 @@ class FatherController extends CrudControllerAbstract
     }
 
     #[Route('/{id}/new.html', name: 'app_father_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, FatherRepository $fatherRepository, Grand $entity): Response
+    public function new(FatherRepository $fatherRepository, Grand $entity): Response
     {
         $father = new Father();
         $father->setParent($entity);
 
-        return $this->editAction($father, $fatherRepository);
+        return $this->editAction($father);
     }
 
     #[Route('/{id}/edit.html', name: 'app_father_edit', methods: ['GET', 'POST'])]
     public function edit(Father $father, FatherRepository $fatherRepository): Response
     {
-        return $this->editAction($father, $fatherRepository);
+        return $this->editAction($father);
     }
 
-    protected function getForm(EntityInterface $entity): FormInterface
+    /**
+     * @param Father $entity
+     */
+    protected function getForm($entity): FormInterface
     {
         return $this->createForm(FatherType::class, $entity);
     }
 
     #[Route('/{id}/delete.html', name: 'app_father_delete', methods: ['POST'])]
-    public function delete(FatherRepository $repository, Father $entity): Response
+    public function delete(Father $entity): Response
     {
         return $this->deleteAction(
-            $repository,
             $entity,
             $this->generateUrl('app_father_show', ['id' => $entity->getId()]),
             $this->generateUrl('app_father_index', ['id' => $entity->getParentId()])

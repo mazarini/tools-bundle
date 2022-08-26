@@ -19,12 +19,15 @@
 
 namespace Mazarini\ToolsBundle\Repository;
 
+use Doctrine\Persistence\ObjectRepository;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 
 /**
  * @template T of EntityInterface
+ *
+ * @template-extends ObjectRepository<T>
  */
-interface EntityRepositoryInterface extends RepositoryInterface
+interface EntityRepositoryInterface extends RepositoryInterface, ObjectRepository
 {
     /**
      * @return T
