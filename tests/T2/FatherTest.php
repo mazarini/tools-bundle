@@ -22,13 +22,13 @@ namespace App\Tests\T2;
 use App\Repository\FatherRepository;
 use App\Repository\GrandRepository;
 use App\Repository\SonRepository;
-use Mazarini\ToolsBundle\Test\RegistryTrait;
+use Mazarini\ToolsBundle\Test\DoctrineTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FatherTest extends WebTestCase
 {
-    use RegistryTrait;
+    use DoctrineTrait;
 
     protected GrandRepository $grandRepository;
     protected FatherRepository $fatherRepository;

@@ -17,7 +17,7 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Mazarini\ToolsBundle\Controller;
+namespace Mazarini\ToolsBundle\Utility;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Persistence\ObjectManager;
@@ -58,7 +58,7 @@ trait DoctrineTrait
         return $this->objectManager;
     }
 
-    private function getRegistry(): Registry
+    protected function getRegistry(): Registry
     {
         $registry = $this->container->get('doctrine');
         if ($registry instanceof Registry) {

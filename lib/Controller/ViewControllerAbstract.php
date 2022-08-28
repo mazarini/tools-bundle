@@ -54,7 +54,7 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     protected function indexEntityAction(EntityRepositoryInterface $repository): Response
     {
         return $this->render($this->getTemplate('index'), [
-            'entities' => $repository->getPage([], 1),
+            'entities' => $repository->findAll(),
         ]);
     }
 

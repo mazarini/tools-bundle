@@ -19,6 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
+use Mazarini\ToolsBundle\Utility\DoctrineTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ControllerAbstract extends AbstractController

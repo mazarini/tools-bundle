@@ -23,12 +23,12 @@ use App\Entity\Grand;
 use App\Repository\FatherRepository;
 use App\Repository\GrandRepository;
 use App\Repository\SonRepository;
-use Mazarini\ToolsBundle\Test\RegistryTrait;
+use Mazarini\ToolsBundle\Test\DoctrineTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class EntityTest extends KernelTestCase
 {
-    use RegistryTrait;
+    use DoctrineTrait;
 
     protected GrandRepository $grandRepository;
     protected FatherRepository $fatherRepository;

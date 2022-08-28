@@ -20,10 +20,13 @@
 namespace Mazarini\ToolsBundle\Test;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Mazarini\ToolsBundle\Utility\DoctrineTrait as DoctrineUtils;
 use TypeError;
 
-trait RegistryTrait
+trait DoctrineTrait
 {
+    use DoctrineUtils;
+
     protected function getRegistry(): Registry
     {
         $registry = static::getContainer()->get('doctrine');
