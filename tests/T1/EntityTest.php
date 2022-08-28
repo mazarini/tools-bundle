@@ -53,7 +53,7 @@ class EntityTest extends KernelTestCase
         $new = $this->grandRepository->getNew(0);
         $this->assertTrue($new->isNew());
         $new = new Grand();
-        $this->grandRepository->add($new);
+        $this->persist($new)->flush();
         $this->assertFalse($new->isNew());
 
         $read = $this->grandRepository->get($new->getId());
@@ -61,7 +61,7 @@ class EntityTest extends KernelTestCase
         $this->assertSame($new->getId(), $read->getId());
         $this->assertSame(1, \count($this->grandRepository->getPage([], 1)));
 
-        $this->grandRepository->remove($read);
+        $this->remove($read)->flush();
         $this->assertSame(0, \count($this->grandRepository->getPage([], 1)));
     }
 
@@ -70,7 +70,7 @@ class EntityTest extends KernelTestCase
         $new = $this->fatherRepository->getNew(0);
         $this->assertTrue($new->isNew());
 
-        $this->fatherRepository->add($new);
+        $this->persist($new)->flush();
         $this->assertFalse($new->isNew());
 
         $read = $this->fatherRepository->get($new->getId());
@@ -78,7 +78,7 @@ class EntityTest extends KernelTestCase
         $this->assertSame($new->getId(), $read->getId());
         $this->assertSame(1, \count($this->fatherRepository->getPage([], 1)));
 
-        $this->fatherRepository->remove($read);
+        $this->remove($read)->flush();
         $this->assertSame(0, \count($this->fatherRepository->getPage([], 1)));
     }
 
@@ -87,7 +87,7 @@ class EntityTest extends KernelTestCase
         $new = $this->sonRepository->getNew();
         $this->assertTrue($new->isNew());
 
-        $this->sonRepository->add($new);
+        $this->persist($new)->flush();
         $this->assertFalse($new->isNew());
 
         $read = $this->sonRepository->get($new->getId());
@@ -95,24 +95,24 @@ class EntityTest extends KernelTestCase
         $this->assertSame($new->getId(), $read->getId());
         $this->assertSame(1, \count($this->sonRepository->getPage([], 1)));
 
-        $this->sonRepository->remove($read);
+        $this->remove($read)->flush();
         $this->assertSame(0, \count($this->sonRepository->getPage([], 1)));
     }
 
     public function testParentChild(): void
     {
         $grand = $this->grandRepository->getNew();
-        $this->grandRepository->add($grand);
+        $this->persist($grand)->flush();
 
         $father = $this->fatherRepository->getNew(0);
         $grand->addChild($father);
         $father->setParent($grand);
-        $this->fatherRepository->add($father);
+        $this->persist($father)->flush();
 
         $son = $this->sonRepository->getNew();
         $father->addChild($son);
         $son->setParent($father);
-        $this->sonRepository->add($son);
+        $this->persist($son)->flush();
 
         $this->assertSame(1, \count($this->sonRepository->getPage([], 1)));
         $this->assertSame(1, \count($this->fatherRepository->getPage([], 1)));

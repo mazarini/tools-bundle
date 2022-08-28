@@ -79,31 +79,31 @@ class FatherTest extends WebTestCase
     protected function initEntity(): void
     {
         $grand = $this->grandRepository->getNew(0);
-        $this->grandRepository->add($grand);
+        $this->persist($grand)->flush();
 
         $father1 = $this->fatherRepository->getNew(1);
         $grand->addChild($father1);
         $father1->setParent($grand);
-        $this->fatherRepository->add($father1);
+        $this->persist($father1)->flush();
 
         $father2 = $this->fatherRepository->getNew(1);
         $grand->addChild($father2);
         $father2->setParent($grand);
-        $this->fatherRepository->add($father2);
+        $this->persist($father2)->flush();
 
         $son1 = $this->sonRepository->getNew(2);
         $father2->addChild($son1);
         $son1->setParent($father2);
-        $this->sonRepository->add($son1);
+        $this->persist($son1)->flush();
 
         $son2 = $this->sonRepository->getNew(2);
         $father2->addChild($son2);
         $son2->setParent($father2);
-        $this->sonRepository->add($son2);
+        $this->persist($son2)->flush();
 
         $son3 = $this->sonRepository->getNew(2);
         $father2->addChild($son3);
         $son3->setParent($father2);
-        $this->sonRepository->add($son3);
+        $this->persist($son3)->flush();
     }
 }

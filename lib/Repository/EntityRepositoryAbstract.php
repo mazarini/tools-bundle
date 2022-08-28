@@ -19,15 +19,16 @@
 
 namespace Mazarini\ToolsBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use TypeError;
 
 /**
  * @template T of EntityInterface
- * @template-extends Repository<T>
+ * @template-extends ServiceEntityRepository<T>
  * @template-implements EntityRepositoryInterface<T>
  */
-abstract class EntityRepositoryAbstract extends Repository implements EntityRepositoryInterface
+abstract class EntityRepositoryAbstract extends ServiceEntityRepository implements EntityRepositoryInterface
 {
     /**
      * @return T
