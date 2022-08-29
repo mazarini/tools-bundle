@@ -31,20 +31,11 @@ use TypeError;
 abstract class EntityRepositoryAbstract extends ServiceEntityRepository implements EntityRepositoryInterface
 {
     /**
+     * @param object|array<object>|null $object
+     *
      * @return T
      */
-    abstract protected function createNew(): object;
-
-    /**
-     * @return T
-     */
-    public function getNew(int $id = 0): object
-    {
-        if (0 === $id) {
-            return $this->createNew();
-        }
-        throw new TypeError('TypeError');
-    }
+    abstract public function getNew($object = null): object;
 
     /**
      * @return T

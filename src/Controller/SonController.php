@@ -43,12 +43,9 @@ class SonController extends CrudControllerAbstract
     }
 
     #[Route('/{id}/new.html', name: 'app_son_new', methods: ['GET', 'POST'])]
-    public function new(Father $father): Response
+    public function new(SonRepository $repository, Father $entity): Response
     {
-        $son = new Son();
-        $son->setParent($father);
-
-        return $this->editAction($son);
+        return $this->newAction($repository, $entity);
     }
 
     #[Route('/{id}/show.html', name: 'app_son_show', methods: ['GET'])]

@@ -37,8 +37,8 @@ class EntityTest extends KernelTestCase
     protected function setUp(): void
     {
         $this->grandRepository = new GrandRepository($this->getRegistry());
-        $this->fatherRepository = new FatherRepository($this->getRegistry(), $this->grandRepository);
-        $this->sonRepository = new SonRepository($this->getRegistry(), $this->fatherRepository);
+        $this->fatherRepository = new FatherRepository($this->getRegistry());
+        $this->sonRepository = new SonRepository($this->getRegistry());
     }
 
     public function testVide(): void
@@ -50,7 +50,7 @@ class EntityTest extends KernelTestCase
 
     public function testGrand(): void
     {
-        $new = $this->grandRepository->getNew(0);
+        $new = $this->grandRepository->getNew();
         $this->assertTrue($new->isNew());
         $new = new Grand();
         $this->persist($new)->flush();
@@ -67,7 +67,9 @@ class EntityTest extends KernelTestCase
 
     public function testFather(): void
     {
-        $new = $this->fatherRepository->getNew(0);
+        $grand = new Grand();
+        $this->persist($grand)->flush();
+        $new = $this->fatherRepository->getNew($grand);
         $this->assertTrue($new->isNew());
 
         $this->persist($new)->flush();
@@ -104,12 +106,12 @@ class EntityTest extends KernelTestCase
         $grand = $this->grandRepository->getNew();
         $this->persist($grand)->flush();
 
-        $father = $this->fatherRepository->getNew(0);
+        $father = $this->fatherRepository->getNew($grand);
         $grand->addChild($father);
         $father->setParent($grand);
         $this->persist($father)->flush();
 
-        $son = $this->sonRepository->getNew();
+        $son = $this->sonRepository->getNew($father);
         $father->addChild($son);
         $son->setParent($father);
         $this->persist($son)->flush();

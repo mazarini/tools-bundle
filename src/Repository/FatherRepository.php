@@ -22,10 +22,10 @@ namespace App\Repository;
 use App\Entity\Father;
 use App\Entity\Grand;
 use Doctrine\Persistence\ManagerRegistry;
-use Mazarini\ToolsBundle\Repository\ChildRepositoryAbstract;
+use Mazarini\ToolsBundle\Repository\EntityRepositoryAbstract;
 
 /**
- * @template-extends  ChildRepositoryAbstract<Father,Grand>
+ * @template-extends  EntityRepositoryAbstract<Father>
  *
  * @method Father      getNew($id)
  * @method Father|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,15 +33,23 @@ use Mazarini\ToolsBundle\Repository\ChildRepositoryAbstract;
  * @method Father[]    findAll()
  * @method Father[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FatherRepository extends ChildRepositoryAbstract
+class FatherRepository extends EntityRepositoryAbstract
 {
-    public function __construct(ManagerRegistry $registry, GrandRepository $grandRepository)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, $grandRepository, Father::class);
+        parent::__construct($registry, Father::class);
     }
 
-    protected function createNew(): Father
+    /**
+     * @param Grand $object
+     *
+     * @return Father
+     */
+    public function getNew($object = null): object
     {
-        return new Father();
+        $entity = new Father();
+        $entity->setParent($object);
+
+        return $entity;
     }
 }

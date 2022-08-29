@@ -42,8 +42,8 @@ class FatherTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->grandRepository = new GrandRepository($this->getRegistry());
-        $this->fatherRepository = new FatherRepository($this->getRegistry(), $this->grandRepository);
-        $this->sonRepository = new SonRepository($this->getRegistry(), $this->fatherRepository);
+        $this->fatherRepository = new FatherRepository($this->getRegistry());
+        $this->sonRepository = new SonRepository($this->getRegistry());
     }
 
     public function testVide(): void
@@ -78,30 +78,30 @@ class FatherTest extends WebTestCase
 
     protected function initEntity(): void
     {
-        $grand = $this->grandRepository->getNew(0);
+        $grand = $this->grandRepository->getNew();
         $this->persist($grand)->flush();
 
-        $father1 = $this->fatherRepository->getNew(1);
+        $father1 = $this->fatherRepository->getNew($grand);
         $grand->addChild($father1);
         $father1->setParent($grand);
         $this->persist($father1)->flush();
 
-        $father2 = $this->fatherRepository->getNew(1);
+        $father2 = $this->fatherRepository->getNew($grand);
         $grand->addChild($father2);
         $father2->setParent($grand);
         $this->persist($father2)->flush();
 
-        $son1 = $this->sonRepository->getNew(2);
+        $son1 = $this->sonRepository->getNew($father2);
         $father2->addChild($son1);
         $son1->setParent($father2);
         $this->persist($son1)->flush();
 
-        $son2 = $this->sonRepository->getNew(2);
+        $son2 = $this->sonRepository->getNew($father2);
         $father2->addChild($son2);
         $son2->setParent($father2);
         $this->persist($son2)->flush();
 
-        $son3 = $this->sonRepository->getNew(2);
+        $son3 = $this->sonRepository->getNew($father2);
         $father2->addChild($son3);
         $son3->setParent($father2);
         $this->persist($son3)->flush();

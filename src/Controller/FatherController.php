@@ -51,10 +51,7 @@ class FatherController extends CrudControllerAbstract
     #[Route('/{id}/new.html', name: 'app_father_new', methods: ['GET', 'POST'])]
     public function new(FatherRepository $fatherRepository, Grand $entity): Response
     {
-        $father = new Father();
-        $father->setParent($entity);
-
-        return $this->editAction($father);
+        return $this->newAction($fatherRepository, $entity);
     }
 
     #[Route('/{id}/edit.html', name: 'app_father_edit', methods: ['GET', 'POST'])]

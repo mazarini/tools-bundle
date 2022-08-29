@@ -22,25 +22,33 @@ namespace App\Repository;
 use App\Entity\Father;
 use App\Entity\Son;
 use Doctrine\Persistence\ManagerRegistry;
-use Mazarini\ToolsBundle\Repository\ChildRepositoryAbstract;
+use Mazarini\ToolsBundle\Repository\EntityRepositoryAbstract;
 
 /**
- * @extends ChildRepositoryAbstract<Son,Father>
+ * @extends EntityRepositoryAbstract<Son>
  *
  * @method Son|null find($id, $lockMode = null, $lockVersion = null)
  * @method Son|null findOneBy(array $criteria, array $orderBy = null)
  * @method Son[]    findAll()
  * @method Son[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SonRepository extends ChildRepositoryAbstract
+class SonRepository extends EntityRepositoryAbstract
 {
-    public function __construct(ManagerRegistry $registry, FatherRepository $fatherRepository)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, $fatherRepository, Son::class);
+        parent::__construct($registry, Son::class);
     }
 
-    protected function createNew(): Son
+    /**
+     * @param Father $object
+     *
+     * @return Son
+     */
+    public function getNew($object = null): object
     {
-        return new Son();
+        $entity = new Son();
+        $entity->setParent($object);
+
+        return $entity;
     }
 }

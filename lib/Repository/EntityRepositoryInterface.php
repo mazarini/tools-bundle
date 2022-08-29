@@ -31,9 +31,11 @@ use Mazarini\ToolsBundle\Entity\EntityInterface;
 interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepositoryInterface
 {
     /**
+     * @param object|array<object>|null $object
+     *
      * @return T
      */
-    public function getNew(int $id): object;
+    public function getNew($object): object;
 
     /**
      * @return T

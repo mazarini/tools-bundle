@@ -37,6 +37,14 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     // ==============================================================
 
     /**
+     * @param R<E> $repository
+     */
+    public function newAction(EntityRepositoryInterface $repository, EntityInterface $entity = null): Response
+    {
+        return $this->editAction($repository->getNew($entity));
+    }
+
+    /**
      * @param E $entity
      */
     public function editAction(EntityInterface $entity): Response

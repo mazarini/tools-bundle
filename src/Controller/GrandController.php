@@ -42,9 +42,9 @@ class GrandController extends CrudControllerAbstract
     }
 
     #[Route('/{id}/new.html', name: 'app_grand_new', methods: ['GET', 'POST'])]
-    public function new(int $id = 0): Response
+    public function new(GrandRepository $grandRepository, int $id): Response
     {
-        return $this->editAction(new Grand());
+        return $this->newAction($grandRepository);
     }
 
     #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]

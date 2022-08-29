@@ -38,7 +38,12 @@ class GrandRepository extends EntityRepositoryAbstract
         parent::__construct($registry, Grand::class);
     }
 
-    protected function createNew(): Grand
+    /**
+     * @param null $object
+     *
+     * @return Grand
+     */
+    public function getNew($object = null): object
     {
         return new Grand();
     }
