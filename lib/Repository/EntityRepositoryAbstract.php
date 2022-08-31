@@ -20,7 +20,10 @@
 namespace Mazarini\ToolsBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Page\Pagination;
+use Mazarini\ToolsBundle\Page\PaginationInterface;
 use TypeError;
 
 /**
@@ -50,17 +53,62 @@ abstract class EntityRepositoryAbstract extends ServiceEntityRepository implemen
         return $entity;
     }
 
-    /**
-     * @param array<string,string> $order
-     *
-     * @return array<int,T>
-     */
-    public function getPage(array $order, int $page): array
+    public function getPage(?object $parent, int $currentPage = 1, int $pageSize = 10): PaginationInterface
     {
-        if (0 === $page) {
-            throw new TypeError('NotFound');
+        $pagination = new Pagination();
+        $pagination->setTotalCount($this->totalCount($parent));
+        $pagination->setPageSize($pageSize);
+        $current = $pagination->setCurrentPage($currentPage);
+        if ($pagination->isCurrentPageOk()) {
+            $pagination->setEntities($this->getResult($parent, ($currentPage - 1) * $pageSize, $pageSize));
         }
 
-        return $this->findBy([], $order);
+        return $pagination;
+    }
+
+    protected function totalCount(?object $parent): int
+    {
+        $count = $this->getPageQueryBuilder($parent)
+                ->select('count(e.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+
+        if (\is_int($count)) {
+            return $count;
+        }
+
+        throw new TypeError('Count is not an integer!');
+    }
+
+    /**
+     * getResult.
+     *
+     * @return array<int, mixed>
+     */
+    protected function getResult(?object $parent, int $start, int $pageSize): array
+    {
+        $query = $this->getPageQueryBuilder($parent)
+//              ->orderBy($this->orderColumn, $this->orderDirection)
+                ->setFirstResult($start)
+                ->setMaxResults($pageSize)
+                ->getQuery();
+
+        $result = $query->getResult();
+        if (\is_array($result)) {
+            return $result;
+        }
+        throw new TypeError('Result is not an array.');
+    }
+
+    protected function getPageQueryBuilder(?object $parent): QueryBuilder
+    {
+        if (null === $parent) {
+            return $this->createQueryBuilder('e');
+        }
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.parent = :parent')
+            ->setParameter('parent', $parent)
+        ;
     }
 }

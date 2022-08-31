@@ -30,5 +30,13 @@
 	{% block button_delete %}
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
 	{% endblock %}
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ urls.page }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+
 
 {% endembed %}

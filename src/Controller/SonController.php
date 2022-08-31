@@ -36,6 +36,12 @@ class SonController extends CrudControllerAbstract
 {
     protected string $base = 'son';
 
+    #[Route('/{id}/page-{page}.html', name: 'app_son_page', methods: ['GET'])]
+    public function page(SonRepository $repository, int $page, Father $parent): Response
+    {
+        return $this->pageAction($repository, $page, 20, $parent);
+    }
+
     #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
     public function index(Father $father): Response
     {

@@ -35,6 +35,30 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     protected string $routeFormat = 'app_%s_%s';
 
     /**
+     * @param R<E> $repository
+     */
+    protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, ?EntityInterface $parent): Response
+    {
+        $pagination = $repository->getPage($parent, $currentPage, $pageSize);
+        if ($pagination->isCurrentPageOk()) {
+            $parameters = [];
+            $parameters['pagination'] = $pagination;
+            $parameters['entities'] = $pagination->getEntities();
+            if (null !== $parent) {
+                $parameters['parent'] = $parent;
+            }
+
+            return $this->render($this->getTemplate('page'), $parameters);
+        }
+        $id = 0;
+        if (null !== $parent) {
+            $id = $parent->getId();
+        }
+
+        return $this->redirectToRoute($this->getRoute('page'), ['id' => $id, 'page' => $pagination->getCurrentPage()], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * param E|R<E> $repository.
      */
     protected function indexAction(object $object): Response

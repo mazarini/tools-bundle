@@ -1,0 +1,33 @@
+{% embed '@MazariniTools/page.html.twig' with {data: 3, action: 2} %}
+
+	{% block head_title %}
+		Grand index
+	{% endblock %}
+
+	{% block title %}
+		Grand index
+		{{ pagination.currentPage}}/{{ pagination.lastPage}}
+	{% endblock %}
+
+	{% block table_title %}
+		<th>Id</th>
+		<th>Label</th>
+		<th>Number</th>
+	{% endblock %}
+
+	{% block table_data %}
+		<td>{{ entity.id }}</td>
+		<td>{{ entity.labelGrand }}</td>
+		<td>
+			<a class="text-decoration-none" href="{{ path('app_father_page', {'id': entity.id, 'page': 1}) }}">
+				{% if entity.count == 0 %}
+					None
+				{% else %}
+					{{ entity.count }}
+					fathers
+				{% endif %}
+			</a>
+		</td>
+	{% endblock %}
+
+{% endembed %}

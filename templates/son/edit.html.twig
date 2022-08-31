@@ -16,4 +16,12 @@
 		Update
 	{% endblock %}
 
+	{% block button_back %}
+		<a class="btn btn-secondary" href="{{ urls.page }}">
+			{% block button_back_label %}
+				Back
+			{% endblock %}
+		</a>
+	{% endblock %}
+
 {% endembed %}

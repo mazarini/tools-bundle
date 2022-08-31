@@ -1,4 +1,4 @@
-{% embed '@MazariniTools/index.html.twig' with {data: 3, action: 2} %}
+{% embed '@MazariniTools/page.html.twig' with {data: 3, action: 2} %}
 
 	{% block head_title %}
 		Father index
@@ -22,7 +22,7 @@
 		<td>{{ entity.id }}</td>
 		<td>{{ entity.labelFather }}</td>
 		<td>
-			<a class="text-decoration-none" href="{{ path('app_son_index', {'id': entity.id}) }}">
+			<a class="text-decoration-none" href="{{ path('app_son_page', {'id': entity.id, 'page':1}) }}">
 				{% if entity.count == 0 %}
 					None
 				{% else %}
@@ -31,14 +31,6 @@
 				{% endif %}
 			</a>
 		</td>
-	{% endblock %}
-
-	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ path('app_grand_show',{'id': parent_id}) }}">
-			{% block button_back_label %}
-				Back
-			{% endblock %}
-		</a>
 	{% endblock %}
 
 {% endembed %}

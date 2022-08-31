@@ -35,6 +35,12 @@ class GrandController extends CrudControllerAbstract
 {
     protected string $base = 'grand';
 
+    #[Route('/{id}/page-{page}.html', name: 'app_grand_page', methods: ['GET'])]
+    public function page(GrandRepository $repository, int $page, int $id): Response
+    {
+        return $this->pageAction($repository, $page, 20, null);
+    }
+
     #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
     public function index(GrandRepository $grandRepository, int $id = 0): Response
     {

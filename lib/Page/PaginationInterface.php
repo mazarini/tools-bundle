@@ -17,31 +17,34 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Mazarini\ToolsBundle\Repository;
+namespace Mazarini\ToolsBundle\Page;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
-use Doctrine\Persistence\ObjectRepository;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
-use Mazarini\ToolsBundle\Page\PaginationInterface;
-
-/**
- * @template T of EntityInterface
- *
- * @template-extends ObjectRepository<T>
- */
-interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepositoryInterface
+interface PaginationInterface
 {
     /**
-     * @param object|array<object>|null $object
+     * getEntities.
      *
-     * @return T
+     * @return array<int,mixed>
      */
-    public function getNew($object): object;
+    public function getEntities(): array;
 
-    /**
-     * @return T
-     */
-    public function get(int $id): object;
+    public function hasToPaginate(): bool;
 
-    public function getPage(?object $parent, int $currentPage, int $pageSize): PaginationInterface;
+    public function hasPreviousPage(): bool;
+
+    public function getFirstPage(): int;
+
+    public function getPreviousPage(): int;
+
+    public function getCurrentPage(): int;
+
+    public function isCurrentPageOk(): bool;
+
+    public function hasNextPage(): bool;
+
+    public function getNextPage(): int;
+
+    public function getLastPage(): int;
+
+    public function count(): int;
 }

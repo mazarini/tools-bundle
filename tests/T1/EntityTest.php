@@ -59,10 +59,10 @@ class EntityTest extends KernelTestCase
         $read = $this->grandRepository->get($new->getId());
         $this->assertFalse($read->isNew());
         $this->assertSame($new->getId(), $read->getId());
-        $this->assertSame(1, \count($this->grandRepository->getPage([], 1)));
+        $this->assertSame(1, \count($this->grandRepository->findAll()));
 
         $this->remove($read)->flush();
-        $this->assertSame(0, \count($this->grandRepository->getPage([], 1)));
+        $this->assertSame(0, \count($this->grandRepository->findAll()));
     }
 
     public function testFather(): void
@@ -78,10 +78,10 @@ class EntityTest extends KernelTestCase
         $read = $this->fatherRepository->get($new->getId());
         $this->assertFalse($read->isNew());
         $this->assertSame($new->getId(), $read->getId());
-        $this->assertSame(1, \count($this->fatherRepository->getPage([], 1)));
+        $this->assertSame(1, \count($this->fatherRepository->findAll()));
 
         $this->remove($read)->flush();
-        $this->assertSame(0, \count($this->fatherRepository->getPage([], 1)));
+        $this->assertSame(0, \count($this->fatherRepository->findAll()));
     }
 
     public function testSon(): void
@@ -95,10 +95,10 @@ class EntityTest extends KernelTestCase
         $read = $this->sonRepository->get($new->getId());
         $this->assertFalse($read->isNew());
         $this->assertSame($new->getId(), $read->getId());
-        $this->assertSame(1, \count($this->sonRepository->getPage([], 1)));
+        $this->assertSame(1, \count($this->sonRepository->findAll()));
 
         $this->remove($read)->flush();
-        $this->assertSame(0, \count($this->sonRepository->getPage([], 1)));
+        $this->assertSame(0, \count($this->sonRepository->findAll()));
     }
 
     public function testParentChild(): void
@@ -116,9 +116,9 @@ class EntityTest extends KernelTestCase
         $son->setParent($father);
         $this->persist($son)->flush();
 
-        $this->assertSame(1, \count($this->sonRepository->getPage([], 1)));
-        $this->assertSame(1, \count($this->fatherRepository->getPage([], 1)));
-        $this->assertSame(1, \count($this->grandRepository->getPage([], 1)));
+        $this->assertSame(1, \count($this->sonRepository->findAll()));
+        $this->assertSame(1, \count($this->fatherRepository->findAll()));
+        $this->assertSame(1, \count($this->grandRepository->findAll()));
 
         $grand = $this->grandRepository->findAll()[0];
         $father = $this->fatherRepository->findAll()[0];

@@ -80,7 +80,7 @@ trait ResponseTrait
     protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
     {
         return [
-//          'page' => ['id' => $parentId, 'page' => $page],
+            'page' => ['id' => $parentId, 'page' => $page],
             'index' => ['id' => $parentId],
             'show' => ['id' => $entityId],
             'new' => ['id' => $parentId],
@@ -119,17 +119,10 @@ trait ResponseTrait
                 $parentId = $parameters['entity']->getParent()->getId();
             }
         }
-        $page = 1;
-        if (isset($parameters['page'])) {
-            if (\is_int($parameters['page'])) {
-                $page = $parameters['page'];
-            }
-        }
         $parameters['id'] = $id;
         $parameters['parent_id'] = $parentId;
-        $parameters['page'] = $page;
         $parameters['routes'] = $this->getRoutes();
-        $parameters['urls'] = $this->getUrls($id, $parentId, $page);
+        $parameters['urls'] = $this->getUrls($id, $parentId, 1);
 
         return parent::renderView($view, $parameters);
     }

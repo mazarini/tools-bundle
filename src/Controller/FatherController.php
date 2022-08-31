@@ -36,6 +36,12 @@ class FatherController extends CrudControllerAbstract
 {
     protected string $base = 'father';
 
+    #[Route('/{id}/page-{page}.html', name: 'app_father_page', methods: ['GET'])]
+    public function page(FatherRepository $repository, int $page, Grand $parent): Response
+    {
+        return $this->pageAction($repository, $page, 20, $parent);
+    }
+
     #[Route('/{id}/index.html', name: 'app_father_index', methods: ['GET'])]
     public function index(Grand $grand): Response
     {

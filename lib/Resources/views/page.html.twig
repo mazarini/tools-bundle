@@ -1,0 +1,49 @@
+{% extends '@MazariniTools/layout.html.twig' %}
+
+{% block button %}
+	{% for page in 1..pagination.lastPage %}
+		<a class="btn btn-secondary" href="{{ path(routes.page, { 'id': parent_id, 'page': page}) }}">{{ page }}</a>
+	{% endfor %}
+{% endblock %}
+
+{% block main %}
+	<table class="table">
+		<thead>
+			<tr>
+				{% block table_title %}{% endblock %}
+				<td colspan="{{ action }}">Action</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entity in pagination.entities %}
+				<tr>
+					{% block table_data %}{% endblock %}
+					{% block action %}
+						<td>
+							<a class="btn btn-primary btn-sm" href="{{ path(routes.show, {'id': entity.id}) }}">Show</a>
+						</td>
+						<td>
+							<a class="btn btn-primary btn-sm" href="{{ path(routes.edit, {'id': entity.id}) }}">Edit</a>
+						</td>
+					{% endblock %}
+				</tr>
+			{% else %}
+				{% block not_found %}
+					<tr>
+						<td colspan="{{ data + action }}">no records found</td>
+					</tr>
+				{% endblock %}
+			{% endfor %}
+		</tbody>
+		{% block new %}
+			<tfoot>
+				<tr>
+					<td colspan="{{ data + action - 1 }}"></td>
+					<td>
+						<a class="btn btn-primary btn-sm" href="{{ urls.new }}">New</a>
+					</td>
+				</tr>
+			</tfoot>
+		{% endblock %}
+	</table>
+{% endblock %}
