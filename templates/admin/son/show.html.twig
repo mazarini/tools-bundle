@@ -1,23 +1,23 @@
 {% embed '@MazariniTools/show.html.twig' %}
 
 	{% block head_title %}
-		Father
+		Son
 	{% endblock %}
 
 	{% block title %}
-		Father
+		Son
 	{% endblock %}
 
 	{% block hat %}
-		{% include 'grand/_hat.html.twig' with {'entity':entity.parent,} %}
+		{% include 'admin/father/_hat.html.twig' with {'entity':entity.parent,} %}
 	{% endblock %}
 
 	{% block main %}
 		<table class="table">
 			<tbody>
 				<tr>
-					<th>LabelFather</th>
-					<td>{{ entity.labelFather }}</td>
+					<th>LabelSon</th>
+					<td>{{ entity.labelSon }}</td>
 				</tr>
 				<tr>
 					<th>Id</th>
@@ -27,15 +27,16 @@
 		</table>
 	{% endblock %}
 
+	{% block button_delete %}
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
+	{% endblock %}
 	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ urls.page }}">
+		<a class="btn btn-secondary" href="{{ urls.index }}">
 			{% block button_back_label %}
 				Back
 			{% endblock %}
 		</a>
 	{% endblock %}
-	{% block button_action %}{% endblock %}
-	{% block button_delete %}{% endblock %}
-	{% block modal_delete %}{% endblock %}
+
 
 {% endembed %}

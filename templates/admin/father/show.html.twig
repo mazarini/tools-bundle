@@ -9,7 +9,7 @@
 	{% endblock %}
 
 	{% block hat %}
-		{% include 'grand/_hat.html.twig' with {'entity':entity.parent,} %}
+		{% include 'admin/grand/_hat.html.twig' with {'entity':entity.parent,} %}
 	{% endblock %}
 
 	{% block main %}
@@ -26,16 +26,5 @@
 			</tbody>
 		</table>
 	{% endblock %}
-
-	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ urls.page }}">
-			{% block button_back_label %}
-				Back
-			{% endblock %}
-		</a>
-	{% endblock %}
-	{% block button_action %}{% endblock %}
-	{% block button_delete %}{% endblock %}
-	{% block modal_delete %}{% endblock %}
 
 {% endembed %}

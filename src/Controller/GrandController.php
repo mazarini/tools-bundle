@@ -20,20 +20,26 @@
 namespace App\Controller;
 
 use App\Entity\Grand;
-use App\Form\GrandType;
 use App\Repository\GrandRepository;
-use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Symfony\Component\Form\FormInterface;
+use Mazarini\ToolsBundle\Controller\ViewControllerAbstract;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends CrudControllerAbstract<Grand,GrandRepository>
+ * @template-extends ViewControllerAbstract<Grand,GrandRepository>
  */
 #[Route('/grand')]
-class GrandController extends CrudControllerAbstract
+class GrandController extends ViewControllerAbstract
 {
     protected string $base = 'grand';
+
+    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    {
+        $function = parent::getFunctions($entityId, $parentId, $page);
+        unset($function['index']);
+
+        return $function;
+    }
 
     #[Route('/{id}/page-{page}.html', name: 'app_grand_page', methods: ['GET'])]
     public function page(GrandRepository $repository, int $page, int $id): Response
@@ -41,45 +47,9 @@ class GrandController extends CrudControllerAbstract
         return $this->pageAction($repository, $page, 20, null);
     }
 
-    #[Route('/{id}/index.html', name: 'app_grand_index', methods: ['GET'])]
-    public function index(GrandRepository $grandRepository, int $id = 0): Response
-    {
-        return $this->indexAction($grandRepository);
-    }
-
-    #[Route('/{id}/new.html', name: 'app_grand_new', methods: ['GET', 'POST'])]
-    public function new(GrandRepository $grandRepository, int $id): Response
-    {
-        return $this->newAction($grandRepository);
-    }
-
     #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]
     public function show(Grand $grand): Response
     {
         return $this->showAction($grand);
-    }
-
-    #[Route('/{id}/edit.html', name: 'app_grand_edit', methods: ['GET', 'POST'])]
-    public function edit(Grand $grand, GrandRepository $grandRepository): Response
-    {
-        return $this->editAction($grand);
-    }
-
-    #[Route('/{id}/delete.html', name: 'app_grand_delete', methods: ['POST'])]
-    public function delete(Grand $grand): Response
-    {
-        return $this->deleteAction(
-            $grand,
-            $this->generateUrl('app_father_show', ['id' => $grand->getId()]),
-            $this->generateUrl('app_father_index', ['id' => $grand->getParentId()])
-        );
-    }
-
-    /**
-     * @param Grand $entity
-     */
-    protected function getForm($entity): FormInterface
-    {
-        return $this->createForm(GrandType::class, $entity);
     }
 }

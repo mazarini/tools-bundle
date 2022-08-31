@@ -27,9 +27,6 @@
 		</table>
 	{% endblock %}
 
-	{% block button_delete %}
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
-	{% endblock %}
 	{% block button_back %}
 		<a class="btn btn-secondary" href="{{ urls.page }}">
 			{% block button_back_label %}
@@ -38,5 +35,8 @@
 		</a>
 	{% endblock %}
 
+	{% block button_action %}{% endblock %}
+	{% block button_delete %}{% endblock %}
+	{% block modal_delete %}{% endblock %}
 
 {% endembed %}

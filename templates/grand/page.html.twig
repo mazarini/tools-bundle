@@ -1,4 +1,4 @@
-{% embed '@MazariniTools/page.html.twig' with {data: 3, action: 2} %}
+{% embed '@MazariniTools/page.html.twig' with {data: 3, action: 1} %}
 
 	{% block head_title %}
 		Grand index
@@ -29,5 +29,8 @@
 			</a>
 		</td>
 	{% endblock %}
+
+	{% block edit %}{% endblock %}
+	{% block new %}{% endblock %}
 
 {% endembed %}

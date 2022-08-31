@@ -1,4 +1,4 @@
-{% embed '@MazariniTools/index.html.twig' with {'parent':{'id': 0}, 'entities': entities, data: 3, action: 2, path: 'app_grand'} %}
+{% embed '@MazariniTools/index.html.twig' with {'data': 3, 'action': 2} %}
 
 	{% block head_title %}
 		Grand index
@@ -18,7 +18,7 @@
 		<td>{{ entity.id }}</td>
 		<td>{{ entity.labelGrand }}</td>
 		<td>
-			<a class="text-decoration-none" href="{{ path('app_father_index', {'id': entity.id}) }}">
+			<a class="text-decoration-none" href="{{ path('app_admin_father_index', {'id': entity.id}) }}">
 				{% if entity.count == 0 %}
 					None
 				{% else %}

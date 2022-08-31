@@ -34,6 +34,15 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     protected string $templateFormat = '%s/%s.html.twig';
     protected string $routeFormat = 'app_%s_%s';
 
+    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    {
+        return [
+            'page' => ['id' => $parentId, 'page' => $page],
+            'index' => ['id' => $parentId],
+            'show' => ['id' => $entityId],
+        ];
+    }
+
     /**
      * @param R<E> $repository
      */

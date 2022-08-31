@@ -21,20 +21,26 @@ namespace App\Controller;
 
 use App\Entity\Father;
 use App\Entity\Grand;
-use App\Form\FatherType;
 use App\Repository\FatherRepository;
-use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Symfony\Component\Form\FormInterface;
+use Mazarini\ToolsBundle\Controller\ViewControllerAbstract;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends CrudControllerAbstract<Father,FatherRepository>
+ * @template-extends ViewControllerAbstract<Father,FatherRepository>
  */
 #[Route('/father')]
-class FatherController extends CrudControllerAbstract
+class FatherController extends ViewControllerAbstract
 {
     protected string $base = 'father';
+
+    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    {
+        $function = parent::getFunctions($entityId, $parentId, $page);
+        unset($function['index']);
+
+        return $function;
+    }
 
     #[Route('/{id}/page-{page}.html', name: 'app_father_page', methods: ['GET'])]
     public function page(FatherRepository $repository, int $page, Grand $parent): Response
@@ -42,45 +48,9 @@ class FatherController extends CrudControllerAbstract
         return $this->pageAction($repository, $page, 20, $parent);
     }
 
-    #[Route('/{id}/index.html', name: 'app_father_index', methods: ['GET'])]
-    public function index(Grand $grand): Response
-    {
-        return $this->indexAction($grand);
-    }
-
     #[Route('/{id}/show.html', name: 'app_father_show', methods: ['GET'])]
     public function show(Father $father): Response
     {
         return $this->showAction($father);
-    }
-
-    #[Route('/{id}/new.html', name: 'app_father_new', methods: ['GET', 'POST'])]
-    public function new(FatherRepository $fatherRepository, Grand $entity): Response
-    {
-        return $this->newAction($fatherRepository, $entity);
-    }
-
-    #[Route('/{id}/edit.html', name: 'app_father_edit', methods: ['GET', 'POST'])]
-    public function edit(Father $father, FatherRepository $fatherRepository): Response
-    {
-        return $this->editAction($father);
-    }
-
-    /**
-     * @param Father $entity
-     */
-    protected function getForm($entity): FormInterface
-    {
-        return $this->createForm(FatherType::class, $entity);
-    }
-
-    #[Route('/{id}/delete.html', name: 'app_father_delete', methods: ['POST'])]
-    public function delete(Father $entity): Response
-    {
-        return $this->deleteAction(
-            $entity,
-            $this->generateUrl('app_father_show', ['id' => $entity->getId()]),
-            $this->generateUrl('app_father_index', ['id' => $entity->getParentId()])
-        );
     }
 }

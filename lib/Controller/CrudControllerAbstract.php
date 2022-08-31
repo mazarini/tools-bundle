@@ -36,6 +36,18 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     // | New and edit actions                                       |
     // ==============================================================
 
+    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    {
+        return [
+            'page' => ['id' => $parentId, 'page' => $page],
+            'index' => ['id' => $parentId],
+            'show' => ['id' => $entityId],
+            'new' => ['id' => $parentId],
+            'edit' => ['id' => $entityId],
+            'delete' => ['id' => $entityId],
+        ];
+    }
+
     /**
      * @param R<E> $repository
      */

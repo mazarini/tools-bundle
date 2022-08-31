@@ -1,4 +1,4 @@
-{% embed '@MazariniTools/page.html.twig' with {data: 2, action: 2} %}
+{% embed '@MazariniTools/page.html.twig' with {data: 2, action: 1} %}
 
 	{% block head_title %}
 		Son index
@@ -29,5 +29,8 @@
 			{% endblock %}
 		</a>
 	{% endblock %}
+
+	{% block edit %}{% endblock %}
+	{% block new %}{% endblock %}
 
 {% endembed %}

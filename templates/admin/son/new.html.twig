@@ -1,23 +1,23 @@
 {% embed '@MazariniTools/form.html.twig' %}
 
 	{% block head_title %}
-		Edit Son
+		New Son
 	{% endblock %}
 
 	{% block title %}
-		Edit Son
+		New Son
 	{% endblock %}
 
 	{% block hat %}
-		{% include 'father/_hat.html.twig' with {'entity': entity.parent,} %}
+		{% include 'admin/father/_hat.html.twig' with {'entity':entity.parent,} %}
 	{% endblock %}
 
 	{% block button_action_label %}
-		Update
+		Create
 	{% endblock %}
 
 	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ urls.page }}">
+		<a class="btn btn-secondary" href="{{ urls.index }}">
 			{% block button_back_label %}
 				Back
 			{% endblock %}

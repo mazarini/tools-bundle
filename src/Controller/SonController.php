@@ -21,20 +21,26 @@ namespace App\Controller;
 
 use App\Entity\Father;
 use App\Entity\Son;
-use App\Form\SonType;
 use App\Repository\SonRepository;
-use Mazarini\ToolsBundle\Controller\CrudControllerAbstract;
-use Symfony\Component\Form\FormInterface;
+use Mazarini\ToolsBundle\Controller\ViewControllerAbstract;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends CrudControllerAbstract<Son,SonRepository>
+ * @template-extends ViewControllerAbstract<Son,SonRepository>
  */
 #[Route('/son')]
-class SonController extends CrudControllerAbstract
+class SonController extends ViewControllerAbstract
 {
     protected string $base = 'son';
+
+    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    {
+        $function = parent::getFunctions($entityId, $parentId, $page);
+        unset($function['index']);
+
+        return $function;
+    }
 
     #[Route('/{id}/page-{page}.html', name: 'app_son_page', methods: ['GET'])]
     public function page(SonRepository $repository, int $page, Father $parent): Response
@@ -42,45 +48,9 @@ class SonController extends CrudControllerAbstract
         return $this->pageAction($repository, $page, 20, $parent);
     }
 
-    #[Route('/{id}/index.html', name: 'app_son_index', methods: ['GET'])]
-    public function index(Father $father): Response
-    {
-        return $this->indexAction($father);
-    }
-
-    #[Route('/{id}/new.html', name: 'app_son_new', methods: ['GET', 'POST'])]
-    public function new(SonRepository $repository, Father $entity): Response
-    {
-        return $this->newAction($repository, $entity);
-    }
-
     #[Route('/{id}/show.html', name: 'app_son_show', methods: ['GET'])]
     public function show(Son $son): Response
     {
         return $this->showAction($son);
-    }
-
-    #[Route('/{id}/edit.html', name: 'app_son_edit', methods: ['GET', 'POST'])]
-    public function edit(Son $son): Response
-    {
-        return $this->editAction($son);
-    }
-
-    #[Route('/{id}/delete.html', name: 'app_son_delete', methods: ['POST'])]
-    public function delete(Son $son): Response
-    {
-        return $this->deleteAction(
-            $son,
-            $this->generateUrl('app_son_show', ['id' => $son->getId()]),
-            $this->generateUrl('app_son_index', ['id' => $son->getParentId()])
-        );
-    }
-
-    /**
-     * @param Son $entity
-     */
-    protected function getForm($entity): FormInterface
-    {
-        return $this->createForm(SonType::class, $entity);
     }
 }

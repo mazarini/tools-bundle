@@ -17,11 +17,19 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tests\T2;
+namespace App\Controller\Admin;
 
-class GrandTest extends FatherTest
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class HomeController extends AbstractController
 {
-    protected string $path = '/admin/grand/';
-    protected string $parentId = '0';
-    protected string $id = '1';
+    #[Route('/admin', name: 'app_admin_home')]
+    public function index(): Response
+    {
+        return $this->render('admin/home/index.html.twig', [
+            'controller_name' => 'AdminHomeController',
+        ]);
+    }
 }

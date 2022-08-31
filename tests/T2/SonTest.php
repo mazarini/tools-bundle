@@ -21,7 +21,7 @@ namespace App\Tests\T2;
 
 class SonTest extends FatherTest
 {
-    protected string $path = '/son/';
+    protected string $path = '/admin/son/';
     protected string $parentId = '2';
     protected string $id = '3';
 }

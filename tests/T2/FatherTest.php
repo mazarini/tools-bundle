@@ -34,7 +34,7 @@ class FatherTest extends WebTestCase
     protected FatherRepository $fatherRepository;
     protected SonRepository $sonRepository;
     private KernelBrowser $client;
-    protected string $path = '/father/';
+    protected string $path = '/admin/father/';
     protected string $parentId = '1';
     protected string $id = '2';
 
