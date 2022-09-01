@@ -40,7 +40,7 @@ class EntityAbstract implements EntityInterface
 
     public function getParentId(): int
     {
-        if (is_subclass_of($this, ChildInterface::class)) {
+        if ($this instanceof ChildInterface) {
             return $this->getParent()->getId();
         }
 
@@ -49,7 +49,7 @@ class EntityAbstract implements EntityInterface
 
     public function count(): int
     {
-        if (is_subclass_of($this, ParentInterface::class)) {
+        if ($this instanceof ParentInterface) {
             return \count($this->getChilds());
         }
 

@@ -27,7 +27,6 @@ use Mazarini\ToolsBundle\Entity\ParentInterface;
 
 /**
  * @template-extends ParentAbstract<Grand,Father>
- * @template-implements ParentInterface<grand,Father>
  */
 #[ORM\Entity(repositoryClass: GrandRepository::class)]
 class Grand extends ParentAbstract implements ParentInterface

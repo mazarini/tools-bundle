@@ -24,12 +24,11 @@ use LogicException;
 /**
  * Generic entity M with parent P and childs C class.
  *
- * @template P of ParentInterface|ParentChildInterface
+ * @template P of ParentInterface
  * @template PC of ParentChildInterface
- * @template C of ChildInterface|ParentChildInterface
+ * @template C of ChildInterface
  *
  * @template-extends ParentAbstract<PC,C>
- * @template-implements ParentChildInterface<P,PC,C>
  */
 class ParentChildAbstract extends ParentAbstract implements ParentChildInterface
 {

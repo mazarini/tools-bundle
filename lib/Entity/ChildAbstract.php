@@ -24,10 +24,8 @@ use LogicException;
 /**
  * Generic entity child class.
  *
- * @template P of ParentInterface|ParentChildInterface
- * @template C of ChildInterface|ParentChildInterface
- *
- * @template-implements ChildInterface<P,C>
+ * @template P of ParentInterface
+ * @template C of ChildInterface
  */
 abstract class ChildAbstract extends EntityAbstract implements ChildInterface
 {

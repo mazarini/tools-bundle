@@ -27,7 +27,6 @@ use Mazarini\ToolsBundle\Entity\ParentInterface;
 
 /**
  * @template-extends ChildAbstract<Father,Son>
- * @template-implements ChildInterface<Father,Son>
  */
 #[ORM\Entity(repositoryClass: SonRepository::class)]
 class Son extends ChildAbstract implements ChildInterface

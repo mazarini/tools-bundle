@@ -22,35 +22,24 @@ namespace Mazarini\ToolsBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Generic entity child class.
- *
- * @template P of ParentInterface|ParentChildInterface
- * @template C of ChildInterface|ParentChildInterface
+ * Generic entity parent interface.
  */
 interface ParentInterface extends EntityInterface
 {
     /**
      * Getter of childs.
      *
-     * @return Collection<int, C>
+     * @return Collection<int, ChildInterface>
      */
     public function getChilds(): Collection;
 
     /**
      * Add a child to childs.
-     *
-     * @param C $child
-     *
-     * @return ParentInterface<P,C>
      */
     public function addChild(ChildInterface $child): self;
 
     /**
      * Remove a child from childs.
-     *
-     * @param C $child
-     *
-     * @return ParentInterface<P,C>
      */
     public function removeChild(ChildInterface $child): self;
 }

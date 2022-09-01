@@ -25,10 +25,8 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Generic entity child class.
  *
- * @template P of ParentInterface|ParentChildInterface
- * @template C of ChildInterface|ParentChildInterface
- *
- * @template-implements ParentInterface<P,C>
+ * @template P of ParentInterface
+ * @template C of ChildInterface
  */
 class ParentAbstract extends EntityAbstract implements ParentInterface
 {
@@ -57,7 +55,7 @@ class ParentAbstract extends EntityAbstract implements ParentInterface
      *
      * @param C $child
      *
-     * @return ParentInterface<P,C>
+     * @return self<P,C>
      */
     public function addChild(ChildInterface $child): ParentInterface
     {
@@ -74,7 +72,7 @@ class ParentAbstract extends EntityAbstract implements ParentInterface
      *
      * @param C $child
      *
-     * @return ParentInterface<P,C>
+     * @return self<P,C>
      */
     public function removeChild(ChildInterface $child): ParentInterface
     {
