@@ -22,6 +22,7 @@ namespace Mazarini\ToolsBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Entity\ParentInterface;
 use Mazarini\ToolsBundle\Page\PaginationInterface;
 
 /**
@@ -32,16 +33,14 @@ use Mazarini\ToolsBundle\Page\PaginationInterface;
 interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepositoryInterface
 {
     /**
-     * @param object|array<object>|null $object
-     *
      * @return T
      */
-    public function getNew($object): object;
+    public function getNew(ParentInterface $object = null): EntityInterface;
 
     /**
      * @return T
      */
-    public function get(int $id): object;
+    public function get(int $id): EntityInterface;
 
-    public function getPage(?object $parent, int $currentPage, int $pageSize): PaginationInterface;
+    public function getPage(?ParentInterface $parent, int $currentPage, int $pageSize): PaginationInterface;
 }

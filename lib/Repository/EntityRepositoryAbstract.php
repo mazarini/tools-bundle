@@ -21,7 +21,9 @@ namespace Mazarini\ToolsBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Mazarini\ToolsBundle\Entity\ChildInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Entity\ParentInterface;
 use Mazarini\ToolsBundle\Page\Pagination;
 use Mazarini\ToolsBundle\Page\PaginationInterface;
 use TypeError;
@@ -34,16 +36,31 @@ use TypeError;
 abstract class EntityRepositoryAbstract extends ServiceEntityRepository implements EntityRepositoryInterface
 {
     /**
-     * @param object|array<object>|null $object
-     *
      * @return T
      */
-    abstract public function getNew($object = null): object;
+    abstract protected function createNew(): EntityInterface;
 
     /**
      * @return T
      */
-    public function get(int $id): object
+    public function getNew(ParentInterface $parent = null): EntityInterface
+    {
+        $entity = $this->createNew();
+        if (null === $parent) {
+            return $entity;
+        }
+        if ($entity instanceof ChildInterface) {
+            $entity->setParent($parent);
+
+            return $entity;
+        }
+        throw new TypeError('Only ChildInterface has ParentInterface');
+    }
+
+    /**
+     * @return T
+     */
+    public function get(int $id): EntityInterface
     {
         $entity = $this->find($id);
         if (null === $entity) {
@@ -58,7 +75,7 @@ abstract class EntityRepositoryAbstract extends ServiceEntityRepository implemen
         $pagination = new Pagination();
         $pagination->setTotalCount($this->totalCount($parent));
         $pagination->setPageSize($pageSize);
-        $current = $pagination->setCurrentPage($currentPage);
+        $pagination->setCurrentPage($currentPage);
         if ($pagination->isCurrentPageOk()) {
             $pagination->setEntities($this->getResult($parent, ($currentPage - 1) * $pageSize, $pageSize));
         }
@@ -77,7 +94,7 @@ abstract class EntityRepositoryAbstract extends ServiceEntityRepository implemen
             return $count;
         }
 
-        throw new TypeError('Count is not an integer!');
+        throw new TypeError('Count(*) is not an integer!');
     }
 
     /**

@@ -20,6 +20,7 @@
 namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Entity\ParentInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,7 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     /**
      * @param R<E> $repository
      */
-    public function newAction(EntityRepositoryInterface $repository, EntityInterface $entity = null): Response
+    public function newAction(EntityRepositoryInterface $repository, ParentInterface $entity = null): Response
     {
         return $this->editAction($repository->getNew($entity));
     }

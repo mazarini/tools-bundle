@@ -21,6 +21,7 @@ namespace App\Repository;
 
 use App\Entity\Grand;
 use Doctrine\Persistence\ManagerRegistry;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryAbstract;
 
 /**
@@ -39,11 +40,9 @@ class GrandRepository extends EntityRepositoryAbstract
     }
 
     /**
-     * @param null $object
-     *
      * @return Grand
      */
-    public function getNew($object = null): object
+    protected function createNew(): EntityInterface
     {
         return new Grand();
     }

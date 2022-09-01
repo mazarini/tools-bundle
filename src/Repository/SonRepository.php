@@ -19,9 +19,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Father;
 use App\Entity\Son;
 use Doctrine\Persistence\ManagerRegistry;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryAbstract;
 
 /**
@@ -40,15 +40,10 @@ class SonRepository extends EntityRepositoryAbstract
     }
 
     /**
-     * @param Father $object
-     *
      * @return Son
      */
-    public function getNew($object = null): object
+    protected function createNew(): EntityInterface
     {
-        $entity = new Son();
-        $entity->setParent($object);
-
-        return $entity;
+        return new Son();
     }
 }

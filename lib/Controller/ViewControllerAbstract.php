@@ -20,6 +20,7 @@
 namespace Mazarini\ToolsBundle\Controller;
 
 use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Mazarini\ToolsBundle\Entity\ParentInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use UnexpectedValueException;
@@ -46,7 +47,7 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     /**
      * @param R<E> $repository
      */
-    protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, ?EntityInterface $parent): Response
+    protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, ?ParentInterface $parent): Response
     {
         $pagination = $repository->getPage($parent, $currentPage, $pageSize);
         if ($pagination->isCurrentPageOk()) {
