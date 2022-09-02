@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends CrudControllerAbstract<Grand,GrandRepository>
+ * @template-extends CrudControllerAbstract<Grand>
  */
 #[Route('admin/grand')]
 class GrandController extends CrudControllerAbstract
@@ -37,9 +37,9 @@ class GrandController extends CrudControllerAbstract
     protected string $templateFormat = 'admin/%s/%s.html.twig';
     protected string $routeFormat = 'app_admin_%s_%s';
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
-        $function = parent::getFunctions($entityId, $parentId, $page);
+        $function = parent::getFunctions($entityId, $parentId);
         unset($function['page']);
 
         return $function;
@@ -74,8 +74,8 @@ class GrandController extends CrudControllerAbstract
     {
         return $this->deleteAction(
             $grand,
-            $this->generateUrl('app_father_show', ['id' => $grand->getId()]),
-            $this->generateUrl('app_father_index', ['id' => $grand->getParentId()])
+            $this->generateUrl('app_admin_grand_show', ['id' => $grand->getId()]),
+            $this->generateUrl('app_admin_grand_index', ['id' => $grand->getParentId()])
         );
     }
 

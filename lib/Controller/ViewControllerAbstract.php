@@ -23,11 +23,9 @@ use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentInterface;
 use Mazarini\ToolsBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
-use UnexpectedValueException;
 
 /**
  * @template E of EntityInterface
- * @template R of EntityRepositoryInterface
  */
 abstract class ViewControllerAbstract extends ControllerAbstract
 {
@@ -35,17 +33,17 @@ abstract class ViewControllerAbstract extends ControllerAbstract
     protected string $templateFormat = '%s/%s.html.twig';
     protected string $routeFormat = 'app_%s_%s';
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
         return [
-            'page' => ['id' => $parentId, 'page' => $page],
+            'page' => ['id' => $parentId, 'page' => 1],
             'index' => ['id' => $parentId],
             'show' => ['id' => $entityId],
         ];
     }
 
     /**
-     * @param R<E> $repository
+     * @param EntityRepositoryInterface<E> $repository
      */
     protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, ?ParentInterface $parent): Response
     {
@@ -60,49 +58,26 @@ abstract class ViewControllerAbstract extends ControllerAbstract
 
             return $this->render($this->getTemplate('page'), $parameters);
         }
-        $id = 0;
-        if (null !== $parent) {
-            $id = $parent->getId();
-        }
+
+        $id = null === $parent ? 0 : $parent->getId();
 
         return $this->redirectToRoute($this->getRoute('page'), ['id' => $id, 'page' => $pagination->getCurrentPage()], Response::HTTP_SEE_OTHER);
     }
 
     /**
-     * param E|R<E> $repository.
+     * @param ParentInterface|EntityRepositoryInterface<E> $object
      */
     protected function indexAction(object $object): Response
     {
         if ($object instanceof EntityRepositoryInterface) {
-            return $this->indexEntityAction($object);
-        }
-        if ($object instanceof EntityInterface) {
-            return $this->indexParentAction($object);
-        }
-        throw new UnexpectedValueException(sprintf('Accept EntityInterface or EntityRepositoryInterface "%s" given.', \get_class($object)));
-    }
-
-    /**
-     * @param R<E> $repository
-     */
-    protected function indexEntityAction(EntityRepositoryInterface $repository): Response
-    {
-        return $this->render($this->getTemplate('index'), [
-            'entities' => $repository->findAll(),
-        ]);
-    }
-
-    protected function indexParentAction(EntityInterface $parent): Response
-    {
-        $entities = null;
-        $getChilds = 'getChilds';
-        if (method_exists($parent, $getChilds)) {
-            $entities = $parent->$getChilds();
+            return $this->render($this->getTemplate('index'), [
+                'entities' => $object->findAll(),
+            ]);
         }
 
         return $this->render($this->getTemplate('index'), [
-            'entities' => $entities,
-            'parent' => $parent,
+                'parent' => $object,
+                'entities' => $object->getChilds(),
         ]);
     }
 
