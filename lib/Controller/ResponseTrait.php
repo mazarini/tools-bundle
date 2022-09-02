@@ -127,14 +127,14 @@ trait ResponseTrait
         switch (true) {
             case isset($urls['page']):
                 $urls['list'] = $urls['page'];
-                $parameter['current_url'] = $urls['list'];
+                $parameters['current_url'] = $urls['list'];
                 break;
             case isset($urls['index']):
                 $urls['list'] = $urls['index'];
-                $parameter['current_url'] = $urls['list'];
+                $parameters['current_url'] = $urls['list'];
                 break;
             default:
-                $parameter['current_url'] = null;
+                $parameters['current_url'] = null;
         }
         $parameters['urls'] = $urls;
 
