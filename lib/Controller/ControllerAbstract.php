@@ -19,6 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Mazarini\ToolsBundle\Utility\DoctrineTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,4 +28,11 @@ class ControllerAbstract extends AbstractController
     use DoctrineTrait;
     use RequestTrait;
     use ResponseTrait;
+
+    protected ?ManagerRegistry $registry = null;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
 }

@@ -60,11 +60,10 @@ trait DoctrineTrait
 
     protected function getRegistry(): Registry
     {
-        $registry = $this->container->get('doctrine');
-        if ($registry instanceof Registry) {
-            return $registry;
+        if ($this->registry instanceof Registry) {
+            return $this->registry;
         }
 
-        throw new UnexpectedValueException('Doctrine is not in container.');
+        throw new UnexpectedValueException('Doctrine is not in controler. Remember to call parent::_construct(Doctrine\Bundle\DoctrineBundle\Registry)');
     }
 }
