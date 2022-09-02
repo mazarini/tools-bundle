@@ -26,16 +26,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends ViewControllerAbstract<Grand,GrandRepository>
+ * @template-extends ViewControllerAbstract<Grand>
  */
 #[Route('/grand')]
 class GrandController extends ViewControllerAbstract
 {
     protected string $base = 'grand';
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
-        $function = parent::getFunctions($entityId, $parentId, $page);
+        $function = parent::getFunctions($entityId, $parentId);
         unset($function['index']);
 
         return $function;

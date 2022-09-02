@@ -27,16 +27,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends ViewControllerAbstract<Father,FatherRepository>
+ * @template-extends ViewControllerAbstract<Father>
  */
 #[Route('/father')]
 class FatherController extends ViewControllerAbstract
 {
     protected string $base = 'father';
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
-        $function = parent::getFunctions($entityId, $parentId, $page);
+        $function = parent::getFunctions($entityId, $parentId);
         unset($function['index']);
 
         return $function;

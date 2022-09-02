@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @template-extends CrudControllerAbstract<Father,FatherRepository>
+ * @template-extends CrudControllerAbstract<Father>
  */
 #[Route('admin/father')]
 class FatherController extends CrudControllerAbstract
@@ -38,9 +38,9 @@ class FatherController extends CrudControllerAbstract
     protected string $templateFormat = 'admin/%s/%s.html.twig';
     protected string $routeFormat = 'app_admin_%s_%s';
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
-        $function = parent::getFunctions($entityId, $parentId, $page);
+        $function = parent::getFunctions($entityId, $parentId);
         unset($function['page']);
 
         return $function;

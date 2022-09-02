@@ -64,7 +64,7 @@ trait ResponseTrait
     /**
      * @return array<string,string>
      */
-    protected function getUrls(int $entityId, int $parentId, int $page): array
+    protected function getUrls(int $entityId, int $parentId): array
     {
         $urls = [];
         foreach ($this->getFunctions($entityId, $parentId) as $function => $parameters) {
@@ -77,10 +77,10 @@ trait ResponseTrait
     /**
      * @return array<string,array<string,int>>
      */
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
         return [
-            'page' => ['id' => $parentId, 'page' => $page],
+            'page' => ['id' => $parentId, 'page' => 1],
             'index' => ['id' => $parentId],
             'show' => ['id' => $entityId],
             'new' => ['id' => $parentId],
@@ -122,7 +122,21 @@ trait ResponseTrait
         $parameters['id'] = $id;
         $parameters['parent_id'] = $parentId;
         $parameters['routes'] = $this->getRoutes();
-        $parameters['urls'] = $this->getUrls($id, $parentId, 1);
+
+        $urls = $this->getUrls($id, $parentId);
+        switch (true) {
+            case isset($urls['page']):
+                $urls['list'] = $urls['page'];
+                $parameter['current_url'] = $urls['list'];
+                break;
+            case isset($urls['index']):
+                $urls['list'] = $urls['index'];
+                $parameter['current_url'] = $urls['list'];
+                break;
+            default:
+                $parameter['current_url'] = null;
+        }
+        $parameters['urls'] = $urls;
 
         return parent::renderView($view, $parameters);
     }

@@ -27,9 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @template E of EntityInterface
- * @template R of EntityRepositoryInterface
  *
- * @template-extends ViewControllerAbstract<E,R>
+ * @template-extends ViewControllerAbstract<E>
  */
 abstract class CrudControllerAbstract extends ViewControllerAbstract
 {
@@ -37,10 +36,10 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     // | New and edit actions                                       |
     // ==============================================================
 
-    protected function getFunctions(int $entityId = 0, int $parentId = 0, int $page = 1): array
+    protected function getFunctions(int $entityId = 0, int $parentId = 0): array
     {
         return [
-            'page' => ['id' => $parentId, 'page' => $page],
+            'page' => ['id' => $parentId, 'page' => 1],
             'index' => ['id' => $parentId],
             'show' => ['id' => $entityId],
             'new' => ['id' => $parentId],
@@ -50,7 +49,7 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     }
 
     /**
-     * @param R<E> $repository
+     * @param EntityRepositoryInterface<E> $repository
      */
     public function newAction(EntityRepositoryInterface $repository, ParentInterface $entity = null): Response
     {
@@ -65,7 +64,7 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
         $form = $this->getForm($entity);
         $form->handleRequest($this->getRequest());
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $this->isEntityValid($entity)) {
             $this->persist($entity)->flush();
 
             return $this->redirectToRoute($this->getRoute('show'), ['id' => $entity->getId()], Response::HTTP_SEE_OTHER);
@@ -80,17 +79,26 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
     /**
      * @param E $entity
      */
+    protected function isEntityValid(EntityInterface $entity): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param E $entity
+     */
     abstract protected function getForm($entity): FormInterface;
 
     // ==============================================================
     // | Delete action                                              |
     // ==============================================================
-
+    /**
+     * @param E $entity
+     */
     protected function deleteAction(EntityInterface $entity, string $errorUrl, string $successUrl): Response
     {
         switch (false) {
             case $this->isDeletePossible($entity):
-                $this->addflash('danger', 'You sould delete childs before parent entity');
                 break;
             case $this->isCsrfTokenValid('delete'.$entity->getId(), $this->getRequestStringValue('_token')):
                 $this->addflash('danger', 'Technical problem, retry delete');
@@ -105,10 +113,15 @@ abstract class CrudControllerAbstract extends ViewControllerAbstract
         return $this->redirect($errorUrl, Response::HTTP_SEE_OTHER);
     }
 
+    /**
+     * @param E $entity
+     */
     protected function isDeletePossible(EntityInterface $entity): bool
     {
-        switch (false) {
-            case $entity->count() > 0:
+        $count = $entity->count();
+        $count = \count($entity);
+        switch (true) {
+            case 0 < $entity->count():
                 $this->addflash('danger', 'You should delete childs before parent entity');
                 break;
             default:
