@@ -34,7 +34,7 @@
 	{% endblock %}
 
 	{% block button_back %}
-		<a class="btn btn-secondary" href="{{ path('app_admin_grand_show',{'id': parent_id}) }}">
+		<a class="btn btn-secondary" href="{{ path('app_admin_grand_show',{'id': parent.id}) }}">
 			{% block button_back_label %}
 				Back
 			{% endblock %}

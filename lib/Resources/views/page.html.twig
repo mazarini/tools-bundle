@@ -2,7 +2,11 @@
 
 {% block button %}
 	{% for page in 1..pagination.lastPage %}
-		<a class="btn btn-secondary" href="{{ path(routes.page, { 'id': parent_id, 'page': page}) }}">{{ page }}</a>
+		{% if page == pagination.currentPage %}
+			<a class="btn btn-outline-dark disabled" href="{{ path(routes.page, { 'id': parent_id, 'page': page}) }}">{{ page }}</a>
+		{% else %}
+			<a class="btn btn-outline-dark" href="{{ path(routes.page, { 'id': parent_id, 'page': page}) }}">{{ page }}</a>
+		{% endif %}
 	{% endfor %}
 {% endblock %}
 
