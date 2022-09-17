@@ -17,7 +17,7 @@
  * with mazarini/tools-bundles. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Mazarini\ToolsBundle\Page;
+namespace Mazarini\ToolsBundle\Paginator;
 
 interface PaginationInterface
 {

@@ -23,7 +23,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentInterface;
-use Mazarini\ToolsBundle\Page\PaginationInterface;
+use Mazarini\ToolsBundle\Paginator\PaginationInterface;
 
 /**
  * @template T of EntityInterface

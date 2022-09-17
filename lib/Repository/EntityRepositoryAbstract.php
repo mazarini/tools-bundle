@@ -24,8 +24,8 @@ use Doctrine\ORM\QueryBuilder;
 use Mazarini\ToolsBundle\Entity\ChildInterface;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Mazarini\ToolsBundle\Entity\ParentInterface;
-use Mazarini\ToolsBundle\Page\Pagination;
-use Mazarini\ToolsBundle\Page\PaginationInterface;
+use Mazarini\ToolsBundle\Paginator\Pagination;
+use Mazarini\ToolsBundle\Paginator\PaginationInterface;
 use TypeError;
 
 /**
