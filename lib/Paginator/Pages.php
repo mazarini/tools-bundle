@@ -19,7 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Paginator;
 
-class Pages extends Entities
+class Pages
 {
     /**
      * @var int
@@ -30,6 +30,11 @@ class Pages extends Entities
      * @var int
      */
     protected $currentPage;
+
+    /**
+     * @var int
+     */
+    protected $totalCount;
 
     public function setPageSize(int $pageSize): self
     {

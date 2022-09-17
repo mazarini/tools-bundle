@@ -28,17 +28,12 @@ namespace Mazarini\ToolsBundle\Paginator;
  *         . total entities of page.
  */
 
-class Entities
+class Entities extends Pages
 {
     /**
      * @var array<int,mixed>
      */
     private $entities = [];
-
-    /**
-     * @var int
-     */
-    protected $totalCount;
 
     /**
      * getEntities.

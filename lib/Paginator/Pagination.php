@@ -19,7 +19,7 @@
 
 namespace Mazarini\ToolsBundle\Paginator;
 
-class Pagination extends Pages implements PaginationInterface
+class Pagination extends Entities implements PaginationInterface
 {
     public function hasToPaginate(): bool
     {
