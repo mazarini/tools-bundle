@@ -23,6 +23,8 @@
         "files.insertFinalNewline": true,
         "files.trimFinalNewlines": true,
         "files.trimTrailingWhitespace": true,
+        "php.suggest.basic": false,
+        "php.validate.enable": false,
     },
     "launch": {
         "version": "0.2.0",
