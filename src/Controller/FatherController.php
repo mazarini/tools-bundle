@@ -45,7 +45,7 @@ class FatherController extends ViewControllerAbstract
     #[Route('/{id}/page-{page}.html', name: 'app_father_page', methods: ['GET'])]
     public function page(FatherRepository $repository, int $page, Grand $parent): Response
     {
-        return $this->pageAction($repository, $page, 20, $parent);
+        return $this->pageAction($repository, $page, 20, [], ['parent' => $parent], []);
     }
 
     #[Route('/{id}/show.html', name: 'app_father_show', methods: ['GET'])]

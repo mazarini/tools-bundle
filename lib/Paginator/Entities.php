@@ -19,15 +19,6 @@
 
 namespace Mazarini\ToolsBundle\Paginator;
 
-/*
- * manage data :
- *     - entities
- *     - counters :
- *         . total entities avalaible
- *         . total pages avalaible
- *         . total entities of page.
- */
-
 class Entities extends Pages
 {
     /**
@@ -58,17 +49,23 @@ class Entities extends Pages
     }
 
     /**
-     * totalCount.
+     * Get start parameter of query.
      */
-    public function setTotalCount(int $totalCount): self
+    public function getStart(): int
     {
-        $this->totalCount = $totalCount;
-
-        return $this;
+        return ($this->getCurrentPage() - 1) * $this->pageSize;
     }
 
     /**
-     * count.
+     * Get limit parameter of query.
+     */
+    public function getLimit(): int
+    {
+        return $this->pageSize;
+    }
+
+    /**
+     * Count of items of available items.
      */
     public function count(): int
     {

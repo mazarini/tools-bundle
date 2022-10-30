@@ -42,5 +42,10 @@ interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepos
      */
     public function get(int $id): EntityInterface;
 
-    public function getPage(?ParentInterface $parent, int $currentPage, int $pageSize): PaginationInterface;
+    /**
+     * @param array<string,mixed>  $conditions
+     * @param array<string,mixed>  $parameters
+     * @param array<string,string> $orderBy
+     */
+    public function getPage(int $currentPage, array $conditions, array $parameters, array $orderBy, int $pageSize): PaginationInterface;
 }

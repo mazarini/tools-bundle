@@ -70,22 +70,33 @@ abstract class EntityRepositoryAbstract extends ServiceEntityRepository implemen
         return $entity;
     }
 
-    public function getPage(?object $parent, int $currentPage = 1, int $pageSize = 10): PaginationInterface
+    /**
+     * Undocumented function.
+     *
+     * @param array<string>        $conditions
+     * @param array<string,mixed>  $parameters
+     * @param array<string,string> $orderBy
+     */
+    public function getPage(int $currentPage = 1, array $conditions = [], array $parameters = [], array $orderBy = [], int $pageSize = 10): PaginationInterface
     {
-        $pagination = new Pagination();
-        $pagination->setTotalCount($this->totalCount($parent));
-        $pagination->setPageSize($pageSize);
-        $pagination->setCurrentPage($currentPage);
-        if ($pagination->isCurrentPageOk()) {
-            $pagination->setEntities($this->getResult($parent, ($currentPage - 1) * $pageSize, $pageSize));
+        $totalCount = $this->totalCount($conditions, $parameters);
+        $pagination = new Pagination($totalCount, $currentPage, $pageSize);
+        if ($pagination->isCurrentPageOk() && $totalCount > 0) {
+            $pagination->setEntities($this->getResult($conditions, $parameters, $orderBy, $pagination->getStart(), $pagination->getLimit()));
         }
 
         return $pagination;
     }
 
-    protected function totalCount(?object $parent): int
+    /**
+     * Undocumented function.
+     *
+     * @param array<string>       $conditions
+     * @param array<string,mixed> $parameters
+     */
+    protected function totalCount(array $conditions = [], array $parameters = []): int
     {
-        $count = $this->getPageQueryBuilder($parent)
+        $count = $this->getPageQueryBuilder($conditions, $parameters)
                 ->select('count(e.id)')
                 ->getQuery()
                 ->getSingleScalarResult();
@@ -98,34 +109,57 @@ abstract class EntityRepositoryAbstract extends ServiceEntityRepository implemen
     }
 
     /**
-     * getResult.
+     * @param array<string>        $conditions
+     * @param array<string,mixed>  $parameters
+     * @param array<string,string> $orderBy
      *
      * @return array<int, mixed>
      */
-    protected function getResult(?object $parent, int $start, int $pageSize): array
+    protected function getResult(array $conditions, array $parameters, array $orderBy, int $start, int $limit): array
     {
-        $query = $this->getPageQueryBuilder($parent)
-//              ->orderBy($this->orderColumn, $this->orderDirection)
-                ->setFirstResult($start)
-                ->setMaxResults($pageSize)
-                ->getQuery();
+        $builder = $this->getPageQueryBuilder($conditions, $parameters);
 
-        $result = $query->getResult();
+        foreach ($orderBy as $column => $direction) {
+            $builder->addOrderBy('e.'.$column, $direction);
+        }
+
+        $builder
+            ->addOrderBy('e.id', 'asc')
+            ->setFirstResult($start)
+            ->setMaxResults($limit)
+        ;
+
+        $result = $builder->getQuery()->getResult();
+
         if (\is_array($result)) {
             return $result;
         }
+
         throw new TypeError('Result is not an array.');
     }
 
-    protected function getPageQueryBuilder(?object $parent): QueryBuilder
+    /**
+     * @param array<string>       $conditions
+     * @param array<string,mixed> $parameters
+     */
+    protected function getPageQueryBuilder(array $conditions, array $parameters): QueryBuilder
     {
-        if (null === $parent) {
-            return $this->createQueryBuilder('e');
+        $builder = $this->createQueryBuilder('e');
+
+        foreach ($conditions as $condition) {
+            $builder->andWhere($condition);
         }
 
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.parent = :parent')
-            ->setParameter('parent', $parent)
-        ;
+        if (0 === \count($conditions)) {
+            foreach ($parameters as $parameter => $value) {
+                $builder->andWhere(sprintf('e.%s = :%s', $parameter, $parameter));
+            }
+        }
+
+        foreach ($parameters as $parameter => $value) {
+            $builder->setParameter($parameter, $value);
+        }
+
+        return $builder;
     }
 }

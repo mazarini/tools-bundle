@@ -26,6 +26,16 @@ class Pagination extends Entities implements PaginationInterface
         return $this->getLastPage() > 1;
     }
 
+    public function getFirstPage(): int
+    {
+        return 1;
+    }
+
+    public function getLastPage(): int
+    {
+        return max(1, $this->getPagesCount());
+    }
+
     public function hasPreviousPage(): bool
     {
         return $this->currentPage > 1;

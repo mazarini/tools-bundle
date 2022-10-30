@@ -44,22 +44,33 @@ abstract class ViewControllerAbstract extends ControllerAbstract
 
     /**
      * @param EntityRepositoryInterface<E> $repository
+     * @param array<string>                $conditions
+     * @param array<string,mixed>          $parameters
+     * @param array<string,string>         $orderBy
      */
-    protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, ?ParentInterface $parent): Response
+    protected function pageAction(EntityRepositoryInterface $repository, int $currentPage, int $pageSize, array $conditions = [], array $parameters = [], array $orderBy = []): Response
     {
-        $pagination = $repository->getPage($parent, $currentPage, $pageSize);
-        if ($pagination->isCurrentPageOk()) {
-            $parameters = [];
-            $parameters['pagination'] = $pagination;
-            $parameters['entities'] = $pagination->getEntities();
-            if (null !== $parent) {
-                $parameters['parent'] = $parent;
-            }
-
-            return $this->render($this->getTemplate('page'), $parameters);
+        $parent = null;
+        if (isset($parameters['parent'])) {
+            $parent = $parameters['parent'];
         }
 
-        $id = null === $parent ? 0 : $parent->getId();
+        $pagination = $repository->getPage($currentPage, $conditions, $parameters, $orderBy, $pageSize);
+        if ($pagination->isCurrentPageOk()) {
+            $params = [];
+            $params['pagination'] = $pagination;
+            $params['entities'] = $pagination->getEntities();
+            if (null !== $parent) {
+                $params['parent'] = $parent;
+            }
+
+            return $this->render($this->getTemplate('page'), $params);
+        }
+
+        $id = 0;
+        if ($parent instanceof EntityInterface) {
+            $id = $parent->getId();
+        }
 
         return $this->redirectToRoute($this->getRoute('page'), ['id' => $id, 'page' => $pagination->getCurrentPage()], Response::HTTP_SEE_OTHER);
     }

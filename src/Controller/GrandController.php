@@ -44,7 +44,7 @@ class GrandController extends ViewControllerAbstract
     #[Route('/{id}/page-{page}.html', name: 'app_grand_page', methods: ['GET'])]
     public function page(GrandRepository $repository, int $page, int $id): Response
     {
-        return $this->pageAction($repository, $page, 20, null);
+        return $this->pageAction($repository, $page, 20, [], [], ['labelGrand' => 'ASC']);
     }
 
     #[Route('/{id}/show.html', name: 'app_grand_show', methods: ['GET'])]

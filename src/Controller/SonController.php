@@ -45,7 +45,7 @@ class SonController extends ViewControllerAbstract
     #[Route('/{id}/page-{page}.html', name: 'app_son_page', methods: ['GET'])]
     public function page(SonRepository $repository, int $page, Father $parent): Response
     {
-        return $this->pageAction($repository, $page, 20, $parent);
+        return $this->pageAction($repository, $page, 20, [], ['parent' => $parent], []);
     }
 
     #[Route('/{id}/show.html', name: 'app_son_show', methods: ['GET'])]

@@ -22,54 +22,54 @@ namespace Mazarini\ToolsBundle\Paginator;
 class Pages
 {
     /**
+     * Size of pages.
+     *
      * @var int
      */
-    private $pageSize;
+    protected $pageSize;
 
     /**
+     * Selected page can be out of range.
+     *
      * @var int
      */
     protected $currentPage;
 
     /**
+     * Count of all items.
+     *
      * @var int
      */
     protected $totalCount;
 
-    public function setPageSize(int $pageSize): self
+    public function __construct(int $totalCount, int $currentPage, int $pageSize = 10)
     {
         $this->pageSize = $pageSize;
-
-        return $this;
+        $this->totalCount = $totalCount;
+        $this->currentPage = $currentPage;
     }
 
+    /**
+     * Compute current page between 1 and number of pages.
+     *
+     * Use to redirect to first or last page and to verify if current page exists
+     */
     public function getCurrentPage(): int
     {
         return max(1, min($this->currentPage, $this->getPagesCount()));
     }
 
-    public function setCurrentPage(int $currentPage): self
-    {
-        $this->currentPage = $currentPage;
-
-        return $this;
-    }
-
+    /**
+     * Verify if current page exists.
+     */
     public function isCurrentPageOk(): bool
     {
         return $this->currentPage === $this->getCurrentPage();
     }
 
-    public function getFirstPage(): int
-    {
-        return 1;
-    }
-
-    public function getLastPage(): int
-    {
-        return max(1, $this->getPagesCount());
-    }
-
+    /**
+     * Compute count of page, return 0 if no item.
+     */
     protected function getPagesCount(): int
     {
         return (int) ceil($this->totalCount / $this->pageSize);
